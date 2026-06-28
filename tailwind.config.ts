@@ -9,12 +9,12 @@ const config: Config = {
         sans: ["Montserrat", "sans-serif"]
       },
       colors: {
-        primary: "#052d6d",
-        accent: "#fcb005",
+        primary: "#042D6D",
+        accent: "#FCB005",
         light: "#ffffff"
       },
       boxShadow: {
-        premium: "0 20px 60px rgba(5, 45, 109, 0.15)"
+        premium: "0 20px 60px rgba(4, 45, 109, 0.15)"
       }
     }
   },

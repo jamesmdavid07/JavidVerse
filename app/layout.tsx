@@ -4,18 +4,18 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "JavidVerse — Creative Agency for Books, Video, and Branding",
-  description: "JavidVerse is a premium creative agency offering book services, video production, and graphic branding with a clean, strategic approach.",
+  title: "Javid Verse — Creative Solutions for Ministry & Mission",
+  description: "Purpose-driven design, video, publishing preparation, branding, and web solutions for ministries, authors, organizations, and individuals.",
   keywords: ["creative agency", "book services", "video services", "branding", "graphic design", "web creation", "marketing"],
   openGraph: {
-    title: "JavidVerse — Creative Agency",
-    description: "Premium creative services for authors, brands, and organizations.",
+    title: "Javid Verse — Creative Solutions for Ministry & Mission",
+    description: "Creative media and digital solutions that help meaningful stories reach more people.",
     type: "website",
-    url: "https://javidverse.example",
+    url: "https://javid-verse.vercel.app",
     siteName: "JavidVerse",
     images: [
       {
-        url: "https://javidverse.example/brand-mark.svg",
+        url: "https://javid-verse.vercel.app/hero-image.jpg",
         width: 1200,
         height: 630,
         alt: "JavidVerse creative agency"

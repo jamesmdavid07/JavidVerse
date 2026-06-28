@@ -14,7 +14,7 @@ export default function SectionWrapper({ title, subtitle, children, className = 
     <section className={`px-6 py-20 sm:px-8 lg:px-12 ${className || 'bg-light'}`}>
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 max-w-3xl">
-          <h2 className={`text-4xl md:text-5xl font-bold tracking-tight ${titleClass}`}>{title}</h2>
+          <h2 className={`text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl ${titleClass}`}>{title}</h2>
           <p className={`mt-4 text-lg leading-8 ${subtitleClass}`}>{subtitle}</p>
         </div>
         {children}

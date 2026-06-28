@@ -1,92 +1,38 @@
-import Link from "next/link";
-import { Globe, CheckCircle2 } from "lucide-react";
+import { CheckCircle2, ExternalLink } from "lucide-react";
 import Hero from "@/components/Hero";
 import SectionWrapper from "@/components/SectionWrapper";
+import CTASection from "@/components/CTASection";
 
-export const metadata = {
-  title: "Web Creation & Marketing — JavidVerse",
-  description: "Website development and structured digital presence support.",
-  keywords: ["web creation", "marketing", "website development", "digital presence"]
-};
-
-const services = [
-  { title: "Website development", description: "Custom websites built with modern frameworks and responsive design." },
-  { title: "Digital marketing", description: "Strategic campaigns to grow your online presence and reach." },
-  { title: "SEO optimization", description: "Search engine optimization to improve visibility and rankings." },
-  { title: "Content strategy", description: "Compelling content creation and management for your brand." }
+const services = ["Personal portfolio websites", "Ministry websites", "Landing pages", "Business websites", "Author websites", "School and organization websites", "Front-end development", "Website redesign", "Website content structure", "Digital presence setup"];
+const projects = [
+  { title: "James M. David Personal Website", href: "https://jamesmdavid.vercel.app/", text: "Personal portfolio combining theology, technology, and media ministry." },
+  { title: "Javid Verse", href: "https://javid-verse.vercel.app/", text: "Creative studio website and digital brand identity." },
+  { title: "Aligned4LifeProject", href: "https://aligned4lifeproject.gr-site.com/", text: "Ministry website, brand support, and digital presence." }
 ];
-
-const processSteps = [
-  "Strategy and planning", "Design and development", "Testing and launch", "Ongoing support and optimization"
+const creativePortfolio = [
+  { title: "Aligned4LifeProject", role: "Brand management · Website management · Digital marketing", text: "Supporting a ministry-focused initiative through a coordinated brand and digital presence." },
+  { title: "Lifetime Lifestyle", role: "Website development · Brand organization", text: "Creating a structured digital home and helping organize the visual presentation of the brand." },
+  { title: "Larry Bachman", role: "WordPress development · Hostinger", text: "Website development and hosting setup for a professional personal brand." },
+  { title: "Green Cottage", role: "Website development · Design", text: "A clean, accessible website experience shaped around the organization’s needs." },
+  { title: "Javid Verse", role: "Creative direction · Development", text: "A creative studio and digital identity connecting design, media, books, and web services." }
 ];
-
-export default function WebCreationMarketingPage() {
-  return (
-    <>
-      <div className="w-full border-t border-gray-200"></div>
-      <Hero
-        title="Web Creation & Marketing"
-        subtitle="We build structured, high-performing digital platforms that position your brand with clarity and purpose."
-      />
-
-      <SectionWrapper title="Overview" subtitle="Comprehensive digital solutions for modern businesses.">
-        <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
-          <div className="space-y-6">
-            <p className="text-base leading-7 text-primary/70">From concept to launch, we create websites and marketing strategies that drive results. Our approach combines technical expertise with creative vision to deliver digital experiences that engage and convert.</p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl border border-primary/20 bg-light p-6 shadow-premium">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Performance focused</p>
-                <p className="mt-3 text-sm leading-6 text-primary/70">Optimized for speed, SEO, and user experience.</p>
-              </div>
-              <div className="rounded-3xl border border-primary/20 bg-light p-6 shadow-premium">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Scalable solutions</p>
-                <p className="mt-3 text-sm leading-6 text-primary/70">Built to grow with your business needs.</p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-[2rem] border border-primary/20 bg-light/50 p-8 shadow-premium">
-            <div className="flex items-center gap-3 text-primary">
-              <Globe className="h-6 w-6" />
-              <p className="text-sm font-semibold">Web & Marketing Services</p>
-            </div>
-            <ul className="mt-6 space-y-3">
-              {services.map((service, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 text-accent" />
-                  <div>
-                    <p className="text-sm font-semibold text-primary">{service.title}</p>
-                    <p className="text-sm text-primary/70">{service.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper title="Our process" subtitle="A streamlined approach to digital success." className="bg-gray-50">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {processSteps.map((step, index) => (
-            <div key={index} className="text-center">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-light font-bold">
-                {index + 1}
-              </div>
-              <p className="text-sm font-semibold text-primary">{step}</p>
-            </div>
-          ))}
-        </div>
-      </SectionWrapper>
-
-      <SectionWrapper title="Ready to build your digital presence?" subtitle="Let's create something amazing together.">
-        <div className="text-center">
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center px-8 py-4 bg-primary text-light font-semibold rounded-lg hover:bg-primary/90 transition-colors"
-          >
-            Start your project
-          </Link>
-        </div>
-      </SectionWrapper>
-    </>
-  );
-}
+export const metadata = { title: "Website Development & Digital Presence — Javid Verse", description: "Modern, responsive, purpose-driven websites for ministries, individuals, and organizations." };
+export default function WebPage() { return <>
+  <Hero title="Website Development & Digital Presence" subtitle="Modern, responsive, and purpose-driven websites built to help good work reach more people." />
+  <SectionWrapper title="A clear home for your mission online" subtitle="Websites for ministries, individuals, organizations, schools, authors, and small businesses.">
+    <p className="max-w-4xl text-lg leading-8 text-primary/75">James M. David is a front-end developer with experience in HTML, CSS, Tailwind CSS, React and Next.js-style projects, WordPress, Hostinger, GoDaddy, GetResponse, and Vercel deployments.</p>
+    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{services.map(s => <div key={s} className="flex gap-3 rounded-2xl border border-primary/15 bg-white p-5 shadow-sm"><CheckCircle2 className="h-5 w-5 shrink-0 text-accent"/><span className="font-semibold text-primary">{s}</span></div>)}</div>
+  </SectionWrapper>
+  <SectionWrapper title="Selected website projects" subtitle="A growing portfolio of purpose-driven digital spaces." className="bg-slate-50">
+    <div className="grid gap-7 md:grid-cols-3">{projects.map(p => <a key={p.title} href={p.href} target="_blank" rel="noreferrer" className="group rounded-[2rem] border border-primary/15 bg-white p-8 shadow-premium transition hover:-translate-y-1"><div className="flex h-36 items-center justify-center rounded-2xl bg-primary text-accent">{/* TODO: Replace with a real website screenshot. */}<span className="text-center text-xs font-bold uppercase tracking-widest">Website Screenshot<br/>Placeholder</span></div><div className="mt-6 flex items-start justify-between gap-3"><h3 className="text-xl font-bold text-primary">{p.title}</h3><ExternalLink className="h-5 w-5 shrink-0 text-accent"/></div><p className="mt-3 text-sm leading-7 text-primary/70">{p.text}</p></a>)}</div>
+  </SectionWrapper>
+  <SectionWrapper title="Creative & digital portfolio" subtitle="Website, brand, and digital projects developed for ministries, professionals, organizations, and businesses.">
+    <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">{creativePortfolio.map(project => <article key={project.title} className="overflow-hidden rounded-[2rem] border border-primary/10 bg-white shadow-premium">
+      {/* TODO: Upload and replace with the matching project image from James's portfolio. */}
+      <div className="flex aspect-[16/10] items-center justify-center bg-gradient-to-br from-primary to-blue-800 p-6 text-center"><div><p className="text-xs font-bold uppercase tracking-[0.22em] text-accent">Portfolio image placeholder</p><h3 className="mt-3 text-xl font-bold text-light">{project.title}</h3></div></div>
+      <div className="p-7"><p className="text-xs font-bold uppercase tracking-wider text-accent">{project.role}</p><p className="mt-4 text-sm leading-7 text-primary/70">{project.text}</p></div>
+    </article>)}</div>
+    <p className="mt-8 rounded-2xl border border-accent/40 bg-accent/10 p-5 text-sm leading-7 text-primary">More website screenshots, brand work, and digital projects will be added as the full portfolio is uploaded.</p>
+  </SectionWrapper>
+  <CTASection title="Ready to build your online presence?" description="Let’s create a thoughtful website that makes your message easy to understand and act on." href="/contact" action="Start a Website Project" />
+  </> }

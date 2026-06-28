@@ -9,11 +9,11 @@ import { useState } from "react";
 
 const links = [
   { label: "Home", href: "/" },
-  { label: "Book Services", href: "/book-services" },
-  { label: "Video Services", href: "/video-services" },
-  { label: "Graphic Design & Branding", href: "/graphic-design-branding" },
-  { label: "Web Creation & Marketing", href: "/web-creation-marketing" },
-  { label: "About", href: "/about" }
+  { label: "About", href: "/about" },
+  { label: "Book", href: "/book" },
+  { label: "Graphic", href: "/graphic" },
+  { label: "Video", href: "/video" },
+  { label: "Web", href: "/web" }
 ];
 
 export default function Navbar() {
@@ -33,7 +33,7 @@ export default function Navbar() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 lg:flex">
           {links.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -50,13 +50,16 @@ export default function Navbar() {
               </Link>
             );
           })}
+          <Link href="/contact" className="rounded-lg bg-accent px-5 py-3 text-sm font-bold text-primary transition hover:brightness-110">
+            Contact Us
+          </Link>
         </nav>
 
         <button
           type="button"
           onClick={() => setOpen((current) => !current)}
           aria-label="Toggle menu"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-2 border-light text-light hover:bg-light hover:text-primary transition-all duration-300 md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border-2 border-light text-light hover:bg-light hover:text-primary transition-all duration-300 lg:hidden"
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
@@ -66,7 +69,7 @@ export default function Navbar() {
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
-          className="border-t-2 border-accent/20 bg-primary/95 px-6 pb-6 md:hidden"
+          className="border-t-2 border-accent/20 bg-primary/95 px-6 pb-6 lg:hidden"
         >
           <div className="space-y-3">
             {links.map((link) => {
@@ -86,6 +89,9 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            <Link href="/contact" onClick={() => setOpen(false)} className="block rounded-lg bg-accent px-4 py-3 text-sm font-bold text-primary">
+              Contact Us
+            </Link>
           </div>
         </motion.div>
       ) : null}

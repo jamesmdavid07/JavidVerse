@@ -11,7 +11,7 @@ interface HeroProps {
 
 export default function Hero({ title, subtitle }: HeroProps) {
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-primary">
+    <section className={`relative flex w-full items-center justify-center overflow-hidden bg-primary ${title ? "min-h-[55svh] py-16 sm:py-20" : "min-h-[calc(100svh-80px)] py-12"}`}>
       {/* Hero Image Background */}
       <Image
         src="/hero-image.jpg"
@@ -57,7 +57,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
-            className="text-4xl font-bold leading-tight sm:text-5xl text-light mb-6"
+            className="mb-6 text-3xl font-bold leading-tight text-light sm:text-4xl md:text-5xl"
           >
             {title}
           </motion.h1>
@@ -66,7 +66,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
-            className="text-6xl md:text-7xl font-bold leading-tight text-light mb-6"
+            className="mb-6 text-4xl font-bold leading-tight text-light sm:text-6xl md:text-7xl"
           >
             JavidVerse
           </motion.h1>
@@ -87,7 +87,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className="text-3xl md:text-4xl font-bold text-accent mb-8 tracking-wide"
+            className="mb-8 text-2xl font-bold tracking-wide text-accent sm:text-3xl md:text-4xl"
           >
             For All Creative Solutions
           </motion.p>
@@ -114,7 +114,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
           >
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-12 py-4 bg-accent text-primary font-bold text-lg rounded-lg hover:scale-110 transition-all duration-300 hover:brightness-125 shadow-premium"
+              className="inline-flex items-center justify-center rounded-lg bg-accent px-8 py-4 text-base font-bold text-primary shadow-premium transition-all duration-300 hover:scale-105 hover:brightness-125 sm:px-12 sm:text-lg"
             >
               Contact Us
             </Link>
