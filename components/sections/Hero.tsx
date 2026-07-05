@@ -8,10 +8,12 @@ import { motion } from "framer-motion";
 interface HeroProps {
   title?: string;
   subtitle?: string;
+  action?: string;
+  actionHref?: string;
 }
 
 // Reusable hero for the homepage and inner service pages.
-export default function Hero({ title, subtitle }: HeroProps) {
+export default function Hero({ title, subtitle, action, actionHref }: HeroProps) {
   const isInnerPage = Boolean(title);
 
   return (
@@ -104,6 +106,19 @@ export default function Hero({ title, subtitle }: HeroProps) {
             For All Creative Solutions
           </motion.p>
         )}
+
+        {/* Optional inner-page CTA */}
+        {isInnerPage && action && actionHref ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.55 }}
+          >
+            <Link href={actionHref} className="btn-primary mt-6">
+              {action}
+            </Link>
+          </motion.div>
+        ) : null}
 
         {/* Homepage introduction */}
         {!isInnerPage && (
