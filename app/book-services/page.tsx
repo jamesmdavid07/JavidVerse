@@ -56,7 +56,13 @@ export default function BookPage() {
       </SectionWrapper>
 
       {/* Completed Projects Section */}
-      <SectionWrapper title="Completed book projects" subtitle="Selected projects supported through design, formatting, and preparation." className="bg-slate-50">
+      <SectionWrapper
+        title="Completed book projects"
+        subtitle="Selected projects supported through design, formatting, and preparation."
+        className="bg-primary"
+        titleClass="text-white"
+        subtitleClass="text-white/75"
+      >
         <div className="grid gap-7 md:grid-cols-3">
           {books.map((book) => (
             <article key={book.title} className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
@@ -80,7 +86,7 @@ export default function BookPage() {
       </SectionWrapper>
 
       {/* Contact CTA */}
-      <CTASection title="Ready to shape your manuscript?" description="Let’s prepare a thoughtful, readable book that serves your readers well." href="/contact" action="Start a Book Project" />
+      <CTASection title="Ready to shape your manuscript?" description="Let’s prepare a thoughtful, readable book that serves your readers well." href="/contact" action="Start a Book Project" theme="light" />
     </>
   );
 }

@@ -44,7 +44,13 @@ export default function GraphicPage() {
       </SectionWrapper>
 
       {/* Portfolio Placeholder Section */}
-      <SectionWrapper title="Portfolio placeholders" subtitle="Real work samples will be added here as the portfolio is prepared." className="bg-slate-50">
+      <SectionWrapper
+        title="Portfolio placeholders"
+        subtitle="Real work samples will be added here as the portfolio is prepared."
+        className="bg-primary"
+        titleClass="text-white"
+        subtitleClass="text-white/75"
+      >
         <div className="grid gap-7 sm:grid-cols-2">
           {projects.map((project) => (
             <article key={project.title} className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
@@ -57,7 +63,7 @@ export default function GraphicPage() {
       </SectionWrapper>
 
       {/* Contact CTA */}
-      <CTASection title="Need a design that communicates clearly?" description="Let’s create visuals that carry your message with clarity and purpose." href="/contact" action="Start a Design Project" />
+      <CTASection title="Need a design that communicates clearly?" description="Let’s create visuals that carry your message with clarity and purpose." href="/contact" action="Start a Design Project" theme="light" />
     </>
   );
 }

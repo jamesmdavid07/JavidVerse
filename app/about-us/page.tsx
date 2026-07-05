@@ -133,7 +133,7 @@ export default function AboutPage() {
           </div>
           <div className="space-y-5 text-base leading-8 text-primary/75">
             <p>I am James M. David, founder of JavidVerse, a theology student, digital missionary, educator, author, designer, and creative communicator committed to using faith, technology, and media to serve God and people with excellence. My passion is communicating biblical truth through teaching, preaching, writing, design, and digital ministry—helping people understand God&apos;s Word with clarity, purpose, and hope. Currently pursuing a Bachelor of Arts in Theology at Mountain View College in the Philippines, I continue to integrate ministry, education, and creative media through JavidVerse, a platform dedicated to Christ-centered communication, digital mission, and meaningful service.</p>
-            <blockquote className="rounded-r-2xl border-l-4 border-accent bg-slate-50 p-6 text-xl font-bold leading-8 text-primary">Every message carries purpose. Every creative work is an opportunity to serve.</blockquote>
+            <blockquote className="rounded-r-2xl border border-primary/10 border-l-4 border-l-accent bg-white p-6 text-xl font-bold leading-8 text-primary">Every message carries purpose. Every creative work is an opportunity to serve.</blockquote>
             <div className="grid grid-cols-2 gap-3 pt-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               {introSnapshots.map((item) => (
                 <div key={item.label} className="group relative aspect-square overflow-hidden rounded-2xl bg-primary shadow-sm">
@@ -155,7 +155,13 @@ export default function AboutPage() {
       </SectionWrapper>
 
       {/* Faith Journey Section */}
-      <SectionWrapper title="My Journey of Faith" subtitle="A story of biblical discovery, courageous commitment, and God’s faithful leading." className="bg-slate-50">
+      <SectionWrapper
+        title="My Journey of Faith"
+        subtitle="A story of biblical discovery, courageous commitment, and God’s faithful leading."
+        className="bg-primary"
+        titleClass="text-white"
+        subtitleClass="text-white/75"
+      >
         <div className="mx-auto grid max-w-5xl gap-7 md:grid-cols-2">
           {faithJourney.map((item) => (
             <article key={item.title} className="flex h-full flex-col overflow-hidden rounded-2xl border border-primary/10 bg-white shadow-sm">
@@ -207,7 +213,13 @@ export default function AboutPage() {
       </SectionWrapper>
 
       {/* Missionary Experience Section */}
-      <SectionWrapper title="Missionary Experience" subtitle="Serving across communities and cultures through digital ministry, evangelism, education, media, and global mission." className="bg-slate-50">
+      <SectionWrapper
+        title="Missionary Experience"
+        subtitle="Serving across communities and cultures through digital ministry, evangelism, education, media, and global mission."
+        className="bg-primary"
+        titleClass="text-white"
+        subtitleClass="text-white/75"
+      >
         <div className="mx-auto grid max-w-6xl gap-7 md:grid-cols-2 lg:grid-cols-6">
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] bg-white shadow-premium lg:col-span-2">
             <StoryImage src="/about/online-ministry.jpg" alt="James creating gospel-centered online ministry content" className="aspect-[16/9]" position="center" />
@@ -258,9 +270,9 @@ export default function AboutPage() {
       </SectionWrapper>
 
       {/* Ministry Formation Section */}
-      <SectionWrapper title="Ministry Leadership & Formation" subtitle="Developing Christ-centered leadership through service, evangelism, preaching, literature ministry, and pastoral training." className="bg-primary" titleClass="text-white" subtitleClass="text-white/70">
+      <SectionWrapper title="Ministry Leadership & Formation" subtitle="Developing Christ-centered leadership through service, evangelism, preaching, literature ministry, and pastoral training.">
         <div className="mx-auto grid max-w-5xl gap-7 md:grid-cols-2">
-          <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium">
+          <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
             <StoryImage src="/about/youth-leadership.png" alt="James after Master Guide and Senior Youth Leader investiture" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <p className="text-xs font-bold uppercase tracking-widest text-accent">Master Guide &amp; Senior Youth Leader</p>
@@ -268,21 +280,21 @@ export default function AboutPage() {
               <p className="mt-4 leading-8 text-primary/70">James completed Master Guide and Senior Youth Leader training and was officially invested. These experiences prepared him to mentor young people, organize ministry programs, and cultivate spiritual leadership within the church.</p>
             </div>
           </article>
-          <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium">
+          <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
             <StoryImage src="/about/field-ministry-training.png" alt="Certificate recognizing James M. David for field ministry service as an evangelist" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Field Ministry Training</h3>
               <p className="mt-4 leading-8 text-primary/70">As part of his ministerial preparation, James served as an evangelist at Dologon Seventh-day Adventist Church (2023–2024), as a student church pastor at Cabanglasan Seventh-day Adventist Church (2024–2025), and completed Field School training in Molave City (April–May 2026).</p>
             </div>
           </article>
-          <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium">
+          <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
             <StoryImage src="/about/literature-evangelism.jpg" alt="James holding a book during literature evangelism" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Literature Evangelism</h3>
               <p className="mt-4 leading-8 text-primary/70">Alongside his theological studies, James engaged in literature evangelism, sharing Christ-centered books while gaining valuable experience in personal witnessing, mission work, and soul-winning. He is also the author of <em>In the Arms of Faith</em>, a personal testimony that recounts his journey of faith and God’s leading throughout his life.</p>
             </div>
           </article>
-          <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium">
+          <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
             <StoryImage src="/about/preaching-engagements.png" alt="James speaking during a preaching engagement" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Preaching Engagements</h3>
@@ -293,8 +305,14 @@ export default function AboutPage() {
       </SectionWrapper>
 
       {/* Books and Publications Section */}
-      <SectionWrapper title="Books & Publications" subtitle="Transforming lived faith into words that encourage reflection, prayer, and spiritual growth.">
-        <div className="mx-auto grid max-w-5xl overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium lg:grid-cols-[0.65fr_1.35fr]">
+      <SectionWrapper
+        title="Books & Publications"
+        subtitle="Transforming lived faith into words that encourage reflection, prayer, and spiritual growth."
+        className="bg-primary"
+        titleClass="text-white"
+        subtitleClass="text-white/75"
+      >
+        <div className="mx-auto grid max-w-5xl overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium lg:grid-cols-[0.65fr_1.35fr]">
           <div className="relative min-h-80 overflow-hidden bg-primary">
             <Image src="/books/in-the-arms-of-faith-book-cover.png" alt="In the Arms of Faith by James M. David" fill className="object-cover object-center transition duration-700 hover:scale-105" sizes="(min-width: 1024px) 35vw, 100vw" />
           </div>
@@ -303,12 +321,12 @@ export default function AboutPage() {
       </SectionWrapper>
 
       {/* Speaking and Ministry CTA */}
-      <section className="bg-primary px-6 py-20 text-center text-light">
+      <section className="bg-light px-6 py-20 text-center text-primary">
         <div className="mx-auto max-w-3xl">
           <HeartHandshake className="mx-auto h-11 w-11 text-accent" />
           <p className="mt-5 text-xs font-bold uppercase tracking-[0.24em] text-accent">Speaking &amp; Ministry</p>
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl"> You may invite James</h2>
-          <p className="mt-5 leading-8 text-light/75">James is available for sermons, weeks of prayer, youth programs, Bible teaching, digital-ministry training, and creative communication projects.</p>
+          <p className="mt-5 leading-8 text-primary/75">James is available for sermons, weeks of prayer, youth programs, Bible teaching, digital-ministry training, and creative communication projects.</p>
           <p className="mt-5 text-lg font-bold text-accent">Faithfully sharing the truth | Creatively serving people.</p>
           <Link href="/contact" className="btn-primary mt-8">Invite James</Link>
         </div>

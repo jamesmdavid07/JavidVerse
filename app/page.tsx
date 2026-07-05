@@ -78,7 +78,9 @@ export default function HomePage() {
       <SectionWrapper
         title="The story behind Javid Verse"
         subtitle="Theology, technology, and creativity brought together in service of people and mission."
-        className="bg-slate-50"
+        className="bg-primary"
+        titleClass="text-white"
+        subtitleClass="text-white/75"
       >
         <div className="grid items-center gap-10 lg:grid-cols-2">
           {/* Founder image */}
@@ -92,9 +94,9 @@ export default function HomePage() {
             />
           </div>
           <div>
-            <p className="text-lg leading-8 text-primary/75">JavidVerse grew from James M. David&apos;s journey from ministry to theological training in the Philippines. His story brings together evangelism, youth leadership, media production, design, publishing, and web development.</p>
-            <p className="mt-5 text-lg leading-8 text-primary/75">The studio is an extension of that calling: using creative skills to help worthy messages become clearer, stronger, and easier to share.</p>
-            <Link href="/about-us" className="btn-primary mt-8">Read James&apos;s Ministry Story</Link>
+            <p className="text-lg leading-8 text-light/80">JavidVerse grew from James M. David&apos;s journey from ministry to theological training in the Philippines. His story brings together evangelism, youth leadership, media production, design, publishing, and web development.</p>
+            <p className="mt-5 text-lg leading-8 text-light/80">The studio is an extension of that calling: using creative skills to help worthy messages become clearer, stronger, and easier to share.</p>
+            <Link href="/about-us" className="btn-outline-light mt-8">Read James&apos;s Ministry Story</Link>
           </div>
         </div>
       </SectionWrapper>
