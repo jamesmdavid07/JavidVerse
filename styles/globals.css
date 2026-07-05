@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Brand foundation */
 :root {
   color-scheme: light;
   font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -22,6 +23,11 @@ body {
   font-weight: 400;
 }
 
+:focus-visible {
+  outline: 2px solid #FCB005;
+  outline-offset: 3px;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -32,13 +38,18 @@ a {
   color: #042D6D;
 }
 
+/* Reusable buttons and typography */
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-accent px-8 py-3 font-semibold text-primary transition-all duration-300 hover:scale-105 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+    @apply inline-flex min-h-12 items-center justify-center rounded-lg bg-accent px-8 py-3 text-center font-semibold text-primary transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border-2 border-primary bg-light px-8 py-3 font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+    @apply inline-flex min-h-12 items-center justify-center rounded-lg border-2 border-primary bg-light px-8 py-3 text-center font-semibold text-primary transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+  }
+
+  .btn-outline-light {
+    @apply inline-flex min-h-12 items-center justify-center rounded-lg border-2 border-light px-8 py-3 text-center font-semibold text-light transition-all duration-300 hover:-translate-y-0.5 hover:bg-light hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light;
   }
 
   .heading-h1 {
@@ -58,6 +69,23 @@ a {
   }
 }
 
+/* Respect visitors who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Shared image-overlay utilities */
 @layer utilities {
   .overlay-primary {
     background-color: rgba(4, 45, 109, 0.85);
