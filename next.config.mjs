@@ -1,6 +1,5 @@
-import path from "path";
-
 const nextConfig = {
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -9,9 +8,6 @@ const nextConfig = {
         hostname: "images.unsplash.com"
       }
     ]
-  },
-  experimental: {
-    // typedRoutes: true
   }
 };
 

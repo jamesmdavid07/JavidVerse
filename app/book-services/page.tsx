@@ -9,9 +9,9 @@ const books = [
   { title: "In the Arms of Faith", author: "James M. David", work: "Writing, design, formatting, and publishing preparation" },
   { title: "Personal Witnessing", author: "Namanya Dan — Author/Instructor", work: "Course module formatting, layout design, and print preparation" }
 ];
-export const metadata = { title: "Book Design & Publishing Preparation — Javid Verse", description: "Professional book formatting, cover design, editing support, and publishing preparation." };
+export const metadata = { title: "Book Services — Javid Verse", description: "Professional book formatting, cover design, editing support, and publishing preparation." };
 export default function BookPage() { return <>
-  <Hero title="Book Design & Publishing Preparation" subtitle="Helping authors turn manuscripts into clear, beautiful, professional books." />
+  <Hero title="Book Services" subtitle="Helping authors turn manuscripts into clear, beautiful, professional books." />
   <SectionWrapper title="Support from manuscript to final files" subtitle="Ready for print, digital sharing, or self-publishing platforms.">
     <p className="max-w-4xl text-lg leading-8 text-primary/75">Javid Verse helps authors turn manuscripts into well-designed, professional books. The focus is on clarity, structure, beauty, and readability.</p>
     <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{services.map(s => <div key={s} className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-white p-5 shadow-sm"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent"/><span className="font-semibold text-primary">{s}</span></div>)}</div>

@@ -5,9 +5,9 @@ import CTASection from "@/components/CTASection";
 
 const services = ["Podcast video editing", "Short-form social media videos", "Promotional videos", "Interview editing", "Ministry campaign videos", "Motion graphics", "Livestream support", "YouTube content editing"];
 const experience = ["InVerse Philippines", "GluTeen Podcast", "Church livestream productions", "Personal YouTube projects"];
-export const metadata = { title: "Video Editing & Media Production — Javid Verse", description: "Video editing and production support for ministries, podcasts, sermons, and campaigns." };
+export const metadata = { title: "Videography — Javid Verse", description: "Video editing and production support for ministries, podcasts, sermons, and campaigns." };
 export default function VideoPage() { return <>
-  <Hero title="Video Editing & Media Production" subtitle="Media support for ministries, podcasts, sermons, interviews, social media, and promotional projects." />
+  <Hero title="Videography" subtitle="Media support for ministries, podcasts, sermons, interviews, social media, and promotional projects." />
   <SectionWrapper title="Purposeful stories in motion" subtitle="From the first cut to final delivery, every edit is shaped around the message.">
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{services.map(s => <div key={s} className="rounded-2xl border border-primary/15 bg-white p-6 shadow-sm"><Film className="h-6 w-6 text-accent"/><p className="mt-4 font-semibold text-primary">{s}</p></div>)}</div>
   </SectionWrapper>

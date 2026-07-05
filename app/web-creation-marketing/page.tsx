@@ -16,9 +16,9 @@ const creativePortfolio = [
   { title: "Green Cottage", role: "Website development · Design", text: "A clean, accessible website experience shaped around the organization’s needs." },
   { title: "Javid Verse", role: "Creative direction · Development", text: "A creative studio and digital identity connecting design, media, books, and web services." }
 ];
-export const metadata = { title: "Website Development & Digital Presence — Javid Verse", description: "Modern, responsive, purpose-driven websites for ministries, individuals, and organizations." };
+export const metadata = { title: "Website Services — Javid Verse", description: "Modern, responsive, purpose-driven websites for ministries, individuals, and organizations." };
 export default function WebPage() { return <>
-  <Hero title="Website Development & Digital Presence" subtitle="Modern, responsive, and purpose-driven websites built to help good work reach more people." />
+  <Hero title="Website Services" subtitle="Modern, responsive, and purpose-driven websites built to help good work reach more people." />
   <SectionWrapper title="A clear home for your mission online" subtitle="Websites for ministries, individuals, organizations, schools, authors, and small businesses.">
     <p className="max-w-4xl text-lg leading-8 text-primary/75">James M. David is a front-end developer with experience in HTML, CSS, Tailwind CSS, React and Next.js-style projects, WordPress, Hostinger, GoDaddy, GetResponse, and Vercel deployments.</p>
     <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{services.map(s => <div key={s} className="flex gap-3 rounded-2xl border border-primary/15 bg-white p-5 shadow-sm"><CheckCircle2 className="h-5 w-5 shrink-0 text-accent"/><span className="font-semibold text-primary">{s}</span></div>)}</div>

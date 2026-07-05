@@ -9,11 +9,11 @@ import { useState } from "react";
 
 const links = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Book", href: "/book" },
-  { label: "Graphic", href: "/graphic" },
-  { label: "Video", href: "/video" },
-  { label: "Web", href: "/web" }
+  { label: "About Us", href: "/about" },
+  { label: "Website Services", href: "/web" },
+  { label: "Book Services", href: "/book" },
+  { label: "Graphic Design", href: "/graphic" },
+  { label: "Videography", href: "/video" }
 ];
 
 export default function Navbar() {
@@ -33,14 +33,14 @@ export default function Navbar() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-6">
           {links.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-semibold transition-all duration-300 ${
+                className={`whitespace-nowrap text-sm font-semibold transition-all duration-300 ${
                   isActive
                     ? "text-accent"
                     : "text-light hover:text-accent"

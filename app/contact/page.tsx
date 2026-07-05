@@ -12,7 +12,7 @@ export default function ContactPage() { return <>
       <aside className="rounded-[2rem] bg-primary p-8 text-light shadow-premium sm:p-10">
         <h3 className="text-2xl font-bold">Direct contact</h3>
         <div className="mt-8 space-y-7">
-          <div className="flex gap-4"><Mail className="h-5 w-5 shrink-0 text-accent"/><div><p className="font-semibold">Email</p><Link href="mailto:hello@javidverse.com" className="mt-1 block text-sm text-light/75">hello@javidverse.com</Link><p className="mt-1 text-xs text-accent">Replace with real email later</p></div></div>
+          <div className="flex gap-4"><Mail className="h-5 w-5 shrink-0 text-accent"/><div><p className="font-semibold">Email</p><Link href="mailto:javidverse@gmail.com" className="mt-1 block text-sm text-light/75">javidverse@gmail.com</Link></div></div>
           <div className="flex gap-4"><Phone className="h-5 w-5 shrink-0 text-accent"/><div><p className="font-semibold">Phone / WhatsApp</p><p className="mt-1 text-sm text-light/75">Phone number coming soon</p></div></div>
           <div className="flex gap-4"><MapPin className="h-5 w-5 shrink-0 text-accent"/><div><p className="font-semibold">Location</p><p className="mt-1 text-sm text-light/75">Philippines / Serving clients internationally</p></div></div>
         </div>

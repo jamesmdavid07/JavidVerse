@@ -12,6 +12,12 @@ export const metadata = {
 
 const services = [
   {
+    title: "Website Services",
+    description: "Website development and digital marketing.",
+    href: "/web",
+    icon: "Globe" as const
+  },
+  {
     title: "Book Services",
     description: "Professional formatting, cover design, and publishing support.",
     href: "/book",
@@ -19,23 +25,17 @@ const services = [
     image: "/Book-services.png"
   },
   {
-    title: "Video Services",
-    description: "Engaging ads, promos, and motion graphics.",
-    href: "/video",
-    icon: "Film" as const
-  },
-  {
-    title: "Graphic Design & Branding",
+    title: "Graphic Design",
     description: "Logo design, brand identity creation, digital posters, and visual brand management.",
     href: "/graphic",
     icon: "LayoutGrid" as const,
     image: "/Graphic-services.png"
   },
   {
-    title: "Web Creation & Marketing",
-    description: "Website development and digital marketing.",
-    href: "/web",
-    icon: "Globe" as const
+    title: "Videography",
+    description: "Engaging ads, promos, and motion graphics.",
+    href: "/video",
+    icon: "Film" as const
   }
 ];
 

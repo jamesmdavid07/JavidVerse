@@ -10,9 +10,9 @@ const projects = [
   ["Social Media Series", "Reusable, audience-friendly graphics for announcements and encouragement."],
   ["Author Launch Materials", "Promotional graphics that help authors introduce their work with confidence."]
 ];
-export const metadata = { title: "Graphic Design & Branding — Javid Verse", description: "Clear, consistent visual identities and graphic design for ministries and organizations." };
+export const metadata = { title: "Graphic Design — Javid Verse", description: "Clear, consistent visual identities and graphic design for ministries and organizations." };
 export default function GraphicPage() { return <>
-  <Hero title="Graphic Design & Branding" subtitle="Clear and consistent visual identities for ministries, churches, organizations, and individuals." />
+  <Hero title="Graphic Design" subtitle="Clear and consistent visual identities for ministries, churches, organizations, and individuals." />
   <SectionWrapper title="Design that communicates clearly" subtitle="Thoughtful visuals built around your message, audience, and mission.">
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{services.map(s => <div key={s} className="flex items-center gap-4 rounded-2xl border border-primary/15 bg-white p-5 shadow-sm"><span className="rounded-xl bg-accent/15 p-3 text-primary"><Palette className="h-5 w-5"/></span><span className="font-semibold text-primary">{s}</span></div>)}</div>
   </SectionWrapper>
