@@ -369,7 +369,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-3xl">
           <HeartHandshake className="mx-auto h-11 w-11 text-accent" />
           <p className="mt-5 text-xs font-bold uppercase tracking-[0.24em] text-accent">Speaking &amp; Ministry</p>
-          <h2 className="mt-3 text-3xl font-bold sm:text-4xl"> You may invite James</h2>
+          <h2 className="mt-3 text-3xl font-bold sm:text-4xl">You may invite James</h2>
           <p className="mt-5 leading-8 text-primary/75">James is available for sermons, weeks of prayer, youth programs, Bible teaching, digital-ministry training, and creative communication projects.</p>
           <p className="mt-5 text-lg font-bold text-accent">Faithfully sharing the truth | Creatively serving people.</p>
           <Link href="/contact" className="btn-primary mt-8">Invite James</Link>

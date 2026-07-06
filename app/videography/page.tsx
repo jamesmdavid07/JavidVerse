@@ -23,7 +23,7 @@ const ministryExperience = [
   {
     title: "InVerse Philippines",
     description: "Video editing and production support for digital ministry content and faith-centered communication.",
-    href: "https://www.youtube.com/@javid07.",
+    href: "https://www.youtube.com/@javid07",
     action: "View Media Work",
     icon: Radio,
   },
@@ -51,7 +51,7 @@ const videoProjects = [
 // Personal YouTube channels.
 const youtubeChannels = [
   { title: "Jay Travels", href: "https://www.youtube.com/@jaytravels4113" },
-  { title: "JavidVerse", href: "https://www.youtube.com/@javid07." },
+  { title: "JavidVerse", href: "https://www.youtube.com/@javid07" },
 ] as const;
 
 export default function VideoPage() {

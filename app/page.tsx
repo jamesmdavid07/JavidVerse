@@ -45,13 +45,13 @@ const featuredWork = [
   {
     title: "Larry Bachman Website",
     category: "Website",
-    image: "/website/larry-bachman.jpg",
+    image: "/larry-web-homepage.png",
     alt: "Larry Bachman website preview",
     href: "/website-services",
     action: "View Website Services",
     external: false,
     blue: false,
-    imageClassName: "object-cover object-center",
+    imageClassName: "object-cover object-top",
   },
   {
     title: "Royal Christian Academy Logo",
@@ -125,7 +125,7 @@ export default function HomePage() {
               src="/about/james.jpg"
               alt="James M. David, founder of JavidVerse"
               fill
-              className="object-cover object-center"
+              className="object-cover object-top"
               sizes="(min-width: 1024px) 50vw, 100vw"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary via-primary/80 to-transparent p-7 pt-24 text-light">

@@ -45,7 +45,7 @@ export default function Footer() {
                 javidverse@gmail.com
               </Link>
               <a
-                href="https://www.youtube.com/@javid07./videos"
+                href="https://www.youtube.com/@javid07/videos"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm font-semibold text-light transition hover:text-accent"

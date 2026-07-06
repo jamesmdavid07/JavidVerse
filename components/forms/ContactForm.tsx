@@ -5,7 +5,7 @@ import type { FormEvent } from "react";
 import { useState } from "react";
 
 const fieldClassName =
-  "w-full rounded-2xl border border-primary/20 bg-light px-4 py-3 text-sm text-primary outline-none transition placeholder:text-primary/40 focus:border-accent focus:ring-2 focus:ring-accent/20";
+  "mt-2 block w-full rounded-2xl border border-primary/20 bg-light px-4 py-3 text-sm text-primary outline-none transition placeholder:text-primary/40 focus:border-accent focus:ring-2 focus:ring-accent/20";
 
 // Contact form that prepares a complete inquiry in the visitor's email app.
 export default function ContactForm() {
