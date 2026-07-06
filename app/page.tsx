@@ -23,7 +23,7 @@ const services = [
   {
     title: "Book Services",
     description: "Professional formatting, cover design, and publishing preparation.",
-    href: "/book-services",
+    href: "/books",
     icon: "BookOpen" as const,
     image: "/services/book-services-card.png",
   },
@@ -116,7 +116,7 @@ export default function HomePage() {
             </article>
           ))}
         </div>
-        <Link href="/book-services" className="btn-primary mt-8">Explore Book Services</Link>
+        <Link href="/books" className="btn-primary mt-8">Explore Books</Link>
       </SectionWrapper>
 
       {/* Website Highlights Section */}

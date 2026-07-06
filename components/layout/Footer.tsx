@@ -6,7 +6,7 @@ import { Mail, Youtube } from "lucide-react";
 const footerLinks = [
   { label: "About Us", href: "/about-us" },
   { label: "Website Services", href: "/website-services" },
-  { label: "Book Services", href: "/book-services" },
+  { label: "Books", href: "/books" },
   { label: "Graphic Design", href: "/graphic-design" },
   { label: "Videography", href: "/videography" },
   { label: "Contact", href: "/contact" },
@@ -47,7 +47,7 @@ export default function Footer() {
               <a
                 href="https://www.youtube.com/@javid07./videos"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm font-semibold text-light transition hover:text-accent"
               >
                 <Youtube className="h-5 w-5 shrink-0 text-accent" />

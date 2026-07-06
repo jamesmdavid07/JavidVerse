@@ -38,7 +38,7 @@ const introSnapshots = [
   },
   {
     label: "Ministry",
-    src: "/about/me-preaching.png",
+    src: "/about/me-preaching.jpg",
     alt: "James preaching during a ministry engagement",
     position: "center 22%",
   },
@@ -49,7 +49,7 @@ const faithJourney = [
   {
     year: "2015",
     title: "First Truth Encounter",
-    image: "/about/following-truth.png",
+    image: "/about/following-truth.jpg",
     alt: "James at a Seventh-day Adventist church sign",
     position: "center top",
     text: "I first discovered the biblical truth about the Sabbath through my uncle, whose life was transformed by an Adventist radio program on Wikwatyo FM. With no nearby Adventist church, we walked nearly 20 kilometers every Sabbath to worship, strengthening my faith and commitment to God's truth."
@@ -116,8 +116,8 @@ export default function AboutPage() {
       <section className="bg-primary px-6 py-12 text-light sm:px-8 sm:py-14">
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-accent sm:text-sm">A creative brand</p>
-          <h1 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl">About JavidVerse</h1>
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-light/80 sm:text-lg">Founded by James M. David to render creative solutions and Christ-centered services.</p>
+          <h1 className="mt-3 text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">About JavidVerse</h1>
+          <p className="mx-auto mt-5 max-w-4xl text-lg leading-8 text-light/80 sm:text-xl sm:leading-9">Founded by James M. David to render creative solutions and Christ-centered services.</p>
         </div>
       </section>
 
@@ -239,7 +239,7 @@ export default function AboutPage() {
             {/* Davao and Butuan training images */}
             <div className="grid aspect-[16/9] grid-cols-2 overflow-hidden bg-primary">
               <div className="relative overflow-hidden">
-                <Image src="/about/davao-youth-training.png" alt="James leading youth training in Davao" fill className="object-cover transition duration-700 hover:scale-105" style={{ objectPosition: "center 30%" }} sizes="(min-width: 1024px) 16vw, 50vw" />
+                <Image src="/about/davao-youth-training.jpg" alt="James leading youth training in Davao" fill className="object-cover transition duration-700 hover:scale-105" style={{ objectPosition: "center 30%" }} sizes="(min-width: 1024px) 16vw, 50vw" />
               </div>
               <div className="relative overflow-hidden">
                 <Image src="/about/butuan-youth-training.jpg" alt="James leading digital evangelism training in Butuan" fill className="object-cover transition duration-700 hover:scale-105" style={{ objectPosition: "center 30%" }} sizes="(min-width: 1024px) 16vw, 50vw" />
@@ -260,7 +260,7 @@ export default function AboutPage() {
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] bg-white shadow-premium lg:col-span-3">
-            <StoryImage src="/about/mvc-media-ministry.png" alt="James editing video content for MVC Media Ministry" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/mvc-media-ministry.jpg" alt="James editing video content for MVC Media Ministry" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">MVC Media Ministry</h3>
               <p className="mt-4 leading-8 text-primary/70">James serves with the Mountain View College Media Center, editing videos, producing content for InVerse Philippines and the GluTeen Podcast, and supporting church livestreams and other digital ministry initiatives.</p>
@@ -273,7 +273,7 @@ export default function AboutPage() {
       <SectionWrapper title="Ministry Leadership & Formation" subtitle="Developing Christ-centered leadership through service, evangelism, preaching, literature ministry, and pastoral training.">
         <div className="mx-auto grid max-w-5xl gap-7 md:grid-cols-2">
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/youth-leadership.png" alt="James after Master Guide and Senior Youth Leader investiture" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/youth-leadership.jpg" alt="James after Master Guide and Senior Youth Leader investiture" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <p className="text-xs font-bold uppercase tracking-widest text-accent">Master Guide &amp; Senior Youth Leader</p>
               <h3 className="mt-2 text-2xl font-bold text-primary">Leadership</h3>
@@ -281,7 +281,7 @@ export default function AboutPage() {
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/field-ministry-training.png" alt="Certificate recognizing James M. David for field ministry service as an evangelist" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/field-ministry-training.jpg" alt="Certificate recognizing James M. David for field ministry service as an evangelist" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Field Ministry Training</h3>
               <p className="mt-4 leading-8 text-primary/70">As part of his ministerial preparation, James served as an evangelist at Dologon Seventh-day Adventist Church (2023–2024), as a student church pastor at Cabanglasan Seventh-day Adventist Church (2024–2025), and completed Field School training in Molave City (April–May 2026).</p>
@@ -295,7 +295,7 @@ export default function AboutPage() {
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/preaching-engagements.png" alt="James speaking during a preaching engagement" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/preaching-engagements.jpg" alt="James speaking during a preaching engagement" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Preaching Engagements</h3>
               <p className="mt-4 leading-8 text-primary/70">James has been invited to preach in churches, youth fellowships, evangelistic meetings, weeks of prayer, and other ministry events. He also receives online invitations to share sermons, Bible studies, devotionals, and personal testimonies with churches and youth groups across different regions, extending the reach of God’s Word beyond geographical boundaries.</p>
@@ -304,19 +304,63 @@ export default function AboutPage() {
         </div>
       </SectionWrapper>
 
-      {/* Books and Publications Section */}
+      {/* Author Section */}
       <SectionWrapper
-        title="Books & Publications"
-        subtitle="Transforming lived faith into words that encourage reflection, prayer, and spiritual growth."
+        title="As an Author"
+        subtitle="James M. David shares his journey of discovery, rejection, redemption, and revival, reminding every reader that God’s plans are never accidental."
         className="bg-primary"
         titleClass="text-white"
         subtitleClass="text-white/75"
+        headerClassName="mx-auto mb-10 max-w-6xl"
       >
-        <div className="mx-auto grid max-w-5xl overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium lg:grid-cols-[0.65fr_1.35fr]">
-          <div className="relative min-h-80 overflow-hidden bg-primary">
-            <Image src="/books/in-the-arms-of-faith-book-cover.png" alt="In the Arms of Faith by James M. David" fill className="object-cover object-center transition duration-700 hover:scale-105" sizes="(min-width: 1024px) 35vw, 100vw" />
-          </div>
-          <div className="p-8 sm:p-10"><p className="text-xl font-bold text-primary">When faith becomes more than belief, it becomes a journey.</p><p className="mt-5 leading-8 text-primary/70"><em>In the Arms of Faith</em> traces James&apos;s journey of discovering biblical truth and following God&apos;s leading through education, ministry, and mission. Each chapter invites readers to reflect through personal questions, practical application, and prayer.</p><a href="https://www.amazon.com/Arms-Faith-James-Maangi-David/dp/B0FY5MRHF3" target="_blank" rel="noreferrer" className="btn-primary mt-7">View the Book on Amazon</a></div>
+        <div className="mx-auto grid max-w-6xl gap-8">
+          {/* Author card: edge-to-edge image with vertically centered copy */}
+          <article className="grid overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium lg:grid-cols-[34%_66%]">
+            <div className="relative aspect-square w-full lg:aspect-auto lg:min-h-[24rem]">
+              <Image
+                src="/about/Author.jpg"
+                alt="James M. David as an author"
+                fill
+                className="object-cover object-center"
+                sizes="(min-width: 1024px) 392px, 100vw"
+              />
+            </div>
+            <div className="flex items-center px-8 py-10 sm:px-12 sm:py-12 lg:px-14">
+              <div className="text-left">
+                <p className="text-2xl font-bold leading-tight text-primary sm:text-3xl">
+                  May God bless you as you step into the arms of faith.
+                </p>
+                <p className="mt-6 max-w-3xl text-lg leading-[1.9] text-primary/70">
+                  Growing up, I loved writing, and over the years, I&apos;ve kept journals of my answered prayers by God. These stories make up this book. They are simple, raw, and real. I believe they are stories worth reading, stories that can help someone trust in the Lord again.
+                </p>
+                <Link href="/books" className="btn-primary mt-8 w-full max-w-xs sm:text-lg">View More</Link>
+              </div>
+            </div>
+          </article>
+
+          {/* Book card: edge-to-edge book image with matching text layout */}
+          <article className="grid overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium lg:grid-cols-[34%_66%]">
+            <div className="relative aspect-square w-full lg:aspect-auto lg:min-h-[24rem]">
+              <Image
+                src="/books/in-the-arms-of-faith-book-cover.png"
+                alt="In the Arms of Faith by James M. David"
+                fill
+                className="object-cover object-center"
+                sizes="(min-width: 1024px) 392px, 100vw"
+              />
+            </div>
+            <div className="flex items-center px-8 py-10 sm:px-12 sm:py-12 lg:px-14">
+              <div className="text-left">
+                <p className="text-2xl font-bold leading-tight text-primary sm:text-3xl">
+                  When faith becomes more than belief, it becomes a journey.
+                </p>
+                <p className="mt-6 max-w-3xl text-lg leading-[1.9] text-primary/70">
+                  <em>In the Arms of Faith</em> traces James&apos;s journey of discovering biblical truth and following God&apos;s leading through education, ministry, and mission. Each chapter invites readers to reflect through personal questions, practical application, and prayer.
+                </p>
+                <a href="https://www.amazon.com/Arms-Faith-James-Maangi-David/dp/B0FY5MRHF3" target="_blank" rel="noopener noreferrer" className="btn-primary mt-8 w-full max-w-xs sm:text-lg">View the Book on Amazon</a>
+              </div>
+            </div>
+          </article>
         </div>
       </SectionWrapper>
 

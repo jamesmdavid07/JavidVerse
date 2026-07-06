@@ -47,14 +47,14 @@ const websiteOptions = [
         title: "Lifetime Lifestyle",
         description: "A professional online home for a lifestyle-focused brand.",
         href: "https://lifetimelifestyle.org/",
-        image: "/website/lifetime-website.png",
+        image: "/website/lifetime-website.jpg",
         alt: "Homepage preview of the Lifetime Lifestyle website",
       },
       {
         title: "Aligned4LifeProject",
         description: "A focused digital presence supporting a ministry initiative and its audience.",
         href: "https://aligned4lifeproject.gr-site.com/",
-        image: "/website/aligned-4-life.png",
+        image: "/website/aligned-4-life.jpg",
         alt: "Homepage preview of the Aligned4LifeProject website",
       },
     ],
@@ -70,15 +70,16 @@ const websiteOptions = [
         title: "Larry Bachman",
         description: "A professional author and speaker website with a clear, audience-focused structure.",
         href: "https://larrybachman.org/",
-        image: "/website/larry-bachman.png",
+        image: "/website/larry-bachman.jpg",
         alt: "Homepage preview of the Larry Bachman website",
       },
       {
-        title: "Grace Senior Living Cottage",
-        description: "A welcoming website presenting senior-living services and essential information.",
-        href: "https://greencottage-five.vercel.app/",
-        image: "/website/grace-cottage.png",
-        alt: "Homepage preview of the Grace Senior Living Cottage website",
+        title: "Royal Christian Academy",
+        category: "School Website",
+        description: "A modern, responsive website designed for school, academic programs, admissions process, faculty, and Christ-centered educational mission.",
+        href: "https://royal-christian-academy.vercel.app/",
+        image: "/website/royal-christian-academy.jpg",
+        alt: "Homepage preview of the Royal Christian Academy website",
       },
     ],
   },
@@ -154,20 +155,22 @@ export default function WebsiteServicesPage() {
             const Icon = option.icon;
             return (
               <article key={option.title} className="overflow-hidden rounded-[2rem] border border-primary/15 bg-white p-6 shadow-premium sm:p-8 lg:p-10">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-accent">
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                </div>
-                <p className="mt-6 text-xs font-bold uppercase tracking-[0.24em] text-accent">{option.label}</p>
-                <h3 className="mt-3 text-2xl font-bold text-primary sm:text-3xl">{option.title}</h3>
-                <p className="mt-4 max-w-4xl leading-8 text-primary/70">{option.description}</p>
+                <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-accent">
+                    <Icon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <p className="mt-6 text-xs font-bold uppercase tracking-[0.24em] text-accent">{option.label}</p>
+                  <h3 className="mt-3 text-2xl font-bold text-primary sm:text-3xl">{option.title}</h3>
+                  <p className="mt-4 max-w-3xl leading-8 text-primary/70">{option.description}</p>
 
-                <div className="mt-7">
-                  <p className="text-sm font-bold uppercase tracking-widest text-primary">Best For</p>
-                  <ul className="mt-4 flex flex-wrap gap-2">
+                  <div className="mt-7">
+                    <p className="text-sm font-bold uppercase tracking-widest text-primary">Best For</p>
+                    <ul className="mt-4 flex flex-wrap justify-center gap-2">
                     {option.bestFor.map((item) => (
                       <li key={item} className="rounded-full bg-accent/15 px-3 py-1.5 text-xs font-semibold text-primary">{item}</li>
                     ))}
-                  </ul>
+                    </ul>
+                  </div>
                 </div>
 
                 <div className="mt-8 border-t border-primary/10 pt-8">
@@ -188,8 +191,9 @@ export default function WebsiteServicesPage() {
                         </div>
                         <div className="flex flex-1 flex-col p-4">
                           <h4 className="text-lg font-bold text-primary">{project.title}</h4>
+                          {"category" in project ? <p className="mt-2 text-xs font-bold uppercase tracking-wider text-accent">{project.category}</p> : null}
                           <p className="mt-3 flex-1 text-sm leading-6 text-primary/70">{project.description}</p>
-                          <a href={project.href} target="_blank" rel="noreferrer" className="btn-secondary mt-5 w-full px-4 text-sm">
+                          <a href={project.href} target="_blank" rel="noopener noreferrer" className="btn-secondary mt-5 w-full px-4 text-sm">
                             Visit Website <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
                             <span className="sr-only">Opens in a new tab</span>
                           </a>

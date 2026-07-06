@@ -52,7 +52,7 @@ export default function VideoPage() {
             <article key={item.title} className="h-full rounded-2xl border border-white/15 bg-white/10 p-6 text-light">
               <h3 className="font-bold">{item.title}</h3>
               {item.href ? (
-                <a href={item.href} target="_blank" rel="noreferrer" className="mt-4 inline-block text-sm font-semibold text-accent transition hover:text-light">
+                <a href={item.href} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-sm font-semibold text-accent transition hover:text-light">
                   View experience <span aria-hidden="true">→</span>
                 </a>
               ) : null}
@@ -62,8 +62,8 @@ export default function VideoPage() {
 
         {/* Verified YouTube channels */}
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-          <a href="https://www.youtube.com/@javid07./videos" target="_blank" rel="noreferrer" className="btn-primary">Personal YouTube</a>
-          <a href="https://www.youtube.com/@jaytravels4113" target="_blank" rel="noreferrer" className="btn-outline-light">Jay Travels</a>
+          <a href="https://www.youtube.com/@javid07./videos" target="_blank" rel="noopener noreferrer" className="btn-primary">Personal YouTube</a>
+          <a href="https://www.youtube.com/@jaytravels4113" target="_blank" rel="noopener noreferrer" className="btn-outline-light">Jay Travels</a>
         </div>
       </SectionWrapper>
 

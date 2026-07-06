@@ -71,7 +71,7 @@ export default function Hero({ title, subtitle, action, actionHref }: HeroProps)
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
-            className="text-3xl font-bold leading-tight text-light sm:text-4xl"
+            className="text-4xl font-semibold leading-tight text-light sm:text-5xl md:text-6xl"
           >
             {title}
           </motion.h1>
@@ -92,7 +92,7 @@ export default function Hero({ title, subtitle, action, actionHref }: HeroProps)
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className={isInnerPage ? "mt-4 max-w-3xl text-base font-normal leading-7 text-light/80 sm:text-lg" : "mb-12 max-w-3xl text-lg font-normal leading-relaxed text-light md:text-xl"}
+            className={isInnerPage ? "mt-5 max-w-4xl text-lg font-normal leading-8 text-light/80 sm:text-xl sm:leading-9" : "mb-12 max-w-3xl text-lg font-normal leading-relaxed text-light md:text-xl"}
           >
             {subtitle}
           </motion.p>
