@@ -4,6 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { BookOpen, Clapperboard, Globe, Palette } from "lucide-react";
 
 interface HeroProps {
   eyebrow?: string;
@@ -12,6 +13,14 @@ interface HeroProps {
   action?: string;
   actionHref?: string;
 }
+
+// Homepage service shortcuts.
+const serviceLinks = [
+  { label: "Book Services", href: "/book-services", icon: BookOpen },
+  { label: "Website Services", href: "/website-services", icon: Globe },
+  { label: "Graphic Design", href: "/graphic-design", icon: Palette },
+  { label: "Videography", href: "/videography", icon: Clapperboard },
+] as const;
 
 // Reusable hero for the homepage and inner service pages.
 export default function Hero({ eyebrow, title, subtitle, action, actionHref }: HeroProps) {
@@ -139,23 +148,50 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.55 }}
-            className="mb-12 max-w-3xl text-lg font-normal leading-relaxed text-light md:text-xl"
+            className="mb-8 max-w-3xl text-lg font-normal leading-relaxed text-light md:text-xl"
           >
             JavidVerse helps ministries, authors, organizations, and individuals turn meaningful ideas into clear, professional creative work—from concept to completion.
           </motion.p>
         )}
 
-        {/* Homepage contact button */}
+        {/* Homepage service icon links */}
         {!isInnerPage && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.65 }}
+            className="mb-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
           >
-            <Link
-              href="/contact"
-              className="btn-primary px-8 py-4 text-base font-bold shadow-premium sm:px-12 sm:text-lg"
-            >
+            {serviceLinks.map((service) => {
+              const Icon = service.icon;
+
+              return (
+                <Link
+                  key={service.href}
+                  href={service.href}
+                  aria-label={service.label}
+                  title={service.label}
+                  className="group inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/25 bg-white/10 text-accent shadow-lg backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-accent hover:bg-accent hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:h-16 sm:w-16"
+                >
+                  <Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110 sm:h-7 sm:w-7" aria-hidden="true" />
+                </Link>
+              );
+            })}
+          </motion.div>
+        )}
+
+        {/* Homepage action buttons */}
+        {!isInnerPage && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.75 }}
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+          >
+            <Link href="/about-us" className="btn-outline-light min-w-44 px-8 py-4 text-base font-bold sm:text-lg">
+              About Us
+            </Link>
+            <Link href="/contact" className="btn-primary min-w-44 px-8 py-4 text-base font-bold shadow-premium sm:text-lg">
               Contact Us
             </Link>
           </motion.div>
