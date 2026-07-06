@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 interface HeroProps {
+  eyebrow?: string;
   title?: string;
   subtitle?: string;
   action?: string;
@@ -13,7 +14,7 @@ interface HeroProps {
 }
 
 // Reusable hero for the homepage and inner service pages.
-export default function Hero({ title, subtitle, action, actionHref }: HeroProps) {
+export default function Hero({ eyebrow, title, subtitle, action, actionHref }: HeroProps) {
   const isInnerPage = Boolean(title);
 
   return (
@@ -63,6 +64,18 @@ export default function Hero({ title, subtitle, action, actionHref }: HeroProps)
               />
             </div>
           </motion.div>
+        ) : null}
+
+        {/* Inner-page eyebrow */}
+        {isInnerPage && eyebrow ? (
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.25 }}
+            className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-accent sm:text-sm"
+          >
+            {eyebrow}
+          </motion.p>
         ) : null}
 
         {/* Page heading */}

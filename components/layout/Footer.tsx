@@ -6,7 +6,7 @@ import { Mail, Youtube } from "lucide-react";
 const footerLinks = [
   { label: "About Us", href: "/about-us" },
   { label: "Website Services", href: "/website-services" },
-  { label: "Books", href: "/books" },
+  { label: "Book Services", href: "/book-services" },
   { label: "Graphic Design", href: "/graphic-design" },
   { label: "Videography", href: "/videography" },
   { label: "Contact", href: "/contact" },

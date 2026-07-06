@@ -14,22 +14,18 @@ export const metadata = {
 const websiteTypes = [
   {
     title: "School & Organization Websites",
-    description: "Structured, accessible websites that clearly present programs, services, leadership, and important information.",
     icon: School,
   },
   {
     title: "Business & Ministry Websites",
-    description: "Professional digital spaces designed to build trust, communicate a mission, and support meaningful growth.",
     icon: Building2,
   },
   {
     title: "Personal Portfolio Websites",
-    description: "Focused personal websites for authors, speakers, creatives, professionals, and growing personal brands.",
     icon: UserRound,
   },
   {
     title: "All Types of Landing Pages",
-    description: "Clear, conversion-focused pages for campaigns, events, lead generation, products, and special initiatives.",
     icon: PanelsTopLeft,
   },
 ];
@@ -118,28 +114,26 @@ export default function WebsiteServicesPage() {
     <>
       {/* Hero Section */}
       <Hero
+        eyebrow="Build Your Website"
         title="Website Services"
         subtitle="We build websites that help your mission, brand, or business look professional, communicate clearly, and reach the right people online."
-        action="Start a Website Project"
-        actionHref="/contact"
       />
 
       {/* What We Build Section */}
-      <SectionWrapper title="What We Build">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <SectionWrapper title="What We Build" subtitle="Professional website solutions shaped around your goals, audience, and mission.">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {websiteTypes.map((service) => {
             const Icon = service.icon;
             return (
-              <article key={service.title} className="group h-full rounded-[2rem] border border-primary/15 bg-white p-7 shadow-premium transition duration-300 hover:-translate-y-1 hover:border-accent/60">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-accent transition group-hover:bg-accent group-hover:text-primary">
+              <li key={service.title} className="group flex h-full items-center gap-4 rounded-2xl border border-primary/15 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-accent/60">
+                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-accent transition duration-300 group-hover:bg-accent group-hover:text-primary">
                   <Icon className="h-6 w-6" aria-hidden="true" />
-                </div>
-                <h3 className="mt-6 text-xl font-bold text-primary">{service.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-primary/70">{service.description}</p>
-              </article>
+                </span>
+                <span className="font-semibold leading-6 text-primary">{service.title}</span>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </SectionWrapper>
 
       {/* Website Options Section */}

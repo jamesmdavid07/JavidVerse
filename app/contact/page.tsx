@@ -14,7 +14,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <Hero title="Let’s Work Together" subtitle="Tell me about your project, ministry, book, website, or creative idea." />
+      <Hero eyebrow="Start a Conversation" title="Let’s Work Together" subtitle="Tell me about your project, ministry, book, website, or creative idea." />
 
       {/* Contact Section */}
       <SectionWrapper title="Shape your idea into something purposeful" subtitle="Let’s make your message clear, thoughtful, and useful to the people you serve.">

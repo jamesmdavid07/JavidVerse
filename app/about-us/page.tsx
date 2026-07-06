@@ -333,7 +333,7 @@ export default function AboutPage() {
                 <p className="mt-6 max-w-3xl text-lg leading-[1.9] text-primary/70">
                   Growing up, I loved writing, and over the years, I&apos;ve kept journals of my answered prayers by God. These stories make up this book. They are simple, raw, and real. I believe they are stories worth reading, stories that can help someone trust in the Lord again.
                 </p>
-                <Link href="/books" className="btn-primary mt-8 w-full max-w-xs sm:text-lg">View More</Link>
+                <Link href="/book-services" className="btn-primary mt-8 w-full max-w-xs sm:text-lg">View More</Link>
               </div>
             </div>
           </article>

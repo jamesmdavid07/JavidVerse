@@ -1,8 +1,7 @@
-// Books Page
+// Book Services Page
 import Image from "next/image";
-import { ExternalLink, Quote } from "lucide-react";
+import { ExternalLink, FileCheck2, FileText, Palette, Quote, Rocket } from "lucide-react";
 import CTASection from "@/components/sections/CTASection";
-import FeatureGrid from "@/components/ui/FeatureGrid";
 import Hero from "@/components/sections/Hero";
 import SectionWrapper from "@/components/sections/SectionWrapper";
 
@@ -19,19 +18,14 @@ interface PortfolioBook {
   author: string;
   image: string;
   alt: string;
-  services: string[];
 }
 
 // Book publishing and design services offered by JavidVerse.
 const publishingServices = [
-  "Manuscript Formatting",
-  "Interior Book Layout",
-  "Cover Design",
-  "Proofreading & Editing Support",
-  "Print-ready PDF Preparation",
-  "eBook Preparation",
-  "Self-Publishing Support",
-  "Author Branding Materials",
+  { title: "Manuscript Formatting", icon: FileText },
+  { title: "Cover Design", icon: Palette },
+  { title: "Print-ready PDF Preparation", icon: FileCheck2 },
+  { title: "Self-Publishing Support", icon: Rocket },
 ] as const;
 
 // Portfolio books completed by JavidVerse.
@@ -41,14 +35,12 @@ const portfolioBooks: PortfolioBook[] = [
     author: "Judy M. Ireri",
     image: "/books/do-men-really-cheat.jpg",
     alt: "Book cover for Do Men Really Cheat? by Judy M. Ireri",
-    services: ["Book Formatting", "Cover Design", "Book Compilation", "Print-ready Preparation"],
   },
   {
     title: "Personal Witnessing",
     author: "Dan Namanya, DMin",
     image: "/books/personal-witnessing.jpg",
     alt: "Book cover for Personal Witnessing by Dan Namanya, DMin",
-    services: ["Book Formatting", "Cover Design", "Book Compilation", "Print-ready Preparation"],
   },
 ];
 
@@ -92,6 +84,7 @@ export default function BooksPage() {
     <>
       {/* Hero Section */}
       <Hero
+        eyebrow="Prepare Your Book"
         title="Book Services"
         subtitle="At JavidVerse, we help authors transform manuscripts into professionally designed books with careful attention to clarity, structure, readability, and visual excellence."
       />
@@ -99,14 +92,22 @@ export default function BooksPage() {
       {/* Publishing Services Section */}
       <SectionWrapper
         title="Services for Authors"
-        titleClass={sectionTitleClass}
-        subtitleClass={sectionSubtitleClass}
-        headerClassName="mx-auto mb-10 max-w-3xl text-center"
+        subtitle="We provide complete publishing and design support for authors—from manuscript to final files."
+        headerClassName="mb-10 max-w-3xl"
       >
-        <p className="mx-auto mb-8 max-w-4xl text-center text-base leading-7 text-primary/75 sm:text-lg">
-          We provide complete publishing and design support for authors—from manuscript to final files. Every project is thoughtfully prepared for print, digital distribution, and self-publishing platforms.
-        </p>
-        <FeatureGrid items={publishingServices} />
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {publishingServices.map((service) => {
+            const Icon = service.icon;
+            return (
+              <li key={service.title} className="group flex h-full items-center gap-4 rounded-2xl border border-primary/15 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-accent/60">
+                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-accent transition duration-300 group-hover:bg-accent group-hover:text-primary">
+                  <Icon className="h-6 w-6" aria-hidden="true" />
+                </span>
+                <span className="font-semibold leading-6 text-primary">{service.title}</span>
+              </li>
+            );
+          })}
+        </ul>
       </SectionWrapper>
 
       {/* Books Portfolio Section */}
@@ -141,27 +142,16 @@ export default function BooksPage() {
                 <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent sm:text-sm">
                   {book.author}
                 </p>
-                <div className="mt-4 flex w-full flex-1 flex-col items-center border-t border-primary/10 pt-4">
-                  <p className="text-xs font-bold uppercase tracking-widest text-primary sm:text-sm">Services Offered</p>
-                  <ul className="mt-3 flex flex-col items-center space-y-2 text-center text-sm leading-6 text-primary/80">
-                    {book.services.map((service) => (
-                      <li key={service} className="flex items-center justify-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-                        <span>{service}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </div>
             </article>
           ))}
         </div>
       </SectionWrapper>
 
-      {/* Featured Book Section */}
+      {/* Featured Publication Section */}
       <SectionWrapper
-        title="Featured Book"
-        subtitle="James M. David warmly presents this personal journey of faith, hope, and God's leading—written from the heart to encourage readers to trust His purpose through every season of life."
+        title="Featured Publication"
+        subtitle="Discover James M. David's debut publication, In the Arms of Faith—a heartfelt journey of faith, hope, and God's leading that encourages readers to trust His purpose through every season of life."
         titleClass={sectionTitleClass}
         subtitleClass={sectionSubtitleClass}
         headerClassName="mx-auto mb-10 max-w-3xl text-center"
