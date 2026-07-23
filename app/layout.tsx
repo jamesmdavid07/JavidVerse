@@ -19,24 +19,24 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "JavidVerse - For All Creative Solutions",
-    description: "Creative solutions for ministry, mission, authors, organizations, and individuals built with clarity, purpose, and care.",
+    description: "Creative solutions for ministry, mission, authors, organizations, and individuals.",
     type: "website",
     url: "/",
     siteName: "JavidVerse",
     images: [
       {
-        url: "/site/hero-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "JavidVerse creative solutions for ministry and mission"
+        url: "/brand/javidverse-logo.png",
+        width: 2048,
+        height: 640,
+        alt: "JavidVerse logo"
       }
     ]
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "JavidVerse - For All Creative Solutions",
     description: "Creative solutions for ministry, mission, authors, organizations, and individuals.",
-    images: ["/site/hero-image.jpg"],
+    images: ["/brand/javidverse-logo.png"],
   },
   icons: {
     icon: "/brand/favicon.svg"
