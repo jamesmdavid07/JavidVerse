@@ -1,7 +1,7 @@
 // Home Page
 import Image from "next/image";
 import Link from "next/link";
-import { BookOpen, Briefcase, Building2, Church, Clapperboard, Feather, Globe, Palette } from "lucide-react";
+import { BookOpen, Clapperboard, Globe, Palette, Quote } from "lucide-react";
 import Hero from "@/components/sections/Hero";
 import SectionWrapper from "@/components/sections/SectionWrapper";
 import CTASection from "@/components/sections/CTASection";
@@ -85,6 +85,7 @@ const featuredBook = {
     "When faith becomes more than belief, it becomes a journey. From a humble village in Kenya to mission fields around the world, James David shares a powerful story of faith, purpose, and God's leading. Each chapter includes reflection questions, practical application, and prayer to help readers grow in their own spiritual journey.",
   image: "/books/in the arms-of-faith.jpg",
   alt: "Book cover for In the Arms of Faith by James M. David",
+  digitalHref: "https://inthearmsoffaith.com/",
 } as const;
 
 // Embedded video projects reused from Videography.
@@ -99,12 +100,29 @@ const videoProjects = [
   },
 ] as const;
 
-// Primary audiences served by JavidVerse.
-const audiences = [
-  { title: "Authors", icon: Feather },
-  { title: "Ministries", icon: Church },
-  { title: "Organizations", icon: Building2 },
-  { title: "Businesses", icon: Briefcase },
+// Client feedback from JavidVerse projects.
+const clientTestimonials = [
+  {
+    name: "Dr. Roderic Bishop",
+    country: "United States",
+    role: "Founder, Aligned4Life",
+    quote:
+      "JavidVerse has been instrumental in developing and managing the Aligned4Life brand. From graphics and website development to podcast production, they consistently deliver professional work that communicates our vision clearly and strengthens our digital presence.",
+  },
+  {
+    name: "Namanya Dan, DMin",
+    country: "Philippines",
+    role: "Author and Ministry Leader",
+    quote:
+      "Working with JavidVerse on my book projects has been a rewarding experience. They transform written content into professional, engaging designs while preserving the message behind every page. Their creativity, patience, and attention to detail are truly commendable.",
+  },
+  {
+    name: "Gina Jenkins",
+    country: "United States",
+    role: "Founder, Lifetime Lifestyle",
+    quote:
+      "JavidVerse brought the Lifetime Lifestyle brand to life through a professional website and consistent creative support. They understand my vision, communicate it effectively through design, and continue to manage the brand with dedication, creativity, and excellence.",
+  },
 ] as const;
 
 export default function HomePage() {
@@ -214,7 +232,10 @@ export default function HomePage() {
             <h3 className="mt-4 text-2xl font-semibold text-primary sm:text-3xl">{featuredBook.title}</h3>
             <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent sm:text-sm">Author: {featuredBook.author}</p>
             <p className="mt-5 text-base leading-7 text-primary/75 sm:text-[1.02rem] sm:leading-8">{featuredBook.description}</p>
-            <Link href="/book-services" className="btn-primary mt-7">Explore Book Services</Link>
+            <div className="mt-7 flex flex-wrap gap-4">
+              <Link href="/book-services" className="btn-primary whitespace-nowrap">Explore Book Services</Link>
+              <a href={featuredBook.digitalHref} target="_blank" rel="noopener noreferrer" className="btn-primary whitespace-nowrap">Get a digital copy</a>
+            </div>
           </div>
         </div>
       </SectionWrapper>
@@ -250,21 +271,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Audience Section */}
-      <SectionWrapper title="Who JavidVerse Serves" subtitle="Creative support shaped for the people and organizations carrying meaningful messages." className="bg-primary" titleClass="text-white" subtitleClass="text-white/75">
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {audiences.map((audience) => {
-            const Icon = audience.icon;
-            return (
-              <li key={audience.title} className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5 text-light">
-                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white text-primary">
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                </span>
-                <span className="font-semibold">{audience.title}</span>
-              </li>
-            );
-          })}
-        </ul>
+      {/* Client Testimonial Section */}
+      <SectionWrapper title="Client Testimonial" subtitle="Trusted by authors, ministries, and brands who need creative work that communicates clearly and serves their mission well." className="bg-primary" titleClass="text-white" subtitleClass="text-white/75">
+        <div className="grid gap-7 lg:grid-cols-3">
+          {clientTestimonials.map((testimonial) => (
+            <article key={testimonial.name} className="flex h-full flex-col rounded-[2rem] border border-white/15 bg-white p-6 shadow-premium sm:p-7">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-accent">
+                <Quote className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <p className="mt-5 flex-1 text-[15px] leading-7 text-primary/75 sm:text-base">
+                &quot;{testimonial.quote}&quot;
+              </p>
+              <div className="mt-6 border-t border-primary/10 pt-4">
+                <h3 className="text-base font-semibold text-primary sm:text-lg">{testimonial.name} — {testimonial.country}</h3>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent sm:text-sm">{testimonial.role}</p>
+              </div>
+            </article>
+          ))}
+        </div>
       </SectionWrapper>
 
       {/* Final CTA Section */}

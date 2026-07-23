@@ -54,6 +54,7 @@ const featuredBook = {
   image: "/books/in the arms-of-faith.jpg",
   alt: "Book cover for In the Arms of Faith by James M. David",
   href: "https://www.amazon.com/Arms-Faith-James-Maangi-David/dp/B0FY5MRHF3",
+  digitalHref: "https://inthearmsoffaith.com/",
   action: "Buy on Amazon",
 } as const;
 
@@ -61,21 +62,21 @@ const featuredBook = {
 const testimonials = [
   {
     name: "Diana Booker",
-    role: "Reader of In the Arms of Faith",
+    role: "United States",
     quote:
-      "I have to hold it close because I've been reading. Very encouraging and enlightening.",
+      "I have to hold it close because I’ve been reading it. It is very encouraging and enlightening. Every page strengthens my faith and reminds me that God is always present throughout life’s journey.",
   },
   {
-    name: "Patty Waldrop",
-    role: "Reader feedback",
+    name: "Editha Orbesido",
+    role: "Philippines",
     quote:
-      "Approved testimonial wording is not currently available in this project. This card is ready for the final verified quote when it is provided.",
+      "Beautiful writing that touches the soul. Thank you, my son, for sharing such a powerful testimony. I’ve gifted this book to my friends and family. It is a must-read for anyone who believes God’s miracles are real.",
   },
   {
-    name: "Dan Namanya, DMin",
-    role: "Author of Personal Witnessing",
+    name: "Purity Masinga",
+    role: "Kenya",
     quote:
-      "Approved feedback about JavidVerse publishing and creative services is not currently available in this project. This card is ready for the final verified quote when it is provided.",
+      "This is a deeply inspiring book filled with hope, faith, and encouragement. The testimony touched my heart and reminded me to trust God in every season. I would gladly recommend it to friends and family.",
   },
 ] as const;
 
@@ -175,11 +176,18 @@ export default function BooksPage() {
               Author: {featuredBook.author}
             </p>
             <p className="mt-5 text-base leading-7 text-primary/75 sm:text-[1.02rem] sm:leading-8">{featuredBook.description}</p>
-            <a href={featuredBook.href} target="_blank" rel="noopener noreferrer" className="btn-primary mt-7">
-              {featuredBook.action}
-              <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
-              <span className="sr-only">Opens in a new tab</span>
-            </a>
+            <div className="mt-7 flex flex-wrap gap-4">
+              <a href={featuredBook.href} target="_blank" rel="noopener noreferrer" className="btn-primary whitespace-nowrap">
+                {featuredBook.action}
+                <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
+                <span className="sr-only">Opens in a new tab</span>
+              </a>
+              <a href={featuredBook.digitalHref} target="_blank" rel="noopener noreferrer" className="btn-primary whitespace-nowrap">
+                Get a digital copy
+                <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
+                <span className="sr-only">Opens in a new tab</span>
+              </a>
+            </div>
           </div>
         </div>
       </SectionWrapper>

@@ -4,24 +4,39 @@ import "../styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
+const siteUrl = new URL(process.env.SITE_URL ?? "https://javidverse.com");
+
 export const metadata: Metadata = {
-  title: "Javid Verse — Creative Solutions for Ministry & Mission",
+  metadataBase: siteUrl,
+  title: {
+    default: "JavidVerse - For All Creative Solutions",
+    template: "%s | JavidVerse",
+  },
   description: "Purpose-driven design, video, publishing preparation, branding, and web solutions for ministries, authors, organizations, and individuals.",
   keywords: ["ministry creative studio", "book services", "video services", "branding", "graphic design", "website development", "digital ministry"],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Javid Verse — Creative Solutions for Ministry & Mission",
-    description: "Creative media and digital solutions that help meaningful stories reach more people.",
+    title: "JavidVerse - For All Creative Solutions",
+    description: "Creative solutions for ministry, mission, authors, organizations, and individuals built with clarity, purpose, and care.",
     type: "website",
-    url: "https://javid-verse.vercel.app",
+    url: "/",
     siteName: "JavidVerse",
     images: [
       {
-        url: "https://javid-verse.vercel.app/site/hero-image.jpg",
+        url: "/site/hero-image.jpg",
         width: 1200,
         height: 630,
         alt: "JavidVerse creative solutions for ministry and mission"
       }
     ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "JavidVerse - For All Creative Solutions",
+    description: "Creative solutions for ministry, mission, authors, organizations, and individuals.",
+    images: ["/site/hero-image.jpg"],
   },
   icons: {
     icon: "/brand/favicon.svg"

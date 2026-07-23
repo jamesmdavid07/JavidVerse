@@ -357,7 +357,10 @@ export default function AboutPage() {
                 <p className="mt-6 max-w-3xl text-lg leading-[1.9] text-primary/70">
                   <em>In the Arms of Faith</em> traces James&apos;s journey of discovering biblical truth and following God&apos;s leading through education, ministry, and mission. Each chapter invites readers to reflect through personal questions, practical application, and prayer.
                 </p>
-                <a href="https://www.amazon.com/Arms-Faith-James-Maangi-David/dp/B0FY5MRHF3" target="_blank" rel="noopener noreferrer" className="btn-primary mt-8 w-full max-w-xs sm:text-lg">View the Book on Amazon</a>
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <a href="https://www.amazon.com/Arms-Faith-James-Maangi-David/dp/B0FY5MRHF3" target="_blank" rel="noopener noreferrer" className="btn-primary whitespace-nowrap sm:text-lg">View the Book on Amazon</a>
+                  <a href="https://inthearmsoffaith.com/" target="_blank" rel="noopener noreferrer" className="btn-primary whitespace-nowrap sm:text-lg">Get a digital copy</a>
+                </div>
               </div>
             </div>
           </article>
