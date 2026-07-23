@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
+
+export const runtime = "nodejs";
 
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
@@ -8,6 +10,7 @@ const MAX_EMAIL_LENGTH = 254;
 const MAX_ORGANIZATION_LENGTH = 120;
 const MAX_PROJECT_TYPE_LENGTH = 120;
 const MAX_MESSAGE_LENGTH = 3000;
+const EMAIL_PROVIDER = "Gmail SMTP";
 
 type RateLimitEntry = {
   count: number;
@@ -77,6 +80,62 @@ function isRateLimited(ip: string) {
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= MAX_EMAIL_LENGTH;
+}
+
+function isPlaceholder(value: string | undefined) {
+  if (!value) {
+    return true;
+  }
+
+  const normalized = value.trim().toLowerCase();
+  return normalized === "" || normalized.includes("your_") || normalized.includes("placeholder") || normalized.includes("example");
+}
+
+function getSmtpErrorCode(error: unknown) {
+  if (!error || typeof error !== "object") {
+    return "unknown";
+  }
+
+  const candidate = error as { code?: unknown; responseCode?: unknown };
+  return candidate.code || candidate.responseCode || "unknown";
+}
+
+function getSmtpCommand(error: unknown) {
+  if (!error || typeof error !== "object") {
+    return "unknown";
+  }
+
+  const candidate = error as { command?: unknown };
+  return candidate.command || "unknown";
+}
+
+function getErrorName(error: unknown) {
+  if (error instanceof Error) {
+    return error.name;
+  }
+
+  return "ProviderError";
+}
+
+function getSanitizedErrorMessage(error: unknown) {
+  const fallback = "SMTP provider rejected the email request.";
+  const message = error instanceof Error ? error.message : fallback;
+
+  return cleanInput(message, 280)
+    .replace(/[A-Za-z0-9]{16}/g, "[redacted-app-password]")
+    .replace(/AUTH\s+[^\s]+/gi, "AUTH [redacted]")
+    .replace(/Password:\s*[^\s]+/gi, "Password: [redacted]");
+}
+
+function logProviderFailure(error: unknown, envPresence: Record<string, boolean>) {
+  console.error("Contact email delivery failed", {
+    provider: EMAIL_PROVIDER,
+    errorCode: getSmtpErrorCode(error),
+    command: getSmtpCommand(error),
+    errorName: getErrorName(error),
+    message: getSanitizedErrorMessage(error),
+    env: envPresence,
+  });
 }
 
 export async function POST(request: Request) {
@@ -152,19 +211,46 @@ export async function POST(request: Request) {
     return jsonResponse("Please enter your project brief.", 400);
   }
 
-  const apiKey = process.env.EMAIL_API_KEY;
-  const emailFrom = process.env.EMAIL_FROM;
+  const emailUser = process.env.EMAIL_USER;
+  const emailAppPassword = process.env.EMAIL_APP_PASSWORD;
   const emailFromName = process.env.EMAIL_FROM_NAME || "JavidVerse";
   const emailTo = process.env.EMAIL_TO;
   const siteUrl = process.env.SITE_URL || "https://javidverse.com";
+  const envPresence = {
+    EMAIL_USER: Boolean(emailUser && !isPlaceholder(emailUser)),
+    EMAIL_APP_PASSWORD: Boolean(emailAppPassword && !isPlaceholder(emailAppPassword)),
+    EMAIL_FROM_NAME: Boolean(emailFromName),
+    EMAIL_TO: Boolean(emailTo && !isPlaceholder(emailTo)),
+    SITE_URL: Boolean(siteUrl),
+  };
 
-  if (!apiKey || !emailFrom || !emailTo) {
+  if (!emailUser || !emailAppPassword || !emailTo) {
+    console.error("Contact email configuration missing", {
+      provider: EMAIL_PROVIDER,
+      env: envPresence,
+    });
     return jsonResponse("Email delivery is not configured yet. Please contact JavidVerse directly by email.", 500);
   }
 
-  const resend = new Resend(apiKey);
+  if (isPlaceholder(emailUser) || isPlaceholder(emailAppPassword) || isPlaceholder(emailTo)) {
+    console.error("Contact email configuration contains placeholder values", {
+      provider: EMAIL_PROVIDER,
+      env: envPresence,
+    });
+    return jsonResponse("Email delivery is not configured yet. Please contact JavidVerse directly by email.", 500);
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: emailUser,
+      pass: emailAppPassword,
+    },
+  });
   const subject = `${projectType} inquiry from ${name}`;
-  const from = `${emailFromName} <${emailFrom}>`;
+  const from = `${emailFromName} <${emailUser}>`;
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
   const safeOrganization = escapeHtml(organization);
@@ -173,7 +259,7 @@ export async function POST(request: Request) {
   const safeSiteUrl = escapeHtml(siteUrl);
 
   try {
-    const result = await resend.emails.send({
+    await transporter.sendMail({
       from,
       to: emailTo,
       replyTo: email,
@@ -195,12 +281,9 @@ export async function POST(request: Request) {
       `,
     });
 
-    if (result.error) {
-      return jsonResponse("The message could not be delivered. Please try again or email JavidVerse directly.", 502);
-    }
-
     return NextResponse.json({ success: true, message: "Thank you. Your inquiry has been sent successfully." });
-  } catch {
+  } catch (error) {
+    logProviderFailure(error, envPresence);
     return jsonResponse("The message could not be delivered. Please try again or email JavidVerse directly.", 502);
   }
 }
