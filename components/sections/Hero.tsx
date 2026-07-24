@@ -87,7 +87,7 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
         {!isInnerPage ? (
           <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 xl:gap-14">
             {/* Homepage message */}
-            <div className="max-w-2xl text-left">
+            <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
               <motion.p
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -132,7 +132,7 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.45 }}
-                className="mt-10 flex flex-col gap-4 sm:flex-row"
+                className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:items-start lg:justify-start"
               >
                 <Link href="/contact" className="btn-primary min-w-48 px-7 py-4 text-base font-bold shadow-premium sm:text-[1.02rem]">
                   Start Your Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
@@ -175,7 +175,7 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
                     >
                       <Link
                         href={service.href}
-                        className="group flex min-h-24 items-center gap-3 rounded-[1.35rem] border border-accent/30 bg-accent p-3.5 text-primary shadow-[0_18px_50px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-1 hover:brightness-105 hover:shadow-[0_24px_70px_rgba(0,0,0,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:p-4 lg:w-60 xl:w-72"
+                        className="group flex min-h-24 items-center gap-3 rounded-[1.35rem] border border-accent/30 bg-accent p-3.5 text-left text-primary shadow-[0_18px_50px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-1 hover:brightness-105 hover:shadow-[0_24px_70px_rgba(0,0,0,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:p-4 lg:w-60 xl:w-72"
                       >
                         <span className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${service.iconClassName}`} aria-hidden="true">
                           <Icon className="h-5 w-5" />
