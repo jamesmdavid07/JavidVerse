@@ -50,7 +50,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop navigation */}
-        <nav aria-label="Primary navigation" className="hidden items-center gap-5 lg:flex xl:gap-6">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-5 xl:flex xl:gap-6">
           {links.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -80,7 +80,7 @@ export default function Navbar() {
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={open}
           aria-controls="mobile-navigation"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border-2 border-light text-light transition-all duration-300 hover:bg-light hover:text-primary lg:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border-2 border-light text-light transition-all duration-300 hover:bg-light hover:text-primary xl:hidden"
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
@@ -91,7 +91,7 @@ export default function Navbar() {
           id="mobile-navigation"
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
-          className="border-t-2 border-accent/20 bg-primary/95 px-6 pb-6 lg:hidden"
+          className="border-t-2 border-accent/20 bg-primary/95 px-6 pb-6 xl:hidden"
         >
           <nav aria-label="Mobile navigation" className="space-y-3 pt-3">
             {links.map((link) => {

@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { BookOpen, Clapperboard, Globe, Palette } from "lucide-react";
+import { ArrowRight, BookOpen, Clapperboard, Globe, Palette } from "lucide-react";
 
 interface HeroProps {
   eyebrow?: string;
@@ -16,10 +16,38 @@ interface HeroProps {
 
 // Homepage service shortcuts.
 const serviceLinks = [
-  { label: "Book Services", href: "/book-services", icon: BookOpen },
-  { label: "Website Services", href: "/website-services", icon: Globe },
-  { label: "Graphic Design", href: "/graphic-design", icon: Palette },
-  { label: "Videography", href: "/videography", icon: Clapperboard },
+  {
+    label: "Website Services",
+    description: "Web design and development",
+    href: "/website-services",
+    icon: Globe,
+    className: "lg:absolute lg:left-0 lg:top-16 xl:top-14",
+    iconClassName: "bg-primary text-accent",
+  },
+  {
+    label: "Book Services",
+    description: "Design, formatting, and publishing",
+    href: "/book-services",
+    icon: BookOpen,
+    className: "lg:absolute lg:right-0 lg:top-16 xl:top-14",
+    iconClassName: "bg-primary text-accent",
+  },
+  {
+    label: "Graphic Design",
+    description: "Branding and visual communication",
+    href: "/graphic-design",
+    icon: Palette,
+    className: "lg:absolute lg:bottom-16 lg:left-0 xl:bottom-14",
+    iconClassName: "bg-primary text-accent",
+  },
+  {
+    label: "Videography",
+    description: "Editing, promotions, and motion graphics",
+    href: "/videography",
+    icon: Clapperboard,
+    className: "lg:absolute lg:bottom-16 lg:right-0 xl:bottom-14",
+    iconClassName: "bg-primary text-accent",
+  },
 ] as const;
 
 // Reusable hero for the homepage and inner service pages.
@@ -29,7 +57,7 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
   return (
     <section
       className={`relative flex w-full items-center justify-center overflow-hidden bg-primary ${
-        isInnerPage ? "px-6 py-12 sm:px-8 sm:py-14" : "min-h-[calc(100svh-80px)] py-12"
+        isInnerPage ? "px-6 py-12 sm:px-8 sm:py-14" : "min-h-[calc(100svh-80px)] px-5 py-12 sm:px-8 lg:min-h-[min(820px,calc(100svh-80px))] lg:px-10 xl:px-12"
       }`}
     >
       {/* Homepage background image and overlay */}
@@ -39,11 +67,13 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
             src="/site/hero-image.jpg"
             alt=""
             fill
-            className="absolute inset-0 z-0 h-full w-full object-cover object-center"
+            className="absolute inset-0 z-0 h-full w-full object-cover object-center opacity-70"
             priority
             sizes="100vw"
           />
-          <div className="overlay-primary absolute inset-0 z-10" aria-hidden="true" />
+          <div className="absolute inset-0 z-10 bg-[linear-gradient(105deg,rgba(4,45,109,0.97)_0%,rgba(4,45,109,0.92)_42%,rgba(4,45,109,0.78)_72%,rgba(4,45,109,0.88)_100%)]" aria-hidden="true" />
+          <div className="absolute -left-24 bottom-[-12rem] z-10 h-96 w-96 rounded-full border border-white/10 bg-white/5 blur-sm sm:h-[30rem] sm:w-[30rem]" aria-hidden="true" />
+          <div className="absolute -right-20 top-[-12rem] z-10 h-[28rem] w-[28rem] rounded-full border border-white/10" aria-hidden="true" />
         </>
       ) : null}
 
@@ -52,27 +82,116 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: "easeOut" }}
-        className={`relative z-20 flex max-w-5xl flex-col items-center justify-center text-center ${isInnerPage ? "py-0" : "px-6 py-12"}`}
+        className={`relative z-20 w-full ${isInnerPage ? "flex max-w-5xl flex-col items-center justify-center py-0 text-center" : "mx-auto max-w-7xl"}`}
       >
-        {/* Homepage JavidVerse mark */}
         {!isInnerPage ? (
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="mb-6 flex justify-center"
-          >
-            <div className="relative flex items-center justify-center">
-              <span className="absolute inset-0 rounded-full bg-white opacity-90 shadow-[0_0_16px_8px_rgba(255,255,255,0.4)] blur-lg" aria-hidden="true" />
-              <Image
-                src="/brand/javidverse-mark.png"
-                alt="JavidVerse"
-                width={70}
-                height={70}
-                className="relative z-10"
-              />
+          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 xl:gap-14">
+            {/* Homepage message */}
+            <div className="max-w-2xl text-left">
+              <motion.p
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-light sm:text-sm"
+              >
+                Welcome to
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15 }}
+                className="text-5xl font-bold leading-none tracking-[-0.045em] sm:text-6xl md:text-7xl xl:text-8xl"
+              >
+                <span className="text-light">Javid</span><span className="text-accent">Verse</span>
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="mt-5 max-w-2xl text-xl font-bold leading-8 text-accent sm:text-2xl md:text-3xl"
+              >
+                For All Creative Solutions
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.35 }}
+                className="mt-7 max-w-2xl text-base leading-8 text-light/85 sm:text-lg sm:leading-9"
+              >
+                A creative agency helping ministries, authors, organizations, businesses, and individuals bring their ideas to life with clarity, creativity, and purpose.
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="mt-5 max-w-2xl text-base leading-8 text-light/85 sm:text-lg sm:leading-9"
+              >
+                From book design and publishing support to branding, video production, and website development, we provide dependable creative solutions from concept to completion.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.45 }}
+                className="mt-10 flex flex-col gap-4 sm:flex-row"
+              >
+                <Link href="/contact" className="btn-primary min-w-48 px-7 py-4 text-base font-bold shadow-premium sm:text-[1.02rem]">
+                  Start Your Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                </Link>
+                <Link href="/about-us" className="btn-outline-light min-w-36 border-light/40 bg-white/5 px-7 py-4 text-base font-bold backdrop-blur-sm hover:border-light sm:text-[1.02rem]">
+                  About Us
+                </Link>
+              </motion.div>
             </div>
-          </motion.div>
+
+            {/* Homepage logo and service cards */}
+            <motion.div
+              initial={{ opacity: 0, x: 34 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.9, delay: 0.35, ease: "easeOut" }}
+              className="relative mx-auto w-full max-w-3xl lg:min-h-[36rem] xl:max-w-[48rem]"
+            >
+              <div className="pointer-events-none relative z-10 mx-auto mb-7 flex h-64 w-64 items-center justify-center sm:h-80 sm:w-80 lg:absolute lg:left-1/2 lg:top-1/2 lg:mb-0 lg:h-[32rem] lg:w-[32rem] lg:-translate-x-1/2 lg:-translate-y-1/2 xl:h-[36rem] xl:w-[36rem]">
+                <span className="absolute -inset-5 rounded-full bg-white/26 blur-3xl" aria-hidden="true" />
+                <Image
+                  src="/brand/logo-with-shadow.png"
+                  alt="JavidVerse"
+                  width={464}
+                  height={464}
+                  className="relative z-10 h-full w-full object-contain"
+                  priority
+                />
+              </div>
+              <div className="relative z-30 grid gap-4 sm:grid-cols-2 lg:min-h-[36rem] lg:block">
+                {serviceLinks.map((service, index) => {
+                  const Icon = service.icon;
+
+                  return (
+                    <motion.div
+                      key={service.href}
+                      initial={{ opacity: 0, y: 24 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.75, delay: 0.5 + index * 0.08 }}
+                      className={service.className}
+                    >
+                      <Link
+                        href={service.href}
+                        className="group flex min-h-24 items-center gap-3 rounded-[1.35rem] border border-accent/30 bg-accent p-3.5 text-primary shadow-[0_18px_50px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-1 hover:brightness-105 hover:shadow-[0_24px_70px_rgba(0,0,0,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:p-4 lg:w-60 xl:w-72"
+                      >
+                        <span className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${service.iconClassName}`} aria-hidden="true">
+                          <Icon className="h-5 w-5" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-bold leading-5 sm:text-[0.95rem]">{service.label}</span>
+                          <span className="mt-1.5 block text-[0.72rem] font-semibold leading-4 text-primary/75 sm:text-xs">{service.description}</span>
+                        </span>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-primary transition duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </div>
         ) : null}
 
         {/* Inner-page eyebrow */}
@@ -97,16 +216,7 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
           >
             {title}
           </motion.h1>
-        ) : (
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="mb-6 text-4xl font-bold leading-tight text-light sm:text-6xl md:text-7xl"
-          >
-            JavidVerse
-          </motion.h1>
-        )}
+        ) : null}
 
         {/* Hero supporting copy */}
         {subtitle ? (
@@ -118,16 +228,7 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
           >
             {subtitle}
           </motion.p>
-        ) : (
-          <motion.p
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.45 }}
-            className="mb-8 text-2xl font-bold tracking-wide text-accent sm:text-3xl md:text-4xl"
-          >
-            For All Creative Solutions
-          </motion.p>
-        )}
+        ) : null}
 
         {/* Optional inner-page CTA */}
         {isInnerPage && action && actionHref ? (
@@ -142,60 +243,6 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
           </motion.div>
         ) : null}
 
-        {/* Homepage introduction */}
-        {!isInnerPage && (
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.55 }}
-            className="mb-8 max-w-3xl text-lg font-normal leading-relaxed text-light md:text-xl"
-          >
-            JavidVerse helps ministries, authors, organizations, and individuals turn meaningful ideas into clear, professional creative work—from concept to completion.
-          </motion.p>
-        )}
-
-        {/* Homepage service icon links */}
-        {!isInnerPage && (
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.65 }}
-            className="mb-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
-          >
-            {serviceLinks.map((service) => {
-              const Icon = service.icon;
-
-              return (
-                <Link
-                  key={service.href}
-                  href={service.href}
-                  aria-label={service.label}
-                  title={service.label}
-                  className="group inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/25 bg-white/10 text-accent shadow-lg backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-accent hover:bg-accent hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:h-16 sm:w-16"
-                >
-                  <Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110 sm:h-7 sm:w-7" aria-hidden="true" />
-                </Link>
-              );
-            })}
-          </motion.div>
-        )}
-
-        {/* Homepage action buttons */}
-        {!isInnerPage && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.75 }}
-            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
-          >
-            <Link href="/about-us" className="btn-outline-light min-w-44 px-8 py-4 text-base font-bold sm:text-lg">
-              About Us
-            </Link>
-            <Link href="/contact" className="btn-primary min-w-44 px-8 py-4 text-base font-bold shadow-premium sm:text-lg">
-              Contact Us
-            </Link>
-          </motion.div>
-        )}
       </motion.div>
     </section>
   );
