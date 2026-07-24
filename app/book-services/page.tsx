@@ -33,13 +33,13 @@ const portfolioBooks: PortfolioBook[] = [
   {
     title: "DO MEN REALLY CHEAT?",
     author: "Judy M. Ireri",
-    image: "/books/do-men-really-cheat.jpg",
+    image: "/books/do-men-really-cheat.webp",
     alt: "Book cover for Do Men Really Cheat? by Judy M. Ireri",
   },
   {
     title: "Personal Witnessing",
     author: "Dan Namanya, DMin",
-    image: "/books/personal-witnessing.jpg",
+    image: "/books/personal-witnessing.webp",
     alt: "Book cover for Personal Witnessing by Dan Namanya, DMin",
   },
 ];
@@ -51,7 +51,7 @@ const featuredBook = {
   badge: "Featured Book",
   description:
     "When faith becomes more than belief, it becomes a journey. From a humble village in Kenya to mission fields around the world, James David shares a powerful story of faith, purpose, and God's leading. Each chapter includes reflection questions, practical application, and prayer to help readers grow in their own spiritual journey.",
-  image: "/books/in the arms-of-faith.jpg",
+  image: "/books/in the arms-of-faith.webp",
   alt: "Book cover for In the Arms of Faith by James M. David",
   href: "https://www.amazon.com/Arms-Faith-James-Maangi-David/dp/B0FY5MRHF3",
   digitalHref: "https://inthearmsoffaith.com/",

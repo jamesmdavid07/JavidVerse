@@ -20,25 +20,25 @@ export const metadata = {
 const introSnapshots = [
   {
     label: "Faith",
-    src: "/about/james.jpg",
+    src: "/about/james.webp",
     alt: "Portrait of James Maangi David",
     position: "center",
   },
   {
     label: "Technology",
-    src: "/about/diploma-in-it.jpg",
+    src: "/about/diploma-in-it.webp",
     alt: "James studying information technology",
     position: "center 35%",
   },
   {
     label: "Teaching",
-    src: "/about/kitui-teachers-college.jpg",
+    src: "/about/kitui-teachers-college.webp",
     alt: "James with students in a classroom",
     position: "center",
   },
   {
     label: "Ministry",
-    src: "/about/me-preaching.jpg",
+    src: "/about/me-preaching.webp",
     alt: "James preaching during a ministry engagement",
     position: "center 22%",
   },
@@ -49,7 +49,7 @@ const faithJourney = [
   {
     year: "2015",
     title: "First Truth Encounter",
-    image: "/about/following-truth.jpg",
+    image: "/about/following-truth.webp",
     alt: "James at a Seventh-day Adventist church sign",
     position: "center top",
     text: "I first discovered the biblical truth about the Sabbath through my uncle, whose life was transformed by an Adventist radio program on Wikwatyo FM. With no nearby Adventist church, we walked nearly 20 kilometers every Sabbath to worship, strengthening my faith and commitment to God's truth."
@@ -57,7 +57,7 @@ const faithJourney = [
   {
     year: "February 2019",
     title: "Following the Truth",
-    image: "/about/baptism-service.jpg",
+    image: "/about/baptism-service.webp",
     alt: "Baptism service in a river",
     position: "center",
     text: "Following my baptism, I fully committed my life to Christ and sensed a clear calling to teach, preach, and prepare for gospel ministry. That decision became the foundation of my theological education, evangelistic work, youth leadership, and lifelong commitment to sharing God’s Word.",
@@ -65,7 +65,7 @@ const faithJourney = [
   {
     year: "2018",
     title: "A Church Begins Under a Tree",
-    image: "/about/church-under-tree.jpg",
+    image: "/about/church-under-tree.webp",
     alt: "Small Sabbath School gathering under a tree in Yongela",
     position: "center",
     text: "In Yongela, a small Sabbath School began under a tree at the village market. A few believers gathered each Sabbath to worship, study the Bible, pray together, and encourage one another. What started as a simple gathering became the beginning of a growing faith community.",
@@ -73,7 +73,7 @@ const faithJourney = [
   {
     year: "Yongela",
     title: "A Church Is Rising",
-    image: "/about/new-church.jpg",
+    image: "/about/new-church.webp",
     alt: "Completed Seventh-day Adventist church building in Yongela",
     position: "center top",
     text: "Through the support of Maranatha International, our congregation now has a completed church building and a borehole on donated land. What began under a tree now stands as a testimony of God’s faithfulness and His continued work among the people of Yongela.",
@@ -125,7 +125,7 @@ export default function AboutPage() {
       <SectionWrapper title="Meet James" subtitle="A young man committed in faith, technology, and creativity in service to God and people.">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
           <div className="relative min-h-[34rem] overflow-hidden rounded-[2rem] bg-primary shadow-premium">
-            <Image src="/about/james.jpg" alt="James M. David" fill priority className="object-cover object-center" sizes="(min-width: 1024px) 42vw, 100vw" />
+            <Image src="/about/james.webp" alt="James M. David" fill priority className="object-cover object-center" sizes="(min-width: 1024px) 42vw, 100vw" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary via-primary/85 to-transparent p-8 pt-28 text-light">
               <h2 className="text-3xl font-bold">James M. David</h2>
               <p className="mt-2 text-sm text-light/80">Founder of JavidVerse · Theology Student · Digital Missionary · Author</p>
@@ -180,7 +180,7 @@ export default function AboutPage() {
       <SectionWrapper title="Education & Preparation" subtitle="Teaching shaped my communication, technology strengthened my skills, and theology continues to prepare me for ministry.">
         <div className="grid gap-7 lg:grid-cols-3">
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/kitui-teachers-college.jpg" alt="James with students during classroom teaching experience" position="center" />
+            <StoryImage src="/about/kitui-teachers-college.webp" alt="James with students during classroom teaching experience" position="center" />
             <div className="flex-1 p-8">
               <Users className="h-9 w-9 text-accent" />
               <p className="mt-5 text-sm font-bold uppercase tracking-widest text-accent">2019 · Kenya</p>
@@ -190,7 +190,7 @@ export default function AboutPage() {
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/diploma-in-it.jpg" alt="James studying information technology" position="center 35%" />
+            <StoryImage src="/about/diploma-in-it.webp" alt="James studying information technology" position="center 35%" />
             <div className="flex-1 p-8">
               <GraduationCap className="h-9 w-9 text-accent" />
               <p className="mt-5 text-sm font-bold uppercase tracking-widest text-accent">2019–2021 · Kenya</p>
@@ -200,7 +200,7 @@ export default function AboutPage() {
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] bg-primary text-light shadow-premium">
-            <StoryImage src="/about/theology-mvc.jpeg" alt="James at Mountain View College in the Philippines" position="center 30%" />
+            <StoryImage src="/about/theology-mvc.webp" alt="James at Mountain View College in the Philippines" position="center 30%" />
             <div className="flex-1 p-8">
               <BookOpen className="h-9 w-9 text-accent" />
               <p className="mt-5 text-sm font-bold uppercase tracking-widest text-accent">2023–Present · Philippines</p>
@@ -222,14 +222,14 @@ export default function AboutPage() {
       >
         <div className="mx-auto grid max-w-6xl gap-7 md:grid-cols-2 lg:grid-cols-6">
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] bg-white shadow-premium lg:col-span-2">
-            <StoryImage src="/about/online-ministry.jpg" alt="James creating gospel-centered online ministry content" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/online-ministry.webp" alt="James creating gospel-centered online ministry content" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Online Ministry</h3>
               <p className="mt-4 leading-8 text-primary/70">James led online Bible studies, prayed with people from different countries, connected seekers with local churches, managed ministry social media pages, responded to messages, and created gospel-centered digital content. Behind every message was a person searching for hope in Christ.</p>
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] bg-white shadow-premium lg:col-span-2">
-            <StoryImage src="/about/outreach-evangelism.jpg" alt="James participating in church outreach and evangelism" className="aspect-[16/9]" position="center 35%" />
+            <StoryImage src="/about/outreach-evangelism.webp" alt="James participating in church outreach and evangelism" className="aspect-[16/9]" position="center 35%" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Outreach &amp; Evangelism</h3>
               <p className="mt-4 leading-8 text-primary/70">James participated in evangelistic crusades, public evangelism, church visitation, care groups, Bible studies, and community outreach. Through these ministries, he shared the gospel while strengthening churches and encouraging spiritual growth within local communities.</p>
@@ -239,10 +239,10 @@ export default function AboutPage() {
             {/* Davao and Butuan training images */}
             <div className="grid aspect-[16/9] grid-cols-2 overflow-hidden bg-primary">
               <div className="relative overflow-hidden">
-                <Image src="/about/davao-youth-training.jpg" alt="James leading youth training in Davao" fill className="object-cover transition duration-700 hover:scale-105" style={{ objectPosition: "center 30%" }} sizes="(min-width: 1024px) 16vw, 50vw" />
+                <Image src="/about/davao-youth-training.webp" alt="James leading youth training in Davao" fill className="object-cover transition duration-700 hover:scale-105" style={{ objectPosition: "center 30%" }} sizes="(min-width: 1024px) 16vw, 50vw" />
               </div>
               <div className="relative overflow-hidden">
-                <Image src="/about/butuan-youth-training.jpg" alt="James leading digital evangelism training in Butuan" fill className="object-cover transition duration-700 hover:scale-105" style={{ objectPosition: "center 30%" }} sizes="(min-width: 1024px) 16vw, 50vw" />
+                <Image src="/about/butuan-youth-training.webp" alt="James leading digital evangelism training in Butuan" fill className="object-cover transition duration-700 hover:scale-105" style={{ objectPosition: "center 30%" }} sizes="(min-width: 1024px) 16vw, 50vw" />
               </div>
             </div>
             <div className="flex-1 p-8">
@@ -252,7 +252,7 @@ export default function AboutPage() {
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] bg-white shadow-premium lg:col-span-3">
-            <StoryImage src="/about/takeo-adventist-school.jpg" alt="James with students at Takeo Adventist School in Cambodia" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/takeo-adventist-school.webp" alt="James with students at Takeo Adventist School in Cambodia" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <p className="text-xs font-bold uppercase tracking-widest text-accent">June 2025</p>
               <h3 className="mt-2 text-2xl font-bold text-primary">Mission Trip — Cambodia</h3>
@@ -260,7 +260,7 @@ export default function AboutPage() {
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] bg-white shadow-premium lg:col-span-3">
-            <StoryImage src="/about/mvc-media-ministry.jpg" alt="James editing video content for MVC Media Ministry" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/mvc-media-ministry.webp" alt="James editing video content for MVC Media Ministry" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">MVC Media Ministry</h3>
               <p className="mt-4 leading-8 text-primary/70">James serves with the Mountain View College Media Center, editing videos, producing content for InVerse Philippines and the GluTeen Podcast, and supporting church livestreams and other digital ministry initiatives.</p>
@@ -273,7 +273,7 @@ export default function AboutPage() {
       <SectionWrapper title="Ministry Leadership & Formation" subtitle="Developing Christ-centered leadership through service, evangelism, preaching, literature ministry, and pastoral training.">
         <div className="mx-auto grid max-w-5xl gap-7 md:grid-cols-2">
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/youth-leadership.jpg" alt="James after Master Guide and Senior Youth Leader investiture" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/youth-leadership.webp" alt="James after Master Guide and Senior Youth Leader investiture" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <p className="text-xs font-bold uppercase tracking-widest text-accent">Master Guide &amp; Senior Youth Leader</p>
               <h3 className="mt-2 text-2xl font-bold text-primary">Leadership</h3>
@@ -281,21 +281,21 @@ export default function AboutPage() {
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/field-ministry-training.jpg" alt="Certificate recognizing James M. David for field ministry service as an evangelist" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/field-ministry-training.webp" alt="Certificate recognizing James M. David for field ministry service as an evangelist" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Field Ministry Training</h3>
               <p className="mt-4 leading-8 text-primary/70">As part of his ministerial preparation, James served as an evangelist at Dologon Seventh-day Adventist Church (2023–2024), as a student church pastor at Cabanglasan Seventh-day Adventist Church (2024–2025), and completed Field School training in Molave City (April–May 2026).</p>
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/literature-evangelism.jpg" alt="James holding a book during literature evangelism" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/literature-evangelism.webp" alt="James holding a book during literature evangelism" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Literature Evangelism</h3>
               <p className="mt-4 leading-8 text-primary/70">Alongside his theological studies, James engaged in literature evangelism, sharing Christ-centered books while gaining valuable experience in personal witnessing, mission work, and soul-winning. He is also the author of <em>In the Arms of Faith</em>, a personal testimony that recounts his journey of faith and God’s leading throughout his life.</p>
             </div>
           </article>
           <article className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-primary/15 bg-white shadow-premium">
-            <StoryImage src="/about/preaching-engagements.jpg" alt="James speaking during a preaching engagement" className="aspect-[16/9]" position="center" />
+            <StoryImage src="/about/preaching-engagements.webp" alt="James speaking during a preaching engagement" className="aspect-[16/9]" position="center" />
             <div className="flex-1 p-8">
               <h3 className="text-2xl font-bold text-primary">Preaching Engagements</h3>
               <p className="mt-4 leading-8 text-primary/70">James has been invited to preach in churches, youth fellowships, evangelistic meetings, weeks of prayer, and other ministry events. He also receives online invitations to share sermons, Bible studies, devotionals, and personal testimonies with churches and youth groups across different regions, extending the reach of God’s Word beyond geographical boundaries.</p>
@@ -318,7 +318,7 @@ export default function AboutPage() {
           <article className="grid overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium lg:grid-cols-[34%_66%]">
             <div className="relative aspect-square w-full lg:aspect-auto lg:min-h-[24rem]">
               <Image
-                src="/about/Author.jpg"
+                src="/about/Author.webp"
                 alt="James M. David as an author"
                 fill
                 className="object-cover object-center"
@@ -342,7 +342,7 @@ export default function AboutPage() {
           <article className="grid overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-premium lg:grid-cols-[34%_66%]">
             <div className="relative aspect-square w-full lg:aspect-auto lg:min-h-[24rem]">
               <Image
-                src="/books/in-the-arms-of-faith-book-cover.png"
+                src="/books/in-the-arms-of-faith-book-cover.webp"
                 alt="In the Arms of Faith by James M. David"
                 fill
                 className="object-cover object-center"

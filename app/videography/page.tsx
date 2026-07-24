@@ -83,7 +83,7 @@ export default function VideoPage() {
         <article className="mx-auto grid max-w-5xl overflow-hidden rounded-[2rem] bg-white shadow-premium md:grid-cols-[42%_58%]">
           <div className="relative min-h-64 overflow-hidden bg-primary sm:min-h-72 md:min-h-80">
             <Image
-              src="/about/mvc-media-ministry.jpg"
+              src="/about/mvc-media-ministry.webp"
               alt="James editing video content for MVC Media Ministry"
               fill
               className="object-cover object-center transition duration-700 hover:scale-105"

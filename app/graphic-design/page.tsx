@@ -20,17 +20,17 @@ const services = [
 
 // Approved logo samples from the public graphic assets folder.
 const logoSamples = [
-  { title: "Royal Christian Academy", image: "/graphic/logo-1.png", alt: "Royal Christian Academy logo design" },
-  { title: "JavidVerse", image: "/graphic/logo-2.png", alt: "JavidVerse logo design" },
-  { title: "Aligned4LifeProject", image: "/graphic/logo-3.png", alt: "Aligned4LifeProject logo design" },
-  { title: "H.E.A.L Lifestyle Academy", image: "/graphic/logo-4.png", alt: "H.E.A.L Lifestyle Academy logo design" },
+  { title: "Royal Christian Academy", image: "/graphic/logo-1.webp", alt: "Royal Christian Academy logo design" },
+  { title: "JavidVerse", image: "/graphic/logo-2.webp", alt: "JavidVerse logo design" },
+  { title: "Aligned4LifeProject", image: "/graphic/logo-3.webp", alt: "Aligned4LifeProject logo design" },
+  { title: "H.E.A.L Lifestyle Academy", image: "/graphic/logo-4.webp", alt: "H.E.A.L Lifestyle Academy logo design" },
 ] as const;
 
 // Approved event-flyer samples from the public graphic assets folder.
 const eventFlyerSamples = [
-  { title: "What Is Eternity in Mind?", image: "/graphic/flyer 1.png", alt: "What Is Eternity in Mind event flyer" },
-  { title: "Featured Titles", image: "/graphic/flyer 2.png", alt: "Aligned4LifeProject featured titles flyer" },
-  { title: "Witnessing in the Old Testament", image: "/graphic/flyer 3.png", alt: "Witnessing in the Old Testament event flyer" },
+  { title: "What Is Eternity in Mind?", image: "/graphic/flyer 1.webp", alt: "What Is Eternity in Mind event flyer" },
+  { title: "Featured Titles", image: "/graphic/flyer 2.webp", alt: "Aligned4LifeProject featured titles flyer" },
+  { title: "Witnessing in the Old Testament", image: "/graphic/flyer 3.webp", alt: "Witnessing in the Old Testament event flyer" },
 ] as const;
 
 export default function GraphicPage() {

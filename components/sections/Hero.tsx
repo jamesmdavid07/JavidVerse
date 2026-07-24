@@ -64,7 +64,7 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
       {!isInnerPage ? (
         <>
           <Image
-            src="/site/hero-image.jpg"
+            src="/site/hero-image.webp"
             alt=""
             fill
             className="absolute inset-0 z-0 h-full w-full object-cover object-center opacity-70"
@@ -85,17 +85,32 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
         className={`relative z-20 w-full ${isInnerPage ? "flex max-w-5xl flex-col items-center justify-center py-0 text-center" : "mx-auto max-w-7xl"}`}
       >
         {!isInnerPage ? (
-          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 xl:gap-14">
+          <div className="grid items-center gap-1 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 xl:gap-14">
             {/* Homepage message */}
             <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
               <motion.p
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="mb-4 text-xs font-bold uppercase tracking-[0.34em] text-light sm:text-sm"
+                className="mb-0 text-xs font-bold uppercase tracking-[0.34em] text-light sm:text-sm lg:mb-4"
               >
                 Welcome to
               </motion.p>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.75, delay: 0.13 }}
+                className="pointer-events-none relative z-10 mx-auto -mt-8 -mb-12 flex h-64 w-64 items-center justify-center sm:-mt-10 sm:-mb-14 sm:h-[23rem] sm:w-[23rem] md:-mt-14 md:-mb-20 md:h-[30rem] md:w-[30rem] lg:hidden"
+              >
+                <span className="absolute -inset-8 rounded-full bg-white/28 blur-3xl sm:-inset-10" aria-hidden="true" />
+                <Image
+                  src="/brand/logo-with-shadow.webp"
+                  alt="JavidVerse"
+                  width={464}
+                  height={464}
+                  className="relative z-10 h-full w-full object-contain"
+                />
+              </motion.div>
               <motion.h1
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -132,7 +147,7 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.45 }}
-                className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:items-start lg:justify-start"
+                className="mt-10 hidden flex-col items-center justify-center gap-4 sm:flex-row lg:flex lg:items-start lg:justify-start"
               >
                 <Link href="/contact" className="btn-primary min-w-48 px-7 py-4 text-base font-bold shadow-premium sm:text-[1.02rem]">
                   Start Your Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
@@ -150,18 +165,17 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
               transition={{ duration: 0.9, delay: 0.35, ease: "easeOut" }}
               className="relative mx-auto w-full max-w-3xl lg:min-h-[36rem] xl:max-w-[48rem]"
             >
-              <div className="pointer-events-none relative z-10 mx-auto mb-7 flex h-64 w-64 items-center justify-center sm:h-80 sm:w-80 lg:absolute lg:left-1/2 lg:top-1/2 lg:mb-0 lg:h-[32rem] lg:w-[32rem] lg:-translate-x-1/2 lg:-translate-y-1/2 xl:h-[36rem] xl:w-[36rem]">
-                <span className="absolute -inset-5 rounded-full bg-white/26 blur-3xl" aria-hidden="true" />
+              <div className="pointer-events-none relative z-10 mx-auto mb-0 hidden h-72 w-72 items-center justify-center sm:h-[23rem] sm:w-[23rem] md:h-[30rem] md:w-[30rem] lg:absolute lg:left-1/2 lg:top-1/2 lg:mb-0 lg:flex lg:h-[32rem] lg:w-[32rem] lg:-translate-x-1/2 lg:-translate-y-1/2 xl:h-[36rem] xl:w-[36rem]">
+                <span className="absolute -inset-8 rounded-full bg-white/28 blur-3xl sm:-inset-10 sm:bg-white/28" aria-hidden="true" />
                 <Image
-                  src="/brand/logo-with-shadow.png"
+                  src="/brand/logo-with-shadow.webp"
                   alt="JavidVerse"
                   width={464}
                   height={464}
                   className="relative z-10 h-full w-full object-contain"
-                  priority
                 />
               </div>
-              <div className="relative z-30 grid gap-4 sm:grid-cols-2 lg:min-h-[36rem] lg:block">
+              <div className="relative z-30 grid grid-cols-2 gap-3 sm:gap-4 lg:min-h-[36rem] lg:block">
                 {serviceLinks.map((service, index) => {
                   const Icon = service.icon;
 
@@ -175,21 +189,34 @@ export default function Hero({ eyebrow, title, subtitle, action, actionHref }: H
                     >
                       <Link
                         href={service.href}
-                        className="group flex min-h-24 items-center gap-3 rounded-[1.35rem] border border-accent/30 bg-accent p-3.5 text-left text-primary shadow-[0_18px_50px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-1 hover:brightness-105 hover:shadow-[0_24px_70px_rgba(0,0,0,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:p-4 lg:w-60 xl:w-72"
+                        className="group relative flex min-h-32 flex-col items-start gap-2 rounded-2xl border border-accent/30 bg-accent p-3 text-left text-primary shadow-[0_18px_50px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-y-1 hover:brightness-105 hover:shadow-[0_24px_70px_rgba(0,0,0,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-light focus-visible:ring-offset-2 focus-visible:ring-offset-primary sm:min-h-24 sm:flex-row sm:items-center sm:gap-3 sm:rounded-[1.35rem] sm:p-4 lg:w-60 xl:w-72"
                       >
-                        <span className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${service.iconClassName}`} aria-hidden="true">
-                          <Icon className="h-5 w-5" />
+                        <span className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl sm:h-10 sm:w-10 ${service.iconClassName}`} aria-hidden="true">
+                          <Icon className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
                         </span>
                         <span className="min-w-0 flex-1">
-                          <span className="block text-sm font-bold leading-5 sm:text-[0.95rem]">{service.label}</span>
-                          <span className="mt-1.5 block text-[0.72rem] font-semibold leading-4 text-primary/75 sm:text-xs">{service.description}</span>
+                          <span className="block text-[0.78rem] font-bold leading-4 sm:text-[0.95rem] sm:leading-5">{service.label}</span>
+                          <span className="mt-1.5 block text-[0.64rem] font-semibold leading-3 text-primary/75 sm:text-xs sm:leading-4">{service.description}</span>
                         </span>
-                        <ArrowRight className="h-4 w-4 shrink-0 text-primary transition duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                        <ArrowRight className="absolute right-3 top-3 h-3.5 w-3.5 shrink-0 text-primary transition duration-300 group-hover:translate-x-1 sm:static sm:h-4 sm:w-4" aria-hidden="true" />
                       </Link>
                     </motion.div>
                   );
                 })}
               </div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.75 }}
+                className="mt-7 flex flex-col items-center justify-center gap-4 sm:flex-row lg:hidden"
+              >
+                <Link href="/contact" className="btn-primary w-full max-w-xs px-7 py-4 text-base font-bold shadow-premium sm:w-auto sm:min-w-48 sm:text-[1.02rem]">
+                  Start Your Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                </Link>
+                <Link href="/about-us" className="btn-outline-light w-full max-w-xs border-light/40 bg-white/5 px-7 py-4 text-base font-bold backdrop-blur-sm hover:border-light sm:w-auto sm:min-w-36 sm:text-[1.02rem]">
+                  About Us
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
         ) : null}

@@ -45,7 +45,7 @@ const featuredWork = [
   {
     title: "Larry Bachman Website",
     category: "Website",
-    image: "/larry-web-homepage.png",
+    image: "/larry-web-homepage.webp",
     alt: "Larry Bachman website preview",
     href: "/website-services",
     action: "View Website Services",
@@ -56,7 +56,7 @@ const featuredWork = [
   {
     title: "Royal Christian Academy Logo",
     category: "Graphic Design",
-    image: "/graphic/logo-1.png",
+    image: "/graphic/logo-1.webp",
     alt: "Royal Christian Academy logo design",
     href: "/graphic-design",
     action: "View Graphic Design",
@@ -67,7 +67,7 @@ const featuredWork = [
   {
     title: "Aligned Advert Poster",
     category: "Graphic Design",
-    image: "/graphic/Align365-Podcast.png",
+    image: "/graphic/Align365-Podcast.webp",
     alt: "Align365 Podcast promotional poster",
     href: "/graphic-design",
     action: "View Graphic Design",
@@ -83,7 +83,7 @@ const featuredBook = {
   author: "James M. David",
   description:
     "When faith becomes more than belief, it becomes a journey. From a humble village in Kenya to mission fields around the world, James David shares a powerful story of faith, purpose, and God's leading. Each chapter includes reflection questions, practical application, and prayer to help readers grow in their own spiritual journey.",
-  image: "/books/in the arms-of-faith.jpg",
+  image: "/books/in the arms-of-faith.webp",
   alt: "Book cover for In the Arms of Faith by James M. David",
   digitalHref: "https://inthearmsoffaith.com/",
 } as const;
@@ -140,7 +140,7 @@ export default function HomePage() {
           {/* Founder image */}
           <div className="relative min-h-80 overflow-hidden rounded-[2rem] bg-primary shadow-premium sm:min-h-[26rem]">
             <Image
-              src="/about/james.jpg"
+              src="/about/james.webp"
               alt="James M. David, founder of JavidVerse"
               fill
               className="object-cover object-top"

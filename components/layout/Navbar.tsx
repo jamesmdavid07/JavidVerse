@@ -41,7 +41,7 @@ export default function Navbar() {
         {/* Brand logo */}
         <Link href="/" aria-label="JavidVerse home">
           <Image
-            src="/brand/javidverse-logo.png"
+            src="/brand/javidverse-logo.webp"
             alt="JavidVerse"
             width={220}
             height={60}
