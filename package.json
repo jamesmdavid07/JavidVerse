@@ -6,9 +6,9 @@
     "dev": "NEXT_DIST_DIR=.next-dev next dev --hostname 127.0.0.1",
     "build": "next build",
     "build:hostinger": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --incremental false"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",

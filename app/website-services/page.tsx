@@ -73,7 +73,6 @@ const websiteOptions = [
         title: "Royal Christian Academy",
         category: "School Website",
         description: "A modern, responsive website designed for school, academic programs, admissions process, faculty, and Christ-centered educational mission.",
-        href: "https://royal-christian-academy.vercel.app/",
         image: "/website/royal-christian-academy.jpg",
         alt: "Homepage preview of the Royal Christian Academy website",
       },
@@ -92,7 +91,7 @@ const clientServices = [
   {
     title: "Hosting & Deployment",
     description: "Help clients launch their websites properly with hosting, domain setup, and deployment support.",
-    items: ["Vercel", "WordPress Hosting", "Domain Connection", "DNS Setup", "SSL Support"],
+    items: ["Web Hosting", "WordPress Hosting", "Domain Connection", "DNS Setup", "SSL Support"],
     icon: CloudCog,
   },
   {
@@ -187,10 +186,14 @@ export default function WebsiteServicesPage() {
                           <h4 className="text-lg font-bold text-primary">{project.title}</h4>
                           {"category" in project ? <p className="mt-2 text-xs font-bold uppercase tracking-wider text-accent">{project.category}</p> : null}
                           <p className="mt-3 flex-1 text-sm leading-6 text-primary/70">{project.description}</p>
-                          <a href={project.href} target="_blank" rel="noopener noreferrer" className="btn-secondary mt-5 w-full px-4 text-sm">
-                            Visit Website <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
-                            <span className="sr-only">Opens in a new tab</span>
-                          </a>
+                          {"href" in project ? (
+                            <a href={project.href} target="_blank" rel="noopener noreferrer" className="btn-secondary mt-5 w-full px-4 text-sm">
+                              Visit Website <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
+                              <span className="sr-only">Opens in a new tab</span>
+                            </a>
+                          ) : (
+                            <p className="mt-5 rounded-full bg-primary/5 px-4 py-3 text-center text-sm font-semibold text-primary/70">Preview available</p>
+                          )}
                         </div>
                       </article>
                     ))}

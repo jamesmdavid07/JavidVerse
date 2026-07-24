@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { getMetadataBase } from "@/lib/site-url";
 
-const siteUrl = new URL(process.env.SITE_URL ?? "https://javidverse.com");
+const siteUrl = getMetadataBase();
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
@@ -26,14 +27,14 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/brand/javidverse-logo.png",
-        width: 2048,
-        height: 640,
+        width: 2189,
+        height: 680,
         alt: "JavidVerse logo"
       }
     ]
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "JavidVerse - For All Creative Solutions",
     description: "Creative solutions for ministry, mission, authors, organizations, and individuals.",
     images: ["/brand/javidverse-logo.png"],
