@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Primary site navigation shared by desktop and mobile layouts.
 const links = [
@@ -23,10 +23,12 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  // Close the mobile menu after navigating to another route.
-  useEffect(() => {
+  // Close the mobile menu when navigating to a new route.
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/15 bg-primary shadow-premium">

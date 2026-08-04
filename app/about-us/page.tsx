@@ -5,7 +5,6 @@ import {
   BookOpen,
   GraduationCap,
   HeartHandshake,
-  Mic2,
   Users,
 } from "lucide-react";
 import SectionWrapper from "@/components/sections/SectionWrapper";
