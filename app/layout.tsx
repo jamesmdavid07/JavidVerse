@@ -4,6 +4,7 @@ import Script from "next/script";
 import "../styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ConsentBanner from "@/components/layout/ConsentBanner";
 import { getMetadataBase } from "@/lib/site-url";
 
 const siteUrl = getMetadataBase();
@@ -70,9 +71,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            var consent = 'denied';
+            try {
+              var m = document.cookie.match(/(?:^|;\\s*)jv_consent=([^;]+)/);
+              if (m && (m[1] === 'granted' || m[1] === 'denied')) consent = m[1];
+            } catch (e) {}
+            gtag('consent', 'default', {
+              ad_storage: consent,
+              ad_user_data: consent,
+              ad_personalization: consent,
+              analytics_storage: consent,
+              wait_for_update: 500
+            });
             gtag('config', 'G-SQ27TCJ0H1');
           `}
         </Script>
+
+        <ConsentBanner />
       </body>
     </html>
   );
