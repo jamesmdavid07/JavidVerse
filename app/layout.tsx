@@ -61,6 +61,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </div>
 
+        {/* Elfsight WhatsApp Chat | JavidVerse */}
+        <Script src="https://elfsightcdn.com/platform.js" strategy="afterInteractive" />
+        <div className="elfsight-app-6d8ade99-aed2-4988-91c6-4bcb46d0d225" data-elfsight-app-lazy />
+
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SQ27TCJ0H1"
