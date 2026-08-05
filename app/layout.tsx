@@ -5,6 +5,7 @@ import "../styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ConsentBanner from "@/components/layout/ConsentBanner";
+import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getMetadataBase } from "@/lib/site-url";
 
 const siteUrl = getMetadataBase();
@@ -61,10 +62,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </div>
 
-        {/* Elfsight WhatsApp Chat | JavidVerse */}
-        <Script src="https://elfsightcdn.com/platform.js" strategy="afterInteractive" />
-        <div className="elfsight-app-6d8ade99-aed2-4988-91c6-4bcb46d0d225" data-elfsight-app-lazy />
-
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SQ27TCJ0H1"
@@ -92,6 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
 
         <ConsentBanner />
+        <WhatsAppButton />
       </body>
     </html>
   );
