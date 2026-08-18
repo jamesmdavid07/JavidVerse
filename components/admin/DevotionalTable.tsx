@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Pencil, Eye, EyeOff } from "lucide-react";
+import { Plus, Pencil, Globe, EyeOff } from "lucide-react";
 
 interface DevotionalEntry {
   id: number;
@@ -18,10 +18,11 @@ export default function DevotionalTable() {
   const router = useRouter();
   const [devotionals, setDevotionals] = useState<DevotionalEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
 
   async function loadDevotionals() {
     try {
-      const res = await fetch("/api/devotionals");
+      const res = await fetch("/api/devotionals?all=true");
       const data = await res.json();
       setDevotionals(data);
     } finally {
@@ -33,14 +34,18 @@ export default function DevotionalTable() {
     loadDevotionals();
   }, [router]);
 
-  async function toggleStatus(d: DevotionalEntry) {
-    const newStatus = d.status === "published" ? "draft" : "published";
-    await fetch(`/api/devotionals/${d.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: newStatus }),
-    });
-    loadDevotionals();
+  async function setStatus(id: number, status: "draft" | "published") {
+    setUpdatingId(id);
+    try {
+      await fetch(`/api/devotionals/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      await loadDevotionals();
+    } finally {
+      setUpdatingId(null);
+    }
   }
 
   function formatDate(dateStr: string) {
@@ -105,7 +110,6 @@ export default function DevotionalTable() {
                 <tr>
                   <th className="px-4 py-3 font-semibold text-white/80">Date</th>
                   <th className="px-4 py-3 font-semibold text-white/80">Title</th>
-                  <th className="px-4 py-3 font-semibold text-white/80">Author</th>
                   <th className="px-4 py-3 font-semibold text-white/80">Status</th>
                   <th className="px-4 py-3 font-semibold text-white/80">Actions</th>
                 </tr>
@@ -119,28 +123,36 @@ export default function DevotionalTable() {
                     <td className="px-4 py-3 font-medium text-[#042D6D]">
                       {d.title}
                     </td>
-                    <td className="px-4 py-3 text-gray-500">{d.author}</td>
                     <td className="px-4 py-3">{statusBadge(d.status)}</td>
                     <td className="whitespace-nowrap px-4 py-3">
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1.5">
+                        {d.status !== "published" && (
+                          <button
+                            onClick={() => setStatus(d.id, "published")}
+                            disabled={updatingId === d.id}
+                            className="inline-flex items-center gap-1 rounded-lg bg-[#FCB005]/10 px-3 py-1.5 text-xs font-semibold text-[#042D6D] transition hover:bg-[#FCB005]/25 disabled:opacity-50"
+                          >
+                            <Globe className="h-3.5 w-3.5" />
+                            Live
+                          </button>
+                        )}
                         <button
                           onClick={() => router.push(`/admin/devotionals/${d.id}/edit`)}
-                          className="rounded-lg p-1.5 text-gray-300 transition hover:bg-[#042D6D]/5 hover:text-[#042D6D]"
-                          title="Edit"
+                          className="inline-flex items-center gap-1 rounded-lg bg-[#042D6D]/5 px-3 py-1.5 text-xs font-semibold text-[#042D6D] transition hover:bg-[#042D6D]/10"
                         >
-                          <Pencil className="h-4 w-4" />
+                          <Pencil className="h-3.5 w-3.5" />
+                          Edit
                         </button>
-                        <button
-                          onClick={() => toggleStatus(d)}
-                          className="rounded-lg p-1.5 text-gray-300 transition hover:bg-[#FCB005]/20 hover:text-[#042D6D]"
-                          title={d.status === "published" ? "Unpublish" : "Publish"}
-                        >
-                          {d.status === "published" ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </button>
+                        {d.status === "published" && (
+                          <button
+                            onClick={() => setStatus(d.id, "draft")}
+                            disabled={updatingId === d.id}
+                            className="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-500 transition hover:bg-gray-200 disabled:opacity-50"
+                          >
+                            <EyeOff className="h-3.5 w-3.5" />
+                            Unpublish
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -162,29 +174,37 @@ export default function DevotionalTable() {
                   </h3>
                   {statusBadge(d.status)}
                 </div>
-                <p className="mb-1 text-xs text-gray-400">
+                <p className="mb-3 text-xs text-gray-400">
                   {formatDate(d.publicationDate)}
                 </p>
-                <p className="mb-3 text-xs text-gray-400">{d.author}</p>
                 <div className="flex items-center gap-2 border-t border-gray-100 pt-2">
+                  {d.status !== "published" && (
+                    <button
+                      onClick={() => setStatus(d.id, "published")}
+                      disabled={updatingId === d.id}
+                      className="flex items-center gap-1 rounded-lg bg-[#FCB005]/10 px-3 py-1.5 text-xs font-semibold text-[#042D6D] transition hover:bg-[#FCB005]/25 disabled:opacity-50"
+                    >
+                      <Globe className="h-3 w-3" />
+                      Live
+                    </button>
+                  )}
                   <button
                     onClick={() => router.push(`/admin/devotionals/${d.id}/edit`)}
-                    className="flex items-center gap-1 rounded-lg bg-[#042D6D]/5 px-3 py-1.5 text-xs font-medium text-[#042D6D] transition hover:bg-[#042D6D]/10"
+                    className="flex items-center gap-1 rounded-lg bg-[#042D6D]/5 px-3 py-1.5 text-xs font-semibold text-[#042D6D] transition hover:bg-[#042D6D]/10"
                   >
                     <Pencil className="h-3 w-3" />
                     Edit
                   </button>
-                  <button
-                    onClick={() => toggleStatus(d)}
-                    className="flex items-center gap-1 rounded-lg bg-[#FCB005]/10 px-3 py-1.5 text-xs font-medium text-[#042D6D] transition hover:bg-[#FCB005]/20"
-                  >
-                    {d.status === "published" ? (
+                  {d.status === "published" && (
+                    <button
+                      onClick={() => setStatus(d.id, "draft")}
+                      disabled={updatingId === d.id}
+                      className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-500 transition hover:bg-gray-200 disabled:opacity-50"
+                    >
                       <EyeOff className="h-3 w-3" />
-                    ) : (
-                      <Eye className="h-3 w-3" />
-                    )}
-                    {d.status === "published" ? "Unpublish" : "Publish"}
-                  </button>
+                      Unpublish
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

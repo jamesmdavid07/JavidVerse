@@ -125,27 +125,16 @@ export default function DevotionalForm({ initialData, mode }: Props) {
         />
       </div>
 
-      {/* Author + Date row */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
-          <label className="block text-sm font-semibold text-[#042D6D]">Author</label>
-          <input
-            type="text"
-            value={form.author}
-            onChange={(e) => updateField("author", e.target.value)}
-            className={inputClass}
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-semibold text-[#042D6D]">Publication Date *</label>
-          <input
-            type="date"
-            value={form.publicationDate}
-            onChange={(e) => updateField("publicationDate", e.target.value)}
-            className={inputClass}
-            required
-          />
-        </div>
+      {/* Publication Date */}
+      <div>
+        <label className="block text-sm font-semibold text-[#042D6D]">Publication Date *</label>
+        <input
+          type="date"
+          value={form.publicationDate}
+          onChange={(e) => updateField("publicationDate", e.target.value)}
+          className={inputClass}
+          required
+        />
       </div>
 
       {/* Bible reference + Translation row */}
