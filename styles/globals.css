@@ -138,3 +138,63 @@ a {
 .prose-devotional a {
   @apply font-semibold text-accent underline transition hover:text-primary;
 }
+
+/* TipTap editor styles (admin) */
+.tiptap-editor {
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.tiptap-editor .tiptap {
+  min-height: 300px;
+  padding: 1rem;
+  outline: none;
+}
+
+.tiptap-editor .tiptap p {
+  margin-bottom: 0.75rem;
+}
+
+.tiptap-editor .tiptap p:last-child {
+  margin-bottom: 0;
+}
+
+.tiptap-editor .tiptap em {
+  font-style: italic;
+}
+
+.tiptap-editor .tiptap strong {
+  font-weight: 700;
+}
+
+.tiptap-editor .tiptap a {
+  color: #042D6D;
+  text-decoration: underline;
+}
+
+.tiptap-editor .toolbar {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #d1d5db;
+  background: #f0ede8;
+  flex-wrap: wrap;
+}
+
+.tiptap-editor .toolbar button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: #042D6D;
+  transition: background-color 0.15s;
+}
+
+.tiptap-editor .toolbar button:hover {
+  background-color: #e0ddd6;
+}
+
+.tiptap-editor .toolbar button.active {
+  background-color: #042D6D;
+  color: white;
+}

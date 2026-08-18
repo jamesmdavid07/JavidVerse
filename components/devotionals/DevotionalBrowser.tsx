@@ -196,7 +196,12 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
 
         {/* Share */}
         <div className="mt-10 border-t border-primary/10 pt-6">
-          <DevotionalShare title={devotional.title} slug={devotional.slug} />
+          <DevotionalShare
+            title={devotional.title}
+            mainBibleRef={devotional.mainBibleRef}
+            fullVerse={devotional.fullVerse}
+            bibleTranslation={devotional.bibleTranslation}
+          />
         </div>
 
         {/* Author card */}
