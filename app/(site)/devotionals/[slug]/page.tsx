@@ -2,16 +2,13 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, User, ArrowLeft, ArrowRight } from "lucide-react";
-import { getDevotionalBySlug, getAdjacentDevotionals, getPublishedDevotionals } from "@/lib/devotionals";
+import { getDevotionalBySlug, getAdjacentDevotionals } from "@/lib/devotionals";
 import { getSiteUrl } from "@/lib/site-url";
 import DevotionalContent from "@/components/devotionals/DevotionalContent";
 import DevotionalBibleRefs from "@/components/devotionals/DevotionalBibleRefs";
 import DevotionalShare from "@/components/devotionals/DevotionalShare";
 
-export async function generateStaticParams() {
-  const published = await getPublishedDevotionals();
-  return published.map((d) => ({ slug: d.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

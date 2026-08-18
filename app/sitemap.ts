@@ -16,8 +16,6 @@ const routes = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const published = await getPublishedDevotionals();
-
   const staticRoutes = routes.map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
@@ -25,12 +23,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === "" ? 1 : 0.8,
   }));
 
-  const devotionalRoutes = published.map((d) => ({
-    url: `${siteUrl}/devotionals/${d.slug}`,
-    lastModified: new Date(d.publicationDate),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  let devotionalRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const published = await getPublishedDevotionals();
+    devotionalRoutes = published.map((d) => ({
+      url: `${siteUrl}/devotionals/${d.slug}`,
+      lastModified: new Date(d.publicationDate),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
+  } catch {
+    // DB unavailable at build time — skip devotional URLs in sitemap.
+  }
 
   return [...staticRoutes, ...devotionalRoutes];
 }
