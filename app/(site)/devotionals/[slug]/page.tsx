@@ -5,7 +5,6 @@ import { Calendar, User, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { getDevotionalBySlug, getAdjacentDevotionals } from "@/lib/devotionals";
 import { getSiteUrl } from "@/lib/site-url";
 import DevotionalContent from "@/components/devotionals/DevotionalContent";
-import DevotionalBibleRefs from "@/components/devotionals/DevotionalBibleRefs";
 import DevotionalShare from "@/components/devotionals/DevotionalShare";
 
 export const dynamic = "force-dynamic";
@@ -40,7 +39,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: devotional.createdAt,
       modifiedTime: devotional.updatedAt,
       authors: [devotional.author],
-      images: [{ url: "/brand/javidverse-logo.png", width: 2189, height: 680, alt: devotional.title }],
     },
     twitter: {
       card: "summary_large_image" as const,
@@ -86,6 +84,7 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "Asia/Manila",
   });
 
   return (
@@ -103,12 +102,12 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
         {/* Meta */}
         <div className="mb-6 flex flex-wrap items-center gap-4 text-sm text-primary/60">
           <span className="inline-flex items-center gap-1.5">
-            <User className="h-4 w-4 text-accent" />
-            {devotional.author}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
             <Calendar className="h-4 w-4 text-accent" />
             {dateStr}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <User className="h-4 w-4 text-accent" />
+            Written by James David
           </span>
         </div>
 
@@ -145,9 +144,6 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
             Lord, help me bring every change, every fear, and every uncertainty to You today. I trust that You are close, faithful, and able to carry me through. In Jesus&apos; name, Amen.
           </p>
         </div>
-
-        {/* Read More Bible references */}
-        <DevotionalBibleRefs refs={devotional.readMoreRefs} />
 
         {/* Share */}
         <div className="mt-10 border-t border-primary/10 pt-6">

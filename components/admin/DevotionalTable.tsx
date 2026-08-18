@@ -53,6 +53,7 @@ export default function DevotionalTable() {
       year: "numeric",
       month: "short",
       day: "numeric",
+      timeZone: "Asia/Manila",
     });
   }
 

@@ -4,7 +4,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import DevotionalEditor from "./DevotionalEditor";
-import { Plus, Trash2 } from "lucide-react";
 
 interface DevotionalFormData {
   title: string;
@@ -14,7 +13,6 @@ interface DevotionalFormData {
   bibleTranslation: string;
   fullVerse: string;
   content: string;
-  readMoreRefs: string[];
   status: "draft" | "published" | "scheduled";
 }
 
@@ -25,13 +23,12 @@ interface Props {
 
 const EMPTY: DevotionalFormData = {
   title: "",
-  author: "Written by James M. David",
-  publicationDate: new Date().toISOString().split("T")[0],
+  author: "Written by James David",
+  publicationDate: new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Manila" }),
   mainBibleRef: "",
   bibleTranslation: "NIV",
   fullVerse: "",
   content: "",
-  readMoreRefs: [""],
   status: "draft",
 };
 
@@ -51,24 +48,6 @@ export default function DevotionalForm({ initialData, mode }: Props) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  function addReadMoreRef() {
-    setForm((prev) => ({ ...prev, readMoreRefs: [...prev.readMoreRefs, ""] }));
-  }
-
-  function removeReadMoreRef(index: number) {
-    setForm((prev) => ({
-      ...prev,
-      readMoreRefs: prev.readMoreRefs.filter((_, i) => i !== index),
-    }));
-  }
-
-  function updateReadMoreRef(index: number, value: string) {
-    setForm((prev) => ({
-      ...prev,
-      readMoreRefs: prev.readMoreRefs.map((r, i) => (i === index ? value : r)),
-    }));
-  }
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
@@ -76,7 +55,6 @@ export default function DevotionalForm({ initialData, mode }: Props) {
 
     const payload = {
       ...form,
-      readMoreRefs: form.readMoreRefs.filter((r) => r.trim() !== ""),
     };
 
     try {
@@ -137,6 +115,17 @@ export default function DevotionalForm({ initialData, mode }: Props) {
         />
       </div>
 
+      {/* Author */}
+      <div>
+        <label className="block text-sm font-semibold text-[#042D6D]">Author</label>
+        <input
+          type="text"
+          value={form.author}
+          onChange={(e) => updateField("author", e.target.value)}
+          className={inputClass}
+        />
+      </div>
+
       {/* Bible reference + Translation row */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
@@ -181,47 +170,6 @@ export default function DevotionalForm({ initialData, mode }: Props) {
             content={form.content}
             onChange={(html) => updateField("content", html)}
           />
-        </div>
-      </div>
-
-      {/* Read More Bible References */}
-      <div>
-        <label className="block text-sm font-semibold text-[#042D6D]">
-          Read More Bible References
-        </label>
-        <p className="mt-0.5 text-xs text-[#042D6D]/40">
-          Additional references displayed below the devotional.
-        </p>
-        <div className="mt-2 space-y-2">
-          {form.readMoreRefs.map((ref, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <input
-                type="text"
-                value={ref}
-                onChange={(e) => updateReadMoreRef(i, e.target.value)}
-                placeholder="e.g. Deuteronomy 31:6"
-                className={inputClass}
-                style={{ marginTop: 0 }}
-              />
-              {form.readMoreRefs.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeReadMoreRef(i)}
-                  className="shrink-0 rounded-lg p-2 text-[#042D6D]/30 transition hover:bg-red-50 hover:text-red-500"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addReadMoreRef}
-            className="flex items-center gap-1 text-sm font-semibold text-[#FCB005] hover:underline"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            Add reference
-          </button>
         </div>
       </div>
 

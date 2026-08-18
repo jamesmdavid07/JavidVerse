@@ -65,7 +65,10 @@ function rowToIndexEntry(row: RowDataPacket): DevotionalIndexEntry {
 function isVisible(status: string, publicationDate: string): boolean {
   if (status === "published") return true;
   if (status === "scheduled") {
-    return new Date(publicationDate) <= new Date();
+    const now = new Date();
+    const phNow = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
+    const pubDate = new Date(publicationDate + "T00:00:00");
+    return pubDate <= phNow;
   }
   return false;
 }

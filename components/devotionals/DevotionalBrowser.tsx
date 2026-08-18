@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, User, BookOpen } from "lucide-react";
 import DevotionalContent from "./DevotionalContent";
-import DevotionalBibleRefs from "./DevotionalBibleRefs";
 import DevotionalShare from "./DevotionalShare";
 import DevotionalArchive from "./DevotionalArchive";
 
@@ -83,6 +82,7 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
     month: "long",
     day: "numeric",
     year: "numeric",
+    timeZone: "Asia/Manila",
   });
 
   return (
@@ -91,12 +91,12 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
         {/* Meta */}
         <div className="mb-6 flex flex-wrap items-center gap-4 text-sm text-primary/60">
           <span className="inline-flex items-center gap-1.5">
-            <User className="h-4 w-4 text-accent" />
-            {devotional.author}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
             <Calendar className="h-4 w-4 text-accent" />
             {dateStr}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <User className="h-4 w-4 text-accent" />
+            Written by James David
           </span>
         </div>
 
@@ -138,9 +138,6 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
             Lord, help me bring every change, every fear, and every uncertainty to You today. I trust that You are close, faithful, and able to carry me through. In Jesus&apos; name, Amen.
           </p>
         </div>
-
-        {/* Read More Bible references */}
-        <DevotionalBibleRefs refs={devotional.readMoreRefs} />
 
         {/* Share */}
         <div className="mt-10 border-t border-primary/10 pt-6">

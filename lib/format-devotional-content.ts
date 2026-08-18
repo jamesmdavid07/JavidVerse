@@ -51,7 +51,10 @@ export function processDevotionalContent(html: string): string {
   return segments
     .map((seg) => {
       if (seg.type !== "text") return seg.value;
-      return seg.value.replace(REFERENCE_RE, (ref) => `<strong>${ref}</strong>`);
+      return seg.value.replace(REFERENCE_RE, (ref) => {
+        const encoded = encodeURIComponent(ref);
+        return `<a href="https://www.biblegateway.com/passage/?search=${encoded}&amp;version=NIV" target="_blank" rel="noopener noreferrer" class="bible-ref-link" data-ref="${ref}"><strong>${ref}</strong></a>`;
+      });
     })
     .join("");
 }

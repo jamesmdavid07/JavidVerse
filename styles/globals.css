@@ -139,6 +139,10 @@ a {
   @apply font-semibold text-accent underline transition hover:text-primary;
 }
 
+.prose-devotional .bible-ref-link {
+  @apply font-bold text-accent no-underline transition hover:underline hover:text-primary;
+}
+
 /* TipTap editor styles (admin) */
 .tiptap-editor {
   border: 1px solid #d1d5db;
