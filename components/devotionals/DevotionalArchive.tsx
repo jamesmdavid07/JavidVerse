@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronRight, CalendarDays } from "lucide-react";
 
 interface DevotionalIndexEntry {
-  id: string;
+  id: number;
   slug: string;
   title: string;
   author: string;

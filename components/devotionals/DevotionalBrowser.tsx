@@ -9,7 +9,7 @@ import DevotionalShare from "./DevotionalShare";
 import DevotionalArchive from "./DevotionalArchive";
 
 interface DevotionalData {
-  id: string;
+  id: number;
   slug: string;
   title: string;
   author: string;
@@ -22,7 +22,7 @@ interface DevotionalData {
 }
 
 interface DevotionalIndexEntry {
-  id: string;
+  id: number;
   slug: string;
   title: string;
   author: string;
@@ -204,9 +204,9 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
           <Image
             src="/Devotionals/Jhen-Moreno.png"
             alt="Jhen Moreno"
-            width={96}
-            height={96}
-            className="h-20 w-20 shrink-0 rounded-full object-cover ring-2 ring-accent/30"
+            width={128}
+            height={128}
+            className="h-28 w-28 shrink-0 rounded-full object-cover object-[center_15%] ring-2 ring-accent/30"
           />
           <div className="text-center sm:text-left">
             <p className="text-lg font-bold text-primary">Jhen Moreno</p>

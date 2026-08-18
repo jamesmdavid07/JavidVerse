@@ -1,13 +1,9 @@
-// Devotional data access layer — reads and writes JSON files on disk.
-import fs from "fs/promises";
-import path from "path";
-import { slugify } from "./slugify";
-
-const DATA_DIR = path.join(process.cwd(), "data", "devotionals");
-const INDEX_PATH = path.join(DATA_DIR, "index.json");
+// Devotional data access layer — reads and writes MySQL database.
+import getPool from "./db";
+import type { RowDataPacket, ResultSetHeader } from "mysql2";
 
 export interface Devotional {
-  id: string;
+  id: number;
   slug: string;
   title: string;
   author: string;
@@ -23,7 +19,7 @@ export interface Devotional {
 }
 
 export interface DevotionalIndexEntry {
-  id: string;
+  id: number;
   slug: string;
   title: string;
   author: string;
@@ -31,74 +27,38 @@ export interface DevotionalIndexEntry {
   status: "draft" | "published" | "scheduled";
 }
 
-// Ensure the data directory exists.
-async function ensureDataDir(): Promise<void> {
-  try {
-    await fs.access(DATA_DIR);
-  } catch {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-  }
+// Map a MySQL row to our Devotional interface.
+function rowToDevotional(row: RowDataPacket): Devotional {
+  const refs = typeof row.read_more_refs === "string"
+    ? JSON.parse(row.read_more_refs)
+    : row.read_more_refs ?? [];
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    author: row.author,
+    publicationDate: row.publication_date,
+    mainBibleRef: row.main_bible_ref,
+    bibleTranslation: row.bible_translation,
+    fullVerse: row.full_verse ?? "",
+    content: row.content,
+    readMoreRefs: Array.isArray(refs) ? refs : [],
+    status: row.status,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
 }
 
-// Read the index file.
-async function readIndex(): Promise<DevotionalIndexEntry[]> {
-  try {
-    const raw = await fs.readFile(INDEX_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-// Write the index file.
-async function writeIndex(entries: DevotionalIndexEntry[]): Promise<void> {
-  await ensureDataDir();
-  await fs.writeFile(INDEX_PATH, JSON.stringify(entries, null, 2), "utf-8");
-}
-
-// Read a single devotional file.
-async function readDevotionalFile(id: string): Promise<Devotional | null> {
-  try {
-    const filePath = path.join(DATA_DIR, `${id}.json`);
-    const raw = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
-
-// Write a single devotional file.
-async function writeDevotionalFile(devotional: Devotional): Promise<void> {
-  await ensureDataDir();
-  const filePath = path.join(DATA_DIR, `${devotional.id}.json`);
-  await fs.writeFile(filePath, JSON.stringify(devotional, null, 2), "utf-8");
-}
-
-// Delete a single devotional file.
-async function deleteDevotionalFile(id: string): Promise<void> {
-  const filePath = path.join(DATA_DIR, `${id}.json`);
-  try {
-    await fs.unlink(filePath);
-  } catch {
-    // File may not exist — ignore.
-  }
-}
-
-// Ensure slug uniqueness by appending a number if needed.
-async function uniqueSlug(base: string, excludeId?: string): Promise<string> {
-  const index = await readIndex();
-  let candidate = base;
-  let counter = 2;
-  while (index.some((e) => e.slug === candidate && e.id !== excludeId)) {
-    candidate = `${base}-${counter}`;
-    counter++;
-  }
-  return candidate;
-}
-
-// Generate a unique ID.
-function generateId(): string {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+// Map a MySQL row to our DevotionalIndexEntry interface.
+function rowToIndexEntry(row: RowDataPacket): DevotionalIndexEntry {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    author: row.author,
+    publicationDate: row.publication_date,
+    status: row.status,
+  };
 }
 
 // Check if a devotional is currently visible (published or scheduled in the past).
@@ -114,34 +74,46 @@ function isVisible(status: string, publicationDate: string): boolean {
 
 // Get all devotionals (for admin).
 export async function getAllDevotionals(): Promise<DevotionalIndexEntry[]> {
-  const index = await readIndex();
-  return index.sort(
-    (a, b) => new Date(b.publicationDate).getTime() - new Date(a.publicationDate).getTime()
+  const pool = getPool();
+  const [rows] = await pool.query<RowDataPacket[]>(
+    "SELECT id, slug, title, author, publication_date, status FROM devotionals ORDER BY publication_date DESC"
   );
+  return rows.map(rowToIndexEntry);
 }
 
 // Get all visible (published + past-scheduled) devotionals.
 export async function getPublishedDevotionals(): Promise<DevotionalIndexEntry[]> {
-  const index = await readIndex();
-  return index
-    .filter((e) => isVisible(e.status, e.publicationDate))
-    .sort(
-      (a, b) => new Date(b.publicationDate).getTime() - new Date(a.publicationDate).getTime()
-    );
+  const pool = getPool();
+  const [rows] = await pool.query<RowDataPacket[]>(
+    "SELECT id, slug, title, author, publication_date, status FROM devotionals ORDER BY publication_date DESC"
+  );
+  return rows
+    .map(rowToIndexEntry)
+    .filter((e) => isVisible(e.status, e.publicationDate));
 }
 
 // Get a single devotional by slug (full data).
 export async function getDevotionalBySlug(slug: string): Promise<Devotional | null> {
-  const index = await readIndex();
-  const entry = index.find((e) => e.slug === slug);
-  if (!entry) return null;
-  if (!isVisible(entry.status, entry.publicationDate)) return null;
-  return readDevotionalFile(entry.id);
+  const pool = getPool();
+  const [rows] = await pool.query<RowDataPacket[]>(
+    "SELECT * FROM devotionals WHERE slug = ?",
+    [slug]
+  );
+  if (rows.length === 0) return null;
+  const d = rowToDevotional(rows[0]);
+  if (!isVisible(d.status, d.publicationDate)) return null;
+  return d;
 }
 
 // Get a single devotional by ID (for admin).
-export async function getDevotionalById(id: string): Promise<Devotional | null> {
-  return readDevotionalFile(id);
+export async function getDevotionalById(id: number): Promise<Devotional | null> {
+  const pool = getPool();
+  const [rows] = await pool.query<RowDataPacket[]>(
+    "SELECT * FROM devotionals WHERE id = ?",
+    [id]
+  );
+  if (rows.length === 0) return null;
+  return rowToDevotional(rows[0]);
 }
 
 // Get a devotional by exact date (year, month, day).
@@ -150,20 +122,24 @@ export async function getDevotionalByExactDate(
   month: number,
   day: number
 ): Promise<Devotional | null> {
-  const published = await getPublishedDevotionals();
-  const match = published.find((e) => {
-    const d = new Date(e.publicationDate);
-    return d.getFullYear() === year && d.getMonth() + 1 === month && d.getDate() === day;
-  });
-  if (!match) return null;
-  return readDevotionalFile(match.id);
+  const pool = getPool();
+  const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  const [rows] = await pool.query<RowDataPacket[]>(
+    "SELECT * FROM devotionals WHERE publication_date = ? AND (status = 'published' OR (status = 'scheduled' AND publication_date <= CURDATE()))",
+    [dateStr]
+  );
+  if (rows.length === 0) return null;
+  return rowToDevotional(rows[0]);
 }
 
 // Get the latest published devotional.
 export async function getLatestDevotional(): Promise<Devotional | null> {
-  const published = await getPublishedDevotionals();
-  if (published.length === 0) return null;
-  return readDevotionalFile(published[0].id);
+  const pool = getPool();
+  const [rows] = await pool.query<RowDataPacket[]>(
+    "SELECT * FROM devotionals WHERE status = 'published' OR (status = 'scheduled' AND publication_date <= CURDATE()) ORDER BY publication_date DESC LIMIT 1"
+  );
+  if (rows.length === 0) return null;
+  return rowToDevotional(rows[0]);
 }
 
 // Get previous and next devotionals relative to a slug.
@@ -182,91 +158,113 @@ export async function getAdjacentDevotionals(
 export async function createDevotional(
   data: Omit<Devotional, "id" | "slug" | "createdAt" | "updatedAt">
 ): Promise<Devotional> {
-  const id = generateId();
-  const baseSlug = slugify(data.title);
-  const slug = await uniqueSlug(baseSlug);
-  const now = new Date().toISOString();
+  const pool = getPool();
 
-  const devotional: Devotional = {
-    ...data,
-    id,
-    slug,
-    createdAt: now,
-    updatedAt: now,
-  };
+  // Generate slug from title, ensure uniqueness.
+  let slug = data.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+  let counter = 2;
+  while (true) {
+    const [existing] = await pool.query<RowDataPacket[]>(
+      "SELECT id FROM devotionals WHERE slug = ?",
+      [slug]
+    );
+    if (existing.length === 0) break;
+    slug = `${data.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "")}-${counter}`;
+    counter++;
+  }
 
-  await writeDevotionalFile(devotional);
+  const [result] = await pool.execute<ResultSetHeader>(
+    `INSERT INTO devotionals (slug, title, author, publication_date, main_bible_ref, bible_translation, full_verse, content, read_more_refs, status)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      slug,
+      data.title,
+      data.author,
+      data.publicationDate,
+      data.mainBibleRef,
+      data.bibleTranslation,
+      data.fullVerse,
+      data.content,
+      JSON.stringify(data.readMoreRefs),
+      data.status,
+    ]
+  );
 
-  const index = await readIndex();
-  index.push({
-    id,
-    slug,
-    title: data.title,
-    author: data.author,
-    publicationDate: data.publicationDate,
-    status: data.status,
-  });
-  await writeIndex(index);
-
-  return devotional;
+  return getDevotionalById(result.insertId) as Promise<Devotional>;
 }
 
 // Update an existing devotional.
 export async function updateDevotional(
-  id: string,
+  id: number,
   data: Partial<Omit<Devotional, "id" | "createdAt" | "updatedAt">>
 ): Promise<Devotional | null> {
-  const existing = await readDevotionalFile(id);
+  const pool = getPool();
+  const existing = await getDevotionalById(id);
   if (!existing) return null;
 
+  // If title changed, regenerate slug.
   let slug = existing.slug;
   if (data.title && data.title !== existing.title) {
-    slug = await uniqueSlug(slugify(data.title), id);
+    slug = data.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+    let counter = 2;
+    while (true) {
+      const [dup] = await pool.query<RowDataPacket[]>(
+        "SELECT id FROM devotionals WHERE slug = ? AND id != ?",
+        [slug, id]
+      );
+      if (dup.length === 0) break;
+      slug = `${data.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "")}-${counter}`;
+      counter++;
+    }
   }
 
-  const updated: Devotional = {
-    ...existing,
-    ...data,
-    slug,
-    updatedAt: new Date().toISOString(),
-  };
+  const fields: string[] = [];
+  const values: (string | number)[] = [];
 
-  await writeDevotionalFile(updated);
+  if (data.title !== undefined) { fields.push("title = ?"); values.push(data.title); }
+  if (data.author !== undefined) { fields.push("author = ?"); values.push(data.author); }
+  if (data.publicationDate !== undefined) { fields.push("publication_date = ?"); values.push(data.publicationDate); }
+  if (data.mainBibleRef !== undefined) { fields.push("main_bible_ref = ?"); values.push(data.mainBibleRef); }
+  if (data.bibleTranslation !== undefined) { fields.push("bible_translation = ?"); values.push(data.bibleTranslation); }
+  if (data.fullVerse !== undefined) { fields.push("full_verse = ?"); values.push(data.fullVerse); }
+  if (data.content !== undefined) { fields.push("content = ?"); values.push(data.content); }
+  if (data.readMoreRefs !== undefined) { fields.push("read_more_refs = ?"); values.push(JSON.stringify(data.readMoreRefs)); }
+  if (data.status !== undefined) { fields.push("status = ?"); values.push(data.status); }
+  if (slug !== existing.slug) { fields.push("slug = ?"); values.push(slug); }
 
-  const index = await readIndex();
-  const idx = index.findIndex((e) => e.id === id);
-  if (idx !== -1) {
-    index[idx] = {
-      id,
-      slug: updated.slug,
-      title: updated.title,
-      author: updated.author,
-      publicationDate: updated.publicationDate,
-      status: updated.status,
-    };
-    await writeIndex(index);
-  }
+  if (fields.length === 0) return existing;
 
-  return updated;
+  values.push(id);
+  await pool.execute(`UPDATE devotionals SET ${fields.join(", ")} WHERE id = ?`, values);
+
+  return getDevotionalById(id);
 }
 
 // Delete a devotional.
-export async function deleteDevotional(id: string): Promise<boolean> {
-  const existing = await readDevotionalFile(id);
-  if (!existing) return false;
-
-  await deleteDevotionalFile(id);
-
-  const index = await readIndex();
-  const filtered = index.filter((e) => e.id !== id);
-  await writeIndex(filtered);
-
-  return true;
+export async function deleteDevotional(id: number): Promise<boolean> {
+  const pool = getPool();
+  const [result] = await pool.execute<ResultSetHeader>(
+    "DELETE FROM devotionals WHERE id = ?",
+    [id]
+  );
+  return result.affectedRows > 0;
 }
 
 // Publish or unpublish a devotional.
 export async function setDevotionalStatus(
-  id: string,
+  id: number,
   status: "draft" | "published" | "scheduled"
 ): Promise<Devotional | null> {
   return updateDevotional(id, { status });
