@@ -14,6 +14,8 @@ interface DevotionalData {
   bibleTranslation: string;
   fullVerse: string;
   content: string;
+  reflection: string;
+  prayer: string;
   readMoreRefs: string[];
   status: "draft" | "published" | "scheduled";
 }
