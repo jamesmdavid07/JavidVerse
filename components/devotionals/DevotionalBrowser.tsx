@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback } from "react";
 import Link from "next/link";
-import { Calendar, User, BookOpen } from "lucide-react";
+import { Calendar, User, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import DevotionalContent from "./DevotionalContent";
 import DevotionalShare from "./DevotionalShare";
 import DevotionalComments from "./DevotionalComments";
@@ -42,13 +42,29 @@ interface CommentData {
   createdAt: string;
 }
 
+interface AdjacentEntry {
+  id: number;
+  slug: string;
+  title: string;
+}
+
 interface DevotionalBrowserProps {
   latest: DevotionalData | null;
   allPublished: DevotionalIndexEntry[];
   dateSlugMap: Record<string, string>;
+  initialComments: CommentData[];
+  prev: AdjacentEntry | null;
+  next: AdjacentEntry | null;
 }
 
-export default function DevotionalBrowser({ latest, allPublished, dateSlugMap }: DevotionalBrowserProps) {
+export default function DevotionalBrowser({
+  latest,
+  allPublished,
+  dateSlugMap,
+  initialComments,
+  prev,
+  next,
+}: DevotionalBrowserProps) {
   const router = useRouter();
 
   const handleDateClick = useCallback(
@@ -75,7 +91,12 @@ export default function DevotionalBrowser({ latest, allPublished, dateSlugMap }:
   return (
     <>
       {/* Devotional content area */}
-      <DevotionalDisplay devotional={latest} />
+      <DevotionalDisplay
+        devotional={latest}
+        comments={initialComments}
+        prev={prev}
+        next={next}
+      />
 
       {/* Full-width archive */}
       <DevotionalArchive
@@ -87,17 +108,18 @@ export default function DevotionalBrowser({ latest, allPublished, dateSlugMap }:
   );
 }
 
-// Renders the full devotional content.
-function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
-  const [comments, setComments] = useState<CommentData[]>([]);
-
-  useEffect(() => {
-    fetch(`/api/devotionals/${devotional.slug}/comments`)
-      .then((res) => (res.ok ? res.json() : []))
-      .then((data) => setComments(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, [devotional.slug]);
-
+// Renders the full devotional content — identical layout to the individual page.
+function DevotionalDisplay({
+  devotional,
+  comments,
+  prev,
+  next,
+}: {
+  devotional: DevotionalData;
+  comments: CommentData[];
+  prev: AdjacentEntry | null;
+  next: AdjacentEntry | null;
+}) {
   const dateStr = new Date(devotional.publicationDate).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -120,15 +142,10 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
           </span>
         </div>
 
-        {/* Title — links to individual page */}
-        <h2 className="text-3xl font-bold leading-tight text-primary sm:text-4xl">
-          <Link
-            href={`/devotionals/${devotional.slug}`}
-            className="transition hover:text-accent"
-          >
-            {devotional.title}
-          </Link>
-        </h2>
+        {/* Title */}
+        <h1 className="text-3xl font-bold leading-tight text-primary sm:text-4xl">
+          {devotional.title}
+        </h1>
 
         {/* Bible text */}
         <div className="mt-6 rounded-xl bg-primary/10 px-6 py-6 sm:px-8 sm:py-7">
@@ -170,7 +187,7 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
           />
         </div>
 
-        {/* Comments */}
+        {/* Comments — server-rendered, persistent */}
         <DevotionalComments
           devotionalId={devotional.id}
           devotionalSlug={devotional.slug}
@@ -200,6 +217,42 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
             button.
           </p>
         </div>
+
+        {/* Previous / Next navigation */}
+        <nav className="mt-12 flex flex-col gap-4 border-t border-primary/10 pt-8 sm:flex-row sm:justify-between">
+          {prev ? (
+            <Link
+              href={`/devotionals/${prev.slug}`}
+              className="group flex flex-1 items-center gap-3 rounded-xl border border-primary/10 bg-primary/5 px-5 py-4 transition hover:border-accent/40 hover:shadow-sm"
+            >
+              <ArrowLeft className="h-5 w-5 shrink-0 text-primary/30 transition group-hover:-translate-x-0.5 group-hover:text-accent" />
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary/40">Previous</p>
+                <p className="mt-0.5 truncate text-sm font-semibold text-primary group-hover:text-accent">
+                  {prev.title}
+                </p>
+              </div>
+            </Link>
+          ) : (
+            <div />
+          )}
+          {next ? (
+            <Link
+              href={`/devotionals/${next.slug}`}
+              className="group flex flex-1 items-center justify-end gap-3 rounded-xl border border-primary/10 bg-primary/5 px-5 py-4 text-right transition hover:border-accent/40 hover:shadow-sm"
+            >
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary/40">Next</p>
+                <p className="mt-0.5 truncate text-sm font-semibold text-primary group-hover:text-accent">
+                  {next.title}
+                </p>
+              </div>
+              <ArrowRight className="h-5 w-5 shrink-0 text-primary/30 transition group-hover:translate-x-0.5 group-hover:text-accent" />
+            </Link>
+          ) : (
+            <div />
+          )}
+        </nav>
       </div>
     </section>
   );
