@@ -3,6 +3,7 @@ import { getLatestDevotional, getPublishedDevotionals } from "@/lib/devotionals"
 import DevotionalBanner from "@/components/devotionals/DevotionalBanner";
 import DevotionalBrowser from "@/components/devotionals/DevotionalBrowser";
 import CTASection from "@/components/sections/CTASection";
+import { BookOpen } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -13,8 +14,15 @@ export const metadata = {
 };
 
 export default async function DevotionalsPage() {
-  const latest = await getLatestDevotional();
-  const allPublished = await getPublishedDevotionals();
+  let latest = null;
+  let allPublished: { id: number; slug: string; title: string; author: string; publicationDate: string; status: "draft" | "published" | "scheduled" }[] = [];
+
+  try {
+    latest = await getLatestDevotional();
+    allPublished = await getPublishedDevotionals();
+  } catch (err) {
+    console.error("Failed to load devotionals from database:", err);
+  }
 
   // Build a date → slug map for the archive calendar links.
   const dateSlugMap: Record<string, string> = {};
@@ -27,7 +35,15 @@ export default async function DevotionalsPage() {
   return (
     <>
       <DevotionalBanner />
-      <DevotionalBrowser latest={latest} allPublished={allPublished} dateSlugMap={dateSlugMap} />
+      {latest ? (
+        <DevotionalBrowser latest={latest} allPublished={allPublished} dateSlugMap={dateSlugMap} />
+      ) : (
+        <section className="px-6 py-16 text-center sm:px-8 sm:py-20 lg:px-12">
+          <BookOpen className="mx-auto mb-4 h-10 w-10 text-accent" />
+          <p className="text-lg font-semibold text-primary">Devotionals are temporarily unavailable.</p>
+          <p className="mt-2 text-primary/60">Please try again shortly.</p>
+        </section>
+      )}
       <CTASection
         title="Need a Creative Partner?"
         description="From book design to websites, JavidVerse helps bring your ideas to life with clarity and purpose."

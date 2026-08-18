@@ -13,6 +13,7 @@ export default function getPool(): mysql.Pool {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
+      ssl: { rejectUnauthorized: false },
     });
   }
   return _pool;

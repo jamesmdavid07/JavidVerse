@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, User, ArrowLeft, ArrowRight } from "lucide-react";
+import { Calendar, User, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { getDevotionalBySlug, getAdjacentDevotionals } from "@/lib/devotionals";
 import { getSiteUrl } from "@/lib/site-url";
 import DevotionalContent from "@/components/devotionals/DevotionalContent";
@@ -12,7 +12,12 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const devotional = await getDevotionalBySlug(slug);
+  let devotional;
+  try {
+    devotional = await getDevotionalBySlug(slug);
+  } catch {
+    return {};
+  }
   if (!devotional) return {};
 
   const siteUrl = getSiteUrl();
@@ -48,10 +53,34 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function DevotionalSlugPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const devotional = await getDevotionalBySlug(slug);
+  let devotional;
+  try {
+    devotional = await getDevotionalBySlug(slug);
+  } catch (err) {
+    console.error("Failed to load devotional:", err);
+    return (
+      <section className="px-6 py-16 text-center sm:px-8 sm:py-20 lg:px-12">
+        <BookOpen className="mx-auto mb-4 h-10 w-10 text-accent" />
+        <p className="text-lg font-semibold text-primary">Devotional temporarily unavailable.</p>
+        <p className="mt-2 text-primary/60">Please try again shortly.</p>
+        <Link href="/devotionals" className="btn-primary mt-6 inline-flex items-center gap-2">
+          <ArrowLeft className="h-4 w-4" />
+          Back to Devotionals
+        </Link>
+      </section>
+    );
+  }
   if (!devotional) notFound();
 
-  const { prev, next } = await getAdjacentDevotionals(slug);
+  let prev = null;
+  let next = null;
+  try {
+    const adjacent = await getAdjacentDevotionals(slug);
+    prev = adjacent.prev;
+    next = adjacent.next;
+  } catch {
+    // Adjacent nav is non-critical — continue without it.
+  }
 
   const dateStr = new Date(devotional.publicationDate).toLocaleDateString("en-US", {
     month: "long",
