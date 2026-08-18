@@ -25,7 +25,7 @@ interface Props {
 
 const EMPTY: DevotionalFormData = {
   title: "",
-  author: "Written by Jhen Moreno",
+  author: "Written by James M. David",
   publicationDate: new Date().toISOString().split("T")[0],
   mainBibleRef: "",
   bibleTranslation: "NIV",

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site-url";
+import { getPublishedDevotionals } from "@/lib/devotionals";
 
 const siteUrl = getSiteUrl();
 
@@ -14,11 +15,22 @@ const routes = [
   "/contact",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((route) => ({
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const published = await getPublishedDevotionals();
+
+  const staticRoutes = routes.map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: route === "" ? "weekly" as const : "monthly" as const,
+    changeFrequency: route === "" ? ("weekly" as const) : ("monthly" as const),
     priority: route === "" ? 1 : 0.8,
   }));
+
+  const devotionalRoutes = published.map((d) => ({
+    url: `${siteUrl}/devotionals/${d.slug}`,
+    lastModified: new Date(d.publicationDate),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...devotionalRoutes];
 }

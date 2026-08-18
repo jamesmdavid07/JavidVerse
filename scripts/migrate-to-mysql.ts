@@ -11,7 +11,7 @@ const SEED_DATA = [
   {
     slug: "when-life-suddenly-changes",
     title: "When Life Suddenly Changes",
-    author: "Written by Jhen Moreno",
+    author: "Written by James M. David",
     publication_date: "2026-08-18",
     main_bible_ref: "Psalm 34:18",
     bible_translation: "NIV",
@@ -23,7 +23,7 @@ const SEED_DATA = [
   {
     slug: "the-peace-that-defies-understanding",
     title: "The Peace That Defies Understanding",
-    author: "Written by Jhen Moreno",
+    author: "Written by James M. David",
     publication_date: "2026-08-17",
     main_bible_ref: "Philippians 4:6-7",
     bible_translation: "NIV",
@@ -35,7 +35,7 @@ const SEED_DATA = [
   {
     slug: "walking-by-faith-when-the-path-is-dark",
     title: "Walking by Faith When the Path Is Dark",
-    author: "Written by Jhen Moreno",
+    author: "Written by James M. David",
     publication_date: "2026-08-16",
     main_bible_ref: "2 Corinthians 5:7",
     bible_translation: "NIV",
@@ -55,7 +55,7 @@ async function migrate() {
       id INT AUTO_INCREMENT PRIMARY KEY,
       slug VARCHAR(255) NOT NULL UNIQUE,
       title VARCHAR(255) NOT NULL,
-      author VARCHAR(255) DEFAULT 'Written by Jhen Moreno',
+      author VARCHAR(255) DEFAULT 'Written by James M. David',
       publication_date DATE NOT NULL,
       main_bible_ref VARCHAR(100) NOT NULL,
       bible_translation VARCHAR(50) DEFAULT 'NIV',

@@ -1,6 +1,7 @@
 // Full-width drill-down archive: Year → Month → Calendar Day.
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, ChevronRight, CalendarDays } from "lucide-react";
 
@@ -16,6 +17,7 @@ interface DevotionalIndexEntry {
 interface DevotionalArchiveProps {
   allPublished: DevotionalIndexEntry[];
   onDateClick: (year: number, month: number, day: number) => void;
+  dateSlugMap: Record<string, string>;
 }
 
 const ALL_MONTHS = [
@@ -63,7 +65,7 @@ function getCalendarGrid(year: number, month: number): (number | null)[] {
   return grid;
 }
 
-export default function DevotionalArchive({ allPublished, onDateClick }: DevotionalArchiveProps) {
+export default function DevotionalArchive({ allPublished, onDateClick, dateSlugMap }: DevotionalArchiveProps) {
   const [expandedYear, setExpandedYear] = useState<number | null>(null);
   const [expandedMonth, setExpandedMonth] = useState<{ year: number; month: number } | null>(null);
   const available = buildAvailableDates(allPublished);
@@ -161,6 +163,7 @@ export default function DevotionalArchive({ allPublished, onDateClick }: Devotio
                         month={expandedMonth.month}
                         availableDays={available[expandedMonth.year]?.[expandedMonth.month]}
                         onDayClick={onDateClick}
+                        dateSlugMap={dateSlugMap}
                       />
                     )}
                   </div>
@@ -180,11 +183,13 @@ function CalendarView({
   month,
   availableDays,
   onDayClick,
+  dateSlugMap,
 }: {
   year: number;
   month: number;
   availableDays?: Set<number>;
   onDayClick: (year: number, month: number, day: number) => void;
+  dateSlugMap: Record<string, string>;
 }) {
   const grid = getCalendarGrid(year, month);
   const monthName = ALL_MONTHS[month - 1];
@@ -216,20 +221,29 @@ function CalendarView({
             today.getMonth() + 1 === month &&
             today.getDate() === day;
 
+          const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+          const slug = dateSlugMap[dateKey];
+
+          if (hasDevotional && slug) {
+            return (
+              <Link
+                key={day}
+                href={`/devotionals/${slug}`}
+                className={`relative flex h-10 items-center justify-center rounded-lg text-sm font-medium transition-all duration-150 bg-accent/15 text-primary hover:bg-accent hover:text-primary shadow-sm hover:-translate-y-0.5 hover:shadow-md ${isToday ? "ring-2 ring-accent ring-offset-1" : ""}`}
+              >
+                {day}
+                <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent" />
+              </Link>
+            );
+          }
+
           return (
             <button
               key={day}
               onClick={() => onDayClick(year, month, day)}
-              className={`relative flex h-10 items-center justify-center rounded-lg text-sm font-medium transition-all duration-150 ${
-                hasDevotional
-                  ? "bg-accent/15 text-primary hover:bg-accent hover:text-primary shadow-sm hover:-translate-y-0.5 hover:shadow-md"
-                  : "text-primary/30 hover:bg-primary/5 hover:text-primary/50"
-              } ${isToday ? "ring-2 ring-accent ring-offset-1" : ""}`}
+              className={`relative flex h-10 items-center justify-center rounded-lg text-sm font-medium transition-all duration-150 text-primary/30 hover:bg-primary/5 hover:text-primary/50 ${isToday ? "ring-2 ring-accent ring-offset-1" : ""}`}
             >
               {day}
-              {hasDevotional && (
-                <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent" />
-              )}
             </button>
           );
         })}

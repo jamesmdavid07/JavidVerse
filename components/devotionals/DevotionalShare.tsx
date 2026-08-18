@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Facebook, Link as LinkIcon, Check } from "lucide-react";
 
 interface DevotionalShareProps {
+  slug: string;
   title: string;
   mainBibleRef: string;
   fullVerse: string;
@@ -11,6 +12,7 @@ interface DevotionalShareProps {
 }
 
 export default function DevotionalShare({
+  slug,
   title,
   mainBibleRef,
   fullVerse,
@@ -18,7 +20,7 @@ export default function DevotionalShare({
 }: DevotionalShareProps) {
   const [copied, setCopied] = useState(false);
 
-  const shareUrl = "https://javidverse.com/devotionals";
+  const shareUrl = `https://javidverse.com/devotionals/${slug}`;
 
   // Truncate verse for previews (max ~120 chars)
   const versePreview =
@@ -34,11 +36,7 @@ export default function DevotionalShare({
 
   const shareQuoteFacebook = `\u{1F4D6} "${versePreview}" \u2014 ${mainBibleRef} (${bibleTranslation}) \u2014 "${title}"`;
 
-  const copyText = [
-    `"${title}"`,
-    `\u{1F4D6} ${mainBibleRef} \u2014 "${fullVerse}" (${bibleTranslation})`,
-    `\u{1F517} ${shareUrl}`,
-  ].join("\n");
+  const copyText = shareUrl;
 
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareQuoteFacebook)}`;
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareTextWhatsApp)}`;
@@ -111,7 +109,7 @@ export default function DevotionalShare({
           ) : (
             <>
               <LinkIcon className="h-4 w-4" />
-              Copy
+              COPY LINK
             </>
           )}
         </button>

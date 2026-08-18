@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
+import Link from "next/link";
 import Image from "next/image";
-import { Calendar, User, ArrowLeft, BookOpen } from "lucide-react";
+import { Calendar, User, BookOpen } from "lucide-react";
 import DevotionalContent from "./DevotionalContent";
 import DevotionalBibleRefs from "./DevotionalBibleRefs";
 import DevotionalShare from "./DevotionalShare";
@@ -33,54 +35,22 @@ interface DevotionalIndexEntry {
 interface DevotionalBrowserProps {
   latest: DevotionalData | null;
   allPublished: DevotionalIndexEntry[];
+  dateSlugMap: Record<string, string>;
 }
 
-export default function DevotionalBrowser({ latest, allPublished }: DevotionalBrowserProps) {
-  const [active, setActive] = useState<DevotionalData | null>(latest);
-  const [loading, setLoading] = useState(false);
-  const [notAvailable, setNotAvailable] = useState<string | null>(null);
-  const devotionalRef = useRef<HTMLDivElement>(null);
+export default function DevotionalBrowser({ latest, allPublished, dateSlugMap }: DevotionalBrowserProps) {
+  const router = useRouter();
 
-  const handleDateClick = useCallback(async (year: number, month: number, day: number) => {
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December",
-    ];
-    const label = `${monthNames[month - 1]} ${day}, ${year}`;
-
-    setLoading(true);
-    setNotAvailable(null);
-
-    try {
+  const handleDateClick = useCallback(
+    (year: number, month: number, day: number) => {
       const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-      const res = await fetch(`/api/devotionals?date=${dateKey}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.id) {
-          setActive(data);
-          setNotAvailable(null);
-        } else {
-          setActive(null);
-          setNotAvailable(label);
-        }
-      } else {
-        setActive(null);
-        setNotAvailable(label);
+      const slug = dateSlugMap[dateKey];
+      if (slug) {
+        router.push(`/devotionals/${slug}`);
       }
-    } catch {
-      setActive(null);
-      setNotAvailable(label);
-    } finally {
-      setLoading(false);
-      devotionalRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, []);
-
-  const handleBackToToday = useCallback(() => {
-    setActive(latest);
-    setNotAvailable(null);
-    devotionalRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [latest]);
+    },
+    [dateSlugMap, router]
+  );
 
   if (!latest) {
     return (
@@ -95,40 +65,13 @@ export default function DevotionalBrowser({ latest, allPublished }: DevotionalBr
   return (
     <>
       {/* Devotional content area */}
-      <div ref={devotionalRef}>
-        {loading ? (
-          <section className="px-6 py-16 sm:px-8 sm:py-20 lg:px-12">
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-2 border-accent border-t-transparent" />
-              <p className="text-sm text-primary/50">Loading devotional...</p>
-            </div>
-          </section>
-        ) : notAvailable ? (
-          <section className="px-6 py-16 sm:px-8 sm:py-20 lg:px-12">
-            <div className="mx-auto max-w-3xl text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/5">
-                <Calendar className="h-6 w-6 text-primary/40" />
-              </div>
-              <p className="text-lg font-semibold text-primary">No devotional available for {notAvailable}</p>
-              <p className="mt-2 text-primary/60">Check back soon for encouragement from God&apos;s Word.</p>
-              <button
-                onClick={handleBackToToday}
-                className="btn-primary mt-6 inline-flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Today&apos;s Devotional
-              </button>
-            </div>
-          </section>
-        ) : active ? (
-          <DevotionalDisplay devotional={active} />
-        ) : null}
-      </div>
+      <DevotionalDisplay devotional={latest} />
 
       {/* Full-width archive */}
       <DevotionalArchive
         allPublished={allPublished}
         onDateClick={handleDateClick}
+        dateSlugMap={dateSlugMap}
       />
     </>
   );
@@ -157,9 +100,14 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
           </span>
         </div>
 
-        {/* Title */}
+        {/* Title — links to individual page */}
         <h2 className="text-3xl font-bold leading-tight text-primary sm:text-4xl">
-          {devotional.title}
+          <Link
+            href={`/devotionals/${devotional.slug}`}
+            className="transition hover:text-accent"
+          >
+            {devotional.title}
+          </Link>
         </h2>
 
         {/* Bible text */}
@@ -197,6 +145,7 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
         {/* Share */}
         <div className="mt-10 border-t border-primary/10 pt-6">
           <DevotionalShare
+            slug={devotional.slug}
             title={devotional.title}
             mainBibleRef={devotional.mainBibleRef}
             fullVerse={devotional.fullVerse}
@@ -207,16 +156,16 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
         {/* Author card */}
         <div className="mt-10 flex flex-col items-center gap-5 rounded-2xl bg-primary/5 px-6 py-6 sm:flex-row sm:items-start sm:px-8">
           <Image
-            src="/Devotionals/Jhen-Moreno.png"
-            alt="Jhen Moreno"
+            src="/about/james.webp"
+            alt="James M. David"
             width={128}
             height={128}
             className="h-28 w-28 shrink-0 rounded-full object-cover object-[center_15%] ring-2 ring-accent/30"
           />
           <div className="text-center sm:text-left">
-            <p className="text-lg font-bold text-primary">Jhen Moreno</p>
+            <p className="text-lg font-bold text-primary">James M. David</p>
             <p className="mt-2 text-sm leading-relaxed text-primary/70">
-              Jhen Moreno is a humble servant of God, committed in sharing God&apos;s messages to enhance the mission.
+              James M. David is a humble servant of God, committed in sharing God&apos;s messages to enhance the mission.
             </p>
             <p className="mt-2 text-xs text-primary/50">
               Published by JavidVerse with permission.
