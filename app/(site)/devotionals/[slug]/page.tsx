@@ -39,12 +39,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: devotional.createdAt,
       modifiedTime: devotional.updatedAt,
       authors: [devotional.author],
+      images: [],
     },
     twitter: {
       card: "summary_large_image" as const,
       title: devotional.title,
       description,
-      images: ["/brand/javidverse-logo.png"],
+      images: [],
     },
   };
 }
