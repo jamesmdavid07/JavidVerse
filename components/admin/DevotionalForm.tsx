@@ -13,6 +13,8 @@ interface DevotionalFormData {
   bibleTranslation: string;
   fullVerse: string;
   content: string;
+  reflection: string;
+  prayer: string;
   status: "draft" | "published" | "scheduled";
 }
 
@@ -29,6 +31,8 @@ const EMPTY: DevotionalFormData = {
   bibleTranslation: "NIV",
   fullVerse: "",
   content: "",
+  reflection: "",
+  prayer: "",
   status: "draft",
 };
 
@@ -171,6 +175,30 @@ export default function DevotionalForm({ initialData, mode }: Props) {
             onChange={(html) => updateField("content", html)}
           />
         </div>
+      </div>
+
+      {/* Reflection */}
+      <div>
+        <label className="block text-sm font-semibold text-[#042D6D]">Reflections</label>
+        <textarea
+          value={form.reflection}
+          onChange={(e) => updateField("reflection", e.target.value)}
+          rows={3}
+          placeholder="A reflection to encourage the reader..."
+          className={inputClass}
+        />
+      </div>
+
+      {/* Prayer */}
+      <div>
+        <label className="block text-sm font-semibold text-[#042D6D]">Prayer</label>
+        <textarea
+          value={form.prayer}
+          onChange={(e) => updateField("prayer", e.target.value)}
+          rows={3}
+          placeholder="A closing prayer..."
+          className={inputClass}
+        />
       </div>
 
       {/* Status */}

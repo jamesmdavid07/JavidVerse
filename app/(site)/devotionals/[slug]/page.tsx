@@ -136,12 +136,12 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
         <div className="mt-10 rounded-xl border-l-4 border-accent bg-accent/10 px-6 py-6 sm:px-8 sm:py-7">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Reflections</p>
           <p className="mt-4 text-base leading-relaxed text-primary sm:text-lg">
-            Today, whatever has changed in your life, bring it before God. You do not need perfect words. You do not need to have it all together. You just need to come. He is close. He is faithful. And He will carry you through.
+            {devotional.reflection}
           </p>
           <div className="my-5 h-px bg-accent/30" />
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Prayer</p>
           <p className="mt-3 text-base leading-relaxed italic text-primary/80 sm:text-lg">
-            Lord, help me bring every change, every fear, and every uncertainty to You today. I trust that You are close, faithful, and able to carry me through. In Jesus&apos; name, Amen.
+            {devotional.prayer}
           </p>
         </div>
 

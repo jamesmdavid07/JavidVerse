@@ -12,6 +12,8 @@ export interface Devotional {
   bibleTranslation: string;
   fullVerse: string;
   content: string;
+  reflection: string;
+  prayer: string;
   readMoreRefs: string[];
   status: "draft" | "published" | "scheduled";
   createdAt: string;
@@ -42,6 +44,8 @@ function rowToDevotional(row: RowDataPacket): Devotional {
     bibleTranslation: row.bible_translation,
     fullVerse: row.full_verse ?? "",
     content: row.content,
+    reflection: row.reflection ?? "",
+    prayer: row.prayer ?? "",
     readMoreRefs: Array.isArray(refs) ? refs : [],
     status: row.status,
     createdAt: row.created_at,
@@ -183,8 +187,8 @@ export async function createDevotional(
   }
 
   const [result] = await pool.execute<ResultSetHeader>(
-    `INSERT INTO devotionals (slug, title, author, publication_date, main_bible_ref, bible_translation, full_verse, content, read_more_refs, status)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO devotionals (slug, title, author, publication_date, main_bible_ref, bible_translation, full_verse, content, reflection, prayer, read_more_refs, status)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       slug,
       data.title,
@@ -194,6 +198,8 @@ export async function createDevotional(
       data.bibleTranslation,
       data.fullVerse,
       data.content,
+      data.reflection,
+      data.prayer,
       JSON.stringify(data.readMoreRefs),
       data.status,
     ]
@@ -243,6 +249,8 @@ export async function updateDevotional(
   if (data.bibleTranslation !== undefined) { fields.push("bible_translation = ?"); values.push(data.bibleTranslation); }
   if (data.fullVerse !== undefined) { fields.push("full_verse = ?"); values.push(data.fullVerse); }
   if (data.content !== undefined) { fields.push("content = ?"); values.push(data.content); }
+  if (data.reflection !== undefined) { fields.push("reflection = ?"); values.push(data.reflection); }
+  if (data.prayer !== undefined) { fields.push("prayer = ?"); values.push(data.prayer); }
   if (data.readMoreRefs !== undefined) { fields.push("read_more_refs = ?"); values.push(JSON.stringify(data.readMoreRefs)); }
   if (data.status !== undefined) { fields.push("status = ?"); values.push(data.status); }
   if (slug !== existing.slug) { fields.push("slug = ?"); values.push(slug); }

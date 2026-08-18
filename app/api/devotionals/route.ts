@@ -51,12 +51,14 @@ export async function POST(request: NextRequest) {
 
   const devotional = await createDevotional({
     title: body.title,
-    author: body.author || "Written by James M. David",
+    author: body.author || "Written by James David",
     publicationDate: body.publicationDate,
     mainBibleRef: body.mainBibleRef,
     bibleTranslation: body.bibleTranslation || "NIV",
     fullVerse: body.fullVerse || "",
     content: body.content,
+    reflection: body.reflection || "",
+    prayer: body.prayer || "",
     readMoreRefs: body.readMoreRefs || [],
     status: body.status || "draft",
   });
