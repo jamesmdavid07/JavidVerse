@@ -38,7 +38,7 @@ export default function DevotionalShare({
 
   const copyText = shareUrl;
 
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareQuoteFacebook)}`;
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl + "?fb=1")}&quote=${encodeURIComponent(shareQuoteFacebook)}`;
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareTextWhatsApp)}`;
 
   async function copyLink() {

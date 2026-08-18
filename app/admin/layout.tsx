@@ -29,6 +29,12 @@ export default function AdminLayout({
               Devotionals
             </button>
             <button
+              onClick={() => router.push("/admin/comments")}
+              className="text-xs font-medium text-white/70 transition hover:text-[#FCB005] sm:text-sm"
+            >
+              Comments
+            </button>
+            <button
               onClick={() => router.push("/")}
               className="text-xs font-medium text-white/70 transition hover:text-[#FCB005] sm:text-sm"
             >

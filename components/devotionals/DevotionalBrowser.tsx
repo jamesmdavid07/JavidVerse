@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Calendar, User, BookOpen } from "lucide-react";
 import DevotionalContent from "./DevotionalContent";
 import DevotionalShare from "./DevotionalShare";
+import DevotionalComments from "./DevotionalComments";
 import DevotionalArchive from "./DevotionalArchive";
 
 interface DevotionalData {
@@ -31,6 +31,15 @@ interface DevotionalIndexEntry {
   author: string;
   publicationDate: string;
   status: "draft" | "published" | "scheduled";
+}
+
+interface CommentData {
+  id: number;
+  devotionalId: number;
+  parentId: number | null;
+  name: string;
+  comment: string;
+  createdAt: string;
 }
 
 interface DevotionalBrowserProps {
@@ -80,6 +89,15 @@ export default function DevotionalBrowser({ latest, allPublished, dateSlugMap }:
 
 // Renders the full devotional content.
 function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
+  const [comments, setComments] = useState<CommentData[]>([]);
+
+  useEffect(() => {
+    fetch(`/api/devotionals/${devotional.slug}/comments`)
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => setComments(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, [devotional.slug]);
+
   const dateStr = new Date(devotional.publicationDate).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -152,24 +170,35 @@ function DevotionalDisplay({ devotional }: { devotional: DevotionalData }) {
           />
         </div>
 
-        {/* Author card */}
-        <div className="mt-10 flex flex-col items-center gap-5 rounded-2xl bg-primary/5 px-6 py-6 sm:flex-row sm:items-start sm:px-8">
-          <Image
-            src="/about/james.webp"
-            alt="James M. David"
-            width={128}
-            height={128}
-            className="h-28 w-28 shrink-0 rounded-full object-cover object-[center_15%] ring-2 ring-accent/30"
-          />
-          <div className="text-center sm:text-left">
-            <p className="text-lg font-bold text-primary">James M. David</p>
-            <p className="mt-2 text-sm leading-relaxed text-primary/70">
-              James M. David is a humble servant of God, committed in sharing God&apos;s messages to enhance the mission.
-            </p>
-            <p className="mt-2 text-xs text-primary/50">
-              Published by JavidVerse with permission.
-            </p>
-          </div>
+        {/* Comments */}
+        <DevotionalComments
+          devotionalId={devotional.id}
+          devotionalSlug={devotional.slug}
+          initialComments={comments}
+        />
+
+        {/* Submit your devotional CTA */}
+        <div className="mt-10 rounded-2xl bg-primary/5 px-6 py-8 text-center sm:px-8">
+          <p className="text-lg font-bold text-primary">
+            Would you like us to publish your devotional thoughts?
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-primary/70">
+            Please reach us through{" "}
+            <a
+              href="mailto:javidverse@gmail.com"
+              className="font-semibold text-accent underline transition hover:text-primary"
+            >
+              javidverse@gmail.com
+            </a>{" "}
+            or click the{" "}
+            <Link
+              href="/contact"
+              className="font-semibold text-accent underline transition hover:text-primary"
+            >
+              Contact Us
+            </Link>{" "}
+            button.
+          </p>
         </div>
       </div>
     </section>

@@ -49,7 +49,7 @@ export default async function DevotionalsPage() {
         description="From book design to websites, JavidVerse helps bring your ideas to life with clarity and purpose."
         href="/contact"
         action="Get in Touch"
-        theme="primary"
+        theme="light"
       />
     </>
   );

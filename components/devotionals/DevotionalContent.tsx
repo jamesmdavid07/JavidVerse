@@ -119,11 +119,28 @@ export default function DevotionalContent({ html }: DevotionalContentProps) {
             {popover.loading ? (
               <p className="text-sm text-primary/50 italic">Loading verse...</p>
             ) : popover.text ? (
-              <p className="text-sm leading-relaxed text-primary/80 italic">
-                &ldquo;{popover.text}&rdquo;
-              </p>
+              <>
+                <p className="text-sm leading-relaxed text-primary/80 italic">
+                  &ldquo;{popover.text}&rdquo;
+                </p>
+                <a
+                  href={`https://www.biblegateway.com/passage/?search=${encodeURIComponent(popover.reference)}&version=NIV`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 block text-xs font-semibold text-accent/70 underline transition hover:text-primary"
+                >
+                  from BibleGateway
+                </a>
+              </>
             ) : (
-              <p className="text-sm text-primary/40 italic">Verse not available</p>
+              <a
+                href={`https://www.biblegateway.com/passage/?search=${encodeURIComponent(popover.reference)}&version=NIV`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold text-accent underline transition hover:text-primary"
+              >
+                Read on BibleGateway
+              </a>
             )}
             {/* Arrow */}
             <div className="absolute left-1/2 top-full -translate-x-1/2">
