@@ -4,6 +4,8 @@ import DevotionalBanner from "@/components/devotionals/DevotionalBanner";
 import DevotionalBrowser from "@/components/devotionals/DevotionalBrowser";
 import CTASection from "@/components/sections/CTASection";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Daily Devotionals",
   description:
