@@ -12,10 +12,11 @@ import { useState } from "react";
 const links = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about-us" },
-  { label: "Website Services", href: "/website-services" },
-  { label: "Book Services", href: "/book-services" },
+  { label: "Websites", href: "/website-services" },
+  { label: "Books", href: "/book-services" },
   { label: "Graphic Design", href: "/graphic-design" },
-  { label: "Videography", href: "/videography" }
+  { label: "Videography", href: "/videography" },
+  { label: "Devotionals", href: "/devotionals" }
 ];
 
 // Sticky site header with desktop and mobile navigation.

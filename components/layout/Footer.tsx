@@ -5,10 +5,11 @@ import { Facebook, Instagram, Mail, Youtube } from "lucide-react";
 // Footer links mirror the primary navigation and use only verified destinations.
 const footerLinks = [
   { label: "About Us", href: "/about-us" },
-  { label: "Website Services", href: "/website-services" },
-  { label: "Book Services", href: "/book-services" },
+  { label: "Websites", href: "/website-services" },
+  { label: "Books", href: "/book-services" },
   { label: "Graphic Design", href: "/graphic-design" },
   { label: "Videography", href: "/videography" },
+  { label: "Devotionals", href: "/devotionals" },
   { label: "Contact", href: "/contact" },
 ];
 

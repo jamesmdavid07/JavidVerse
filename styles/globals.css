@@ -96,3 +96,45 @@ a {
     background-color: rgba(4, 45, 109, 0.5);
   }
 }
+
+/* Devotional content prose styles */
+.prose-devotional p {
+  margin-bottom: 1.25em;
+}
+
+.prose-devotional p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-devotional h2 {
+  @apply mt-10 mb-4 text-2xl font-bold text-primary;
+}
+
+.prose-devotional h3 {
+  @apply mt-8 mb-3 text-xl font-semibold text-primary;
+}
+
+.prose-devotional blockquote {
+  @apply my-6 border-l-4 border-accent/60 pl-5 text-base font-semibold italic text-primary;
+}
+
+.prose-devotional strong {
+  @apply font-bold text-primary;
+}
+
+.prose-devotional em {
+  @apply italic;
+}
+
+.prose-devotional ul,
+.prose-devotional ol {
+  @apply my-4 pl-6;
+}
+
+.prose-devotional li {
+  @apply mb-2 leading-relaxed;
+}
+
+.prose-devotional a {
+  @apply font-semibold text-accent underline transition hover:text-primary;
+}
