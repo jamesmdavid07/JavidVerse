@@ -18,7 +18,7 @@ export default function DevotionalTable() {
   const router = useRouter();
   const [devotionals, setDevotionals] = useState<DevotionalEntry[]>([]);
   const [loading, setLoading] = useState(true);
-  const [updatingId, setUpdatingId] = useState<number | null>(null);
+  const [updatingSlug, setUpdatingSlug] = useState<string | null>(null);
 
   async function loadDevotionals() {
     try {
@@ -34,17 +34,17 @@ export default function DevotionalTable() {
     loadDevotionals();
   }, [router]);
 
-  async function setStatus(id: number, status: "draft" | "published") {
-    setUpdatingId(id);
+  async function setStatus(slug: string, status: "draft" | "published") {
+    setUpdatingSlug(slug);
     try {
-      await fetch(`/api/devotionals/${id}`, {
+      await fetch(`/api/devotionals/${slug}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
       });
       await loadDevotionals();
     } finally {
-      setUpdatingId(null);
+      setUpdatingSlug(null);
     }
   }
 
@@ -128,8 +128,8 @@ export default function DevotionalTable() {
                       <div className="flex items-center gap-1.5">
                         {d.status !== "published" && (
                           <button
-                            onClick={() => setStatus(d.id, "published")}
-                            disabled={updatingId === d.id}
+                            onClick={() => setStatus(d.slug, "published")}
+                            disabled={updatingSlug === d.slug}
                             className="inline-flex items-center gap-1 rounded-lg bg-[#FCB005]/10 px-3 py-1.5 text-xs font-semibold text-[#042D6D] transition hover:bg-[#FCB005]/25 disabled:opacity-50"
                           >
                             <Globe className="h-3.5 w-3.5" />
@@ -137,7 +137,7 @@ export default function DevotionalTable() {
                           </button>
                         )}
                         <button
-                          onClick={() => router.push(`/admin/devotionals/${d.id}/edit`)}
+                          onClick={() => router.push(`/admin/devotionals/${d.slug}/edit`)}
                           className="inline-flex items-center gap-1 rounded-lg bg-[#042D6D]/5 px-3 py-1.5 text-xs font-semibold text-[#042D6D] transition hover:bg-[#042D6D]/10"
                         >
                           <Pencil className="h-3.5 w-3.5" />
@@ -145,8 +145,8 @@ export default function DevotionalTable() {
                         </button>
                         {d.status === "published" && (
                           <button
-                            onClick={() => setStatus(d.id, "draft")}
-                            disabled={updatingId === d.id}
+                            onClick={() => setStatus(d.slug, "draft")}
+                            disabled={updatingSlug === d.slug}
                             className="inline-flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-500 transition hover:bg-gray-200 disabled:opacity-50"
                           >
                             <EyeOff className="h-3.5 w-3.5" />
@@ -180,8 +180,8 @@ export default function DevotionalTable() {
                 <div className="flex items-center gap-2 border-t border-gray-100 pt-2">
                   {d.status !== "published" && (
                     <button
-                      onClick={() => setStatus(d.id, "published")}
-                      disabled={updatingId === d.id}
+                      onClick={() => setStatus(d.slug, "published")}
+                      disabled={updatingSlug === d.slug}
                       className="flex items-center gap-1 rounded-lg bg-[#FCB005]/10 px-3 py-1.5 text-xs font-semibold text-[#042D6D] transition hover:bg-[#FCB005]/25 disabled:opacity-50"
                     >
                       <Globe className="h-3 w-3" />
@@ -189,7 +189,7 @@ export default function DevotionalTable() {
                     </button>
                   )}
                   <button
-                    onClick={() => router.push(`/admin/devotionals/${d.id}/edit`)}
+                    onClick={() => router.push(`/admin/devotionals/${d.slug}/edit`)}
                     className="flex items-center gap-1 rounded-lg bg-[#042D6D]/5 px-3 py-1.5 text-xs font-semibold text-[#042D6D] transition hover:bg-[#042D6D]/10"
                   >
                     <Pencil className="h-3 w-3" />
@@ -197,8 +197,8 @@ export default function DevotionalTable() {
                   </button>
                   {d.status === "published" && (
                     <button
-                      onClick={() => setStatus(d.id, "draft")}
-                      disabled={updatingId === d.id}
+                      onClick={() => setStatus(d.slug, "draft")}
+                      disabled={updatingSlug === d.slug}
                       className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-500 transition hover:bg-gray-200 disabled:opacity-50"
                     >
                       <EyeOff className="h-3 w-3" />

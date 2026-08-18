@@ -25,7 +25,7 @@ export default function EditDevotionalPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/devotionals/${params.id}`)
+    fetch(`/api/devotionals/${params.slug}`)
       .then((r) => {
         if (!r.ok) throw new Error("Not found");
         return r.json();
@@ -33,7 +33,7 @@ export default function EditDevotionalPage() {
       .then(setDevotional)
       .catch(() => router.push("/admin/devotionals"))
       .finally(() => setLoading(false));
-  }, [params.id, router]);
+  }, [params.slug, router]);
 
   if (loading) {
     return (

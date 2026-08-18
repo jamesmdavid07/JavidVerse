@@ -19,7 +19,7 @@ interface DevotionalFormData {
 }
 
 interface Props {
-  initialData?: DevotionalFormData & { id: number };
+  initialData?: DevotionalFormData & { id: number; slug: string };
   mode: "create" | "edit";
 }
 
@@ -83,7 +83,7 @@ export default function DevotionalForm({ initialData, mode }: Props) {
       const url =
         mode === "create"
           ? "/api/devotionals"
-          : `/api/devotionals/${initialData!.id}`;
+          : `/api/devotionals/${initialData!.slug}`;
       const method = mode === "create" ? "POST" : "PUT";
 
       const res = await fetch(url, {
