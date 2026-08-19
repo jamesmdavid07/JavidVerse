@@ -16,6 +16,7 @@ interface DevotionalIndexEntry {
 
 interface DevotionalArchiveProps {
   allPublished: DevotionalIndexEntry[];
+  onDateClick: (year: number, month: number, day: number) => void;
   dateSlugMap: Record<string, string>;
 }
 
@@ -64,7 +65,7 @@ function getCalendarGrid(year: number, month: number): (number | null)[] {
   return grid;
 }
 
-export default function DevotionalArchive({ allPublished, dateSlugMap }: DevotionalArchiveProps) {
+export default function DevotionalArchive({ allPublished, onDateClick, dateSlugMap }: DevotionalArchiveProps) {
   const [expandedYear, setExpandedYear] = useState<number | null>(null);
   const [expandedMonth, setExpandedMonth] = useState<{ year: number; month: number } | null>(null);
   const available = buildAvailableDates(allPublished);
@@ -161,6 +162,7 @@ export default function DevotionalArchive({ allPublished, dateSlugMap }: Devotio
                         year={expandedMonth.year}
                         month={expandedMonth.month}
                         availableDays={available[expandedMonth.year]?.[expandedMonth.month]}
+                        onDayClick={onDateClick}
                         dateSlugMap={dateSlugMap}
                       />
                     )}
@@ -180,11 +182,13 @@ function CalendarView({
   year,
   month,
   availableDays,
+  onDayClick,
   dateSlugMap,
 }: {
   year: number;
   month: number;
   availableDays?: Set<number>;
+  onDayClick: (year: number, month: number, day: number) => void;
   dateSlugMap: Record<string, string>;
 }) {
   const grid = getCalendarGrid(year, month);
@@ -234,13 +238,13 @@ function CalendarView({
           }
 
           return (
-            <Link
+            <button
               key={day}
-              href={`/devotionals?unavailable=${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`}
+              onClick={() => onDayClick(year, month, day)}
               className={`relative flex h-10 items-center justify-center rounded-lg text-sm font-medium transition-all duration-150 text-white/30 hover:bg-white/5 hover:text-white/50 ${isToday ? "ring-2 ring-accent ring-offset-1 ring-offset-primary" : ""}`}
             >
               {day}
-            </Link>
+            </button>
           );
         })}
       </div>

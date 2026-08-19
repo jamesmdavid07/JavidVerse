@@ -72,13 +72,6 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
   }
   if (!devotional) notFound();
 
-  // Only show published or past-scheduled devotionals to the public.
-  const isPublished = devotional.status === "published";
-  const isPastScheduled =
-    devotional.status === "scheduled" &&
-    new Date(devotional.publicationDate + "T00:00:00") <= new Date();
-  if (!isPublished && !isPastScheduled) notFound();
-
   let prev = null;
   let next = null;
   try {
@@ -238,22 +231,6 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
             <div />
           )}
         </nav>
-
-        {/* Go to today's devotional */}
-        <div className="mt-10 rounded-2xl bg-accent/10 px-6 py-8 text-center sm:px-8">
-          <p className="text-lg font-bold text-primary">
-            Read today&apos;s devotional
-          </p>
-          <p className="mt-2 text-sm text-primary/60">
-            Start your day with the latest encouragement from God&apos;s Word.
-          </p>
-          <Link
-            href="/devotionals"
-            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:shadow-md"
-          >
-            Go to Today&apos;s Devotional
-          </Link>
-        </div>
       </div>
     </section>
   );
