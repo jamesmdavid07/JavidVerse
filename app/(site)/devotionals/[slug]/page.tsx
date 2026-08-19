@@ -75,12 +75,6 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
   }
   if (!devotional) notFound();
 
-  const isPublished = devotional.status === "published";
-  const isPastScheduled =
-    devotional.status === "scheduled" &&
-    new Date(devotional.publicationDate + "T00:00:00") <= new Date();
-  if (!isPublished && !isPastScheduled) notFound();
-
   const allPublished = await getPublishedDevotionals();
   const dateSlugMap: Record<string, string> = {};
   for (const entry of allPublished) {

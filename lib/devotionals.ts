@@ -65,14 +65,21 @@ function rowToIndexEntry(row: RowDataPacket): DevotionalIndexEntry {
   };
 }
 
+// Return today's calendar date in the timezone used for devotional publishing.
+function getPhilippineDate(): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Manila",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
 // Check if a devotional is currently visible (published or scheduled in the past).
 function isVisible(status: string, publicationDate: string): boolean {
   if (status === "published") return true;
   if (status === "scheduled") {
-    const now = new Date();
-    const phNow = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
-    const pubDate = new Date(publicationDate + "T00:00:00");
-    return pubDate <= phNow;
+    return publicationDate <= getPhilippineDate();
   }
   return false;
 }
@@ -143,21 +150,25 @@ export async function getDevotionalByExactDate(
   const pool = getPool();
   const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
   const [rows] = await pool.query<RowDataPacket[]>(
-    "SELECT * FROM devotionals WHERE publication_date = ? AND (status = 'published' OR (status = 'scheduled' AND publication_date <= CURDATE()))",
+    "SELECT * FROM devotionals WHERE publication_date = ? AND status IN ('published', 'scheduled')",
     [dateStr]
   );
   if (rows.length === 0) return null;
-  return rowToDevotional(rows[0]);
+  const devotional = rowToDevotional(rows[0]);
+  return isVisible(devotional.status, devotional.publicationDate) ? devotional : null;
 }
 
 // Get the latest published devotional.
 export async function getLatestDevotional(): Promise<Devotional | null> {
   const pool = getPool();
   const [rows] = await pool.query<RowDataPacket[]>(
-    "SELECT * FROM devotionals WHERE status = 'published' OR (status = 'scheduled' AND publication_date <= CURDATE()) ORDER BY publication_date DESC LIMIT 1"
+    "SELECT * FROM devotionals WHERE status IN ('published', 'scheduled') ORDER BY publication_date DESC"
   );
-  if (rows.length === 0) return null;
-  return rowToDevotional(rows[0]);
+  for (const row of rows) {
+    const devotional = rowToDevotional(row);
+    if (isVisible(devotional.status, devotional.publicationDate)) return devotional;
+  }
+  return null;
 }
 
 // Get previous and next devotionals relative to a slug.
