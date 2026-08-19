@@ -17,6 +17,8 @@ export default function getPool(): mysql.Pool {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
+      // Keep calendar dates timezone-neutral for publication comparisons.
+      dateStrings: ["DATE"],
       ssl: { rejectUnauthorized: false },
     });
   }
