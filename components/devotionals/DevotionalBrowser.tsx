@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Calendar, User, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import DevotionalContent from "./DevotionalContent";
@@ -65,18 +64,17 @@ export default function DevotionalBrowser({
   prev,
   next,
 }: DevotionalBrowserProps) {
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const unavailableDate = searchParams.get("unavailable");
 
-  const handleDateClick = useCallback(
-    (year: number, month: number, day: number) => {
-      const dateKey = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-      const slug = dateSlugMap[dateKey];
-      if (slug) {
-        router.push(`/devotionals/${slug}`);
-      }
-    },
-    [dateSlugMap, router]
-  );
+  function formatUnavailableDate(dateStr: string) {
+    return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      timeZone: "Asia/Manila",
+    });
+  }
 
   if (!latest) {
     return (
@@ -85,6 +83,33 @@ export default function DevotionalBrowser({
         <p className="text-lg font-semibold text-primary">No devotionals published yet.</p>
         <p className="mt-2 text-primary/60">Check back soon for daily encouragement from God&apos;s Word.</p>
       </section>
+    );
+  }
+
+  if (unavailableDate) {
+    return (
+      <>
+        <section className="px-6 py-16 text-center sm:px-8 sm:py-20 lg:px-12">
+          <BookOpen className="mx-auto mb-4 h-10 w-10 text-accent" />
+          <h2 className="text-2xl font-bold text-primary">Devotional Not Yet Available</h2>
+          <p className="mt-3 text-primary/60">
+            The devotional for <strong>{formatUnavailableDate(unavailableDate)}</strong> has not been published yet.
+          </p>
+          <p className="mt-2 text-primary/60">Check back soon for daily encouragement from God&apos;s Word.</p>
+          <Link
+            href="/devotionals"
+            className="btn-primary mt-8 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:shadow-md"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Go to Today&apos;s Devotional
+          </Link>
+        </section>
+
+        <DevotionalArchive
+          allPublished={allPublished}
+          dateSlugMap={dateSlugMap}
+        />
+      </>
     );
   }
 
@@ -101,7 +126,6 @@ export default function DevotionalBrowser({
       {/* Full-width archive */}
       <DevotionalArchive
         allPublished={allPublished}
-        onDateClick={handleDateClick}
         dateSlugMap={dateSlugMap}
       />
     </>
@@ -253,6 +277,22 @@ function DevotionalDisplay({
             <div />
           )}
         </nav>
+
+        {/* Go to today's devotional */}
+        <div className="mt-10 rounded-2xl bg-accent/10 px-6 py-8 text-center sm:px-8">
+          <p className="text-lg font-bold text-primary">
+            Read today&apos;s devotional
+          </p>
+          <p className="mt-2 text-sm text-primary/60">
+            Start your day with the latest encouragement from God&apos;s Word.
+          </p>
+          <Link
+            href="/devotionals"
+            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:shadow-md"
+          >
+            Go to Today&apos;s Devotional
+          </Link>
+        </div>
       </div>
     </section>
   );
