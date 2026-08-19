@@ -27,7 +27,7 @@ export default function EditDevotionalPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/devotionals/${params.slug}`)
+    fetch(`/api/devotionals/${params.slug}?admin=true`)
       .then((r) => {
         if (!r.ok) throw new Error("Not found");
         return r.json();

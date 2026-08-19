@@ -4,10 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDevotionalBySlug, getDevotionalById, updateDevotional } from "@/lib/devotionals";
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
+  const { searchParams } = new URL(request.url);
+  const isAdmin = searchParams.get("admin") === "true";
 
   // Try slug first, then try as numeric ID.
   let devotional = await getDevotionalBySlug(slug);
@@ -18,6 +20,18 @@ export async function GET(
   if (!devotional) {
     return NextResponse.json({ error: "Devotional not found" }, { status: 404 });
   }
+
+  // Only serve published or past-scheduled devotionals to the public.
+  if (!isAdmin) {
+    const isPublished = devotional.status === "published";
+    const isPastScheduled =
+      devotional.status === "scheduled" &&
+      new Date(devotional.publicationDate + "T00:00:00") <= new Date();
+    if (!isPublished && !isPastScheduled) {
+      return NextResponse.json({ error: "Devotional not found" }, { status: 404 });
+    }
+  }
+
   return NextResponse.json(devotional);
 }
 
