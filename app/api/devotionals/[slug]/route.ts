@@ -1,7 +1,11 @@
 // GET /api/devotionals/[slug] — get a devotional by slug.
 // PUT /api/devotionals/[slug] — update a devotional by slug.
 import { NextRequest, NextResponse } from "next/server";
-import { getDevotionalBySlug, getDevotionalById, updateDevotional } from "@/lib/devotionals";
+import {
+  getDevotionalBySlugForAdmin,
+  getDevotionalById,
+  updateDevotional,
+} from "@/lib/devotionals";
 
 export async function GET(
   _request: NextRequest,
@@ -10,7 +14,7 @@ export async function GET(
   const { slug } = await params;
 
   // Try slug first, then try as numeric ID.
-  let devotional = await getDevotionalBySlug(slug);
+  let devotional = await getDevotionalBySlugForAdmin(slug);
   if (!devotional && /^\d+$/.test(slug)) {
     devotional = await getDevotionalById(Number(slug));
   }
@@ -29,7 +33,7 @@ export async function PUT(
   const body = await request.json();
 
   // Find the devotional by slug or numeric ID.
-  let existing = await getDevotionalBySlug(slug);
+  let existing = await getDevotionalBySlugForAdmin(slug);
   if (!existing && /^\d+$/.test(slug)) {
     existing = await getDevotionalById(Number(slug));
   }

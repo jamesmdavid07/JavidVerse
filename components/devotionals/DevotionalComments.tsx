@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { MessageCircle, Send } from "lucide-react";
+import { MessageCircle, Send, ThumbsUp } from "lucide-react";
 
 interface CommentData {
   id: number;
@@ -10,10 +10,10 @@ interface CommentData {
   name: string;
   comment: string;
   createdAt: string;
+  reactionCount: number;
 }
 
 interface DevotionalCommentsProps {
-  devotionalId: number;
   devotionalSlug: string;
   initialComments: CommentData[];
 }
@@ -31,12 +31,42 @@ function countWords(value: string) {
   return value.split(/\s+/).filter(Boolean).length;
 }
 
+function ReactionButton({
+  comment,
+  state,
+  loading,
+  onReact,
+}: {
+  comment: CommentData;
+  state: { count: number; reacted: boolean };
+  loading: boolean;
+  onReact: (commentId: number) => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onReact(comment.id)}
+      disabled={loading}
+      aria-label={state.reacted ? "Remove thumbs up" : "Give thumbs up"}
+      className={`mt-2 inline-flex items-center gap-1 text-xs font-semibold transition disabled:opacity-50 ${
+        state.reacted ? "text-accent" : "text-primary/40 hover:text-accent"
+      }`}
+    >
+      <ThumbsUp className={`h-3.5 w-3.5 ${state.reacted ? "fill-current" : ""}`} />
+      {state.count > 0 ? state.count : "Like"}
+    </button>
+  );
+}
+
 export default function DevotionalComments({
-  devotionalId,
   devotionalSlug,
   initialComments,
 }: DevotionalCommentsProps) {
   const [comments, setComments] = useState<CommentData[]>(initialComments);
+  const [reactionState, setReactionState] = useState<Record<number, { count: number; reacted: boolean }>>(
+    () => Object.fromEntries(initialComments.map((comment) => [comment.id, { count: comment.reactionCount, reacted: false }]))
+  );
+  const [reactingTo, setReactingTo] = useState<number | null>(null);
   const [name, setName] = useState("");
   const [commentText, setCommentText] = useState("");
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
@@ -53,6 +83,27 @@ export default function DevotionalComments({
       comments.filter((c) => c.parentId === parentId),
     [comments]
   );
+
+  async function handleReaction(commentId: number) {
+    if (reactingTo === commentId) return;
+    setReactingTo(commentId);
+
+    try {
+      const res = await fetch(`/api/comments/${commentId}/reaction`, { method: "POST" });
+      if (!res.ok) return;
+      const data = await res.json();
+      setReactionState((prev) => ({
+        ...prev,
+        [commentId]: { count: data.reactionCount, reacted: data.reacted },
+      }));
+    } finally {
+      setReactingTo(null);
+    }
+  }
+
+  function reactionFor(comment: CommentData) {
+    return reactionState[comment.id] ?? { count: comment.reactionCount, reacted: false };
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -74,6 +125,7 @@ export default function DevotionalComments({
       }
 
       setComments((prev) => [data, ...prev]);
+      setReactionState((prev) => ({ ...prev, [data.id]: { count: 0, reacted: false } }));
       setName("");
       setCommentText("");
       setSuccess(true);
@@ -110,6 +162,7 @@ export default function DevotionalComments({
       }
 
       setComments((prev) => [data, ...prev]);
+      setReactionState((prev) => ({ ...prev, [data.id]: { count: 0, reacted: false } }));
       setReplyName("");
       setReplyText("");
       setReplyingTo(null);
@@ -248,14 +301,22 @@ export default function DevotionalComments({
                     <p className="mt-2 text-sm leading-relaxed text-primary/80">
                       &ldquo;{c.comment}&rdquo;
                     </p>
-                    <button
-                      onClick={() =>
-                        setReplyingTo(replyingTo === c.id ? null : c.id)
-                      }
-                      className="mt-2 text-xs font-semibold text-accent transition hover:text-primary"
-                    >
-                      Reply
-                    </button>
+                    <div className="mt-2 flex items-center gap-4">
+                      <button
+                        onClick={() =>
+                          setReplyingTo(replyingTo === c.id ? null : c.id)
+                        }
+                        className="text-xs font-semibold text-accent transition hover:text-primary"
+                      >
+                        Reply
+                      </button>
+                      <ReactionButton
+                        comment={c}
+                        state={reactionFor(c)}
+                        loading={reactingTo === c.id}
+                        onReact={handleReaction}
+                      />
+                    </div>
                   </div>
 
                   {/* Replies */}
@@ -272,10 +333,16 @@ export default function DevotionalComments({
                           <p className="mt-0.5 text-xs text-primary/50">
                             {formatDate(r.createdAt)}
                           </p>
-                          <p className="mt-2 text-sm leading-relaxed text-primary/80">
-                            &ldquo;{r.comment}&rdquo;
-                          </p>
-                        </div>
+                           <p className="mt-2 text-sm leading-relaxed text-primary/80">
+                             &ldquo;{r.comment}&rdquo;
+                           </p>
+                           <ReactionButton
+                             comment={r}
+                             state={reactionFor(r)}
+                             loading={reactingTo === r.id}
+                             onReact={handleReaction}
+                           />
+                         </div>
                       ))}
                     </div>
                   )}

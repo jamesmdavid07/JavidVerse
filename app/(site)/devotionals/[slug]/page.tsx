@@ -1,12 +1,15 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Calendar, User, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
-import { getDevotionalBySlug, getAdjacentDevotionals } from "@/lib/devotionals";
+import { Calendar, User, ArrowLeft, BookOpen } from "lucide-react";
+import { getDevotionalBySlug, getPublishedDevotionals } from "@/lib/devotionals";
 import { getCommentsByDevotionalId } from "@/lib/comments";
 import { getSiteUrl } from "@/lib/site-url";
 import DevotionalContent from "@/components/devotionals/DevotionalContent";
 import DevotionalShare from "@/components/devotionals/DevotionalShare";
 import DevotionalComments from "@/components/devotionals/DevotionalComments";
+import DevotionalBanner from "@/components/devotionals/DevotionalBanner";
+import DevotionalArchive from "@/components/devotionals/DevotionalArchive";
+import CTASection from "@/components/sections/CTASection";
 
 export const dynamic = "force-dynamic";
 
@@ -72,21 +75,18 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
   }
   if (!devotional) notFound();
 
-  // Only show published or past-scheduled devotionals to the public.
   const isPublished = devotional.status === "published";
   const isPastScheduled =
     devotional.status === "scheduled" &&
     new Date(devotional.publicationDate + "T00:00:00") <= new Date();
   if (!isPublished && !isPastScheduled) notFound();
 
-  let prev = null;
-  let next = null;
-  try {
-    const adjacent = await getAdjacentDevotionals(slug);
-    prev = adjacent.prev;
-    next = adjacent.next;
-  } catch {
-    // Adjacent nav is non-critical — continue without it.
+  const allPublished = await getPublishedDevotionals();
+  const dateSlugMap: Record<string, string> = {};
+  for (const entry of allPublished) {
+    const date = new Date(entry.publicationDate);
+    const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    dateSlugMap[dateKey] = entry.slug;
   }
 
   let comments: Awaited<ReturnType<typeof getCommentsByDevotionalId>> = [];
@@ -104,8 +104,10 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
   });
 
   return (
-    <section className="px-6 py-12 sm:px-8 sm:py-16 lg:px-12">
-      <div className="mx-auto max-w-4xl">
+    <>
+      <DevotionalBanner />
+      <section className="px-6 py-12 sm:px-8 sm:py-16 lg:px-12">
+        <div className="mx-auto max-w-4xl">
         {/* Back to hub */}
         <Link
           href="/devotionals"
@@ -174,7 +176,6 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
 
         {/* Comments */}
         <DevotionalComments
-          devotionalId={devotional.id}
           devotionalSlug={devotional.slug}
           initialComments={comments}
         />
@@ -203,47 +204,10 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
           </p>
         </div>
 
-        {/* Previous / Next navigation */}
-        <nav className="mt-12 flex flex-col gap-4 border-t border-primary/10 pt-8 sm:flex-row sm:justify-between">
-          {prev ? (
-            <Link
-              href={`/devotionals/${prev.slug}`}
-              className="group flex flex-1 items-center gap-3 rounded-xl border border-primary/10 bg-primary/5 px-5 py-4 transition hover:border-accent/40 hover:shadow-sm"
-            >
-              <ArrowLeft className="h-5 w-5 shrink-0 text-primary/30 transition group-hover:-translate-x-0.5 group-hover:text-accent" />
-              <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-wider text-primary/40">Previous</p>
-                <p className="mt-0.5 truncate text-sm font-semibold text-primary group-hover:text-accent">
-                  {prev.title}
-                </p>
-              </div>
-            </Link>
-          ) : (
-            <div />
-          )}
-          {next ? (
-            <Link
-              href={`/devotionals/${next.slug}`}
-              className="group flex flex-1 items-center justify-end gap-3 rounded-xl border border-primary/10 bg-primary/5 px-5 py-4 text-right transition hover:border-accent/40 hover:shadow-sm"
-            >
-              <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-wider text-primary/40">Next</p>
-                <p className="mt-0.5 truncate text-sm font-semibold text-primary group-hover:text-accent">
-                  {next.title}
-                </p>
-              </div>
-              <ArrowRight className="h-5 w-5 shrink-0 text-primary/30 transition group-hover:translate-x-0.5 group-hover:text-accent" />
-            </Link>
-          ) : (
-            <div />
-          )}
-        </nav>
+        <div className="mt-12 border-t border-primary/10 pt-8" />
 
-        {/* Go to today's devotional */}
         <div className="mt-10 rounded-2xl bg-accent/10 px-6 py-8 text-center sm:px-8">
-          <p className="text-lg font-bold text-primary">
-            Read today&apos;s devotional
-          </p>
+          <p className="text-lg font-bold text-primary">Read today&apos;s devotional</p>
           <p className="mt-2 text-sm text-primary/60">
             Start your day with the latest encouragement from God&apos;s Word.
           </p>
@@ -254,7 +218,16 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
             Go to Today&apos;s Devotional
           </Link>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+      <DevotionalArchive allPublished={allPublished} dateSlugMap={dateSlugMap} />
+      <CTASection
+        title="Need a Creative Partner?"
+        description="From book design to websites, JavidVerse helps bring your ideas to life with clarity and purpose."
+        href="/contact"
+        action="Get in Touch"
+        theme="light"
+      />
+    </>
   );
 }

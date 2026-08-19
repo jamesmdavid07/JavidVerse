@@ -112,6 +112,17 @@ export async function getDevotionalBySlug(slug: string): Promise<Devotional | nu
   return d;
 }
 
+// Get a devotional by slug for admin operations, including drafts and future schedules.
+export async function getDevotionalBySlugForAdmin(slug: string): Promise<Devotional | null> {
+  const pool = getPool();
+  const [rows] = await pool.query<RowDataPacket[]>(
+    "SELECT * FROM devotionals WHERE slug = ?",
+    [slug]
+  );
+  if (rows.length === 0) return null;
+  return rowToDevotional(rows[0]);
+}
+
 // Get a single devotional by ID (for admin).
 export async function getDevotionalById(id: number): Promise<Devotional | null> {
   const pool = getPool();

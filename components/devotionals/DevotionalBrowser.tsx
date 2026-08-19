@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Calendar, User, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
+import { Calendar, User, ArrowLeft, BookOpen } from "lucide-react";
 import DevotionalContent from "./DevotionalContent";
 import DevotionalShare from "./DevotionalShare";
 import DevotionalComments from "./DevotionalComments";
@@ -39,12 +39,7 @@ interface CommentData {
   name: string;
   comment: string;
   createdAt: string;
-}
-
-interface AdjacentEntry {
-  id: number;
-  slug: string;
-  title: string;
+  reactionCount: number;
 }
 
 interface DevotionalBrowserProps {
@@ -52,8 +47,6 @@ interface DevotionalBrowserProps {
   allPublished: DevotionalIndexEntry[];
   dateSlugMap: Record<string, string>;
   initialComments: CommentData[];
-  prev: AdjacentEntry | null;
-  next: AdjacentEntry | null;
 }
 
 export default function DevotionalBrowser({
@@ -61,8 +54,6 @@ export default function DevotionalBrowser({
   allPublished,
   dateSlugMap,
   initialComments,
-  prev,
-  next,
 }: DevotionalBrowserProps) {
   const searchParams = useSearchParams();
   const unavailableDate = searchParams.get("unavailable");
@@ -105,10 +96,7 @@ export default function DevotionalBrowser({
           </Link>
         </section>
 
-        <DevotionalArchive
-          allPublished={allPublished}
-          dateSlugMap={dateSlugMap}
-        />
+        <DevotionalArchive allPublished={allPublished} dateSlugMap={dateSlugMap} />
       </>
     );
   }
@@ -119,8 +107,6 @@ export default function DevotionalBrowser({
       <DevotionalDisplay
         devotional={latest}
         comments={initialComments}
-        prev={prev}
-        next={next}
       />
 
       {/* Full-width archive */}
@@ -136,13 +122,9 @@ export default function DevotionalBrowser({
 function DevotionalDisplay({
   devotional,
   comments,
-  prev,
-  next,
 }: {
   devotional: DevotionalData;
   comments: CommentData[];
-  prev: AdjacentEntry | null;
-  next: AdjacentEntry | null;
 }) {
   const dateStr = new Date(devotional.publicationDate).toLocaleDateString("en-US", {
     month: "long",
@@ -213,7 +195,6 @@ function DevotionalDisplay({
 
         {/* Comments — server-rendered, persistent */}
         <DevotionalComments
-          devotionalId={devotional.id}
           devotionalSlug={devotional.slug}
           initialComments={comments}
         />
@@ -242,57 +223,7 @@ function DevotionalDisplay({
           </p>
         </div>
 
-        {/* Previous / Next navigation */}
-        <nav className="mt-12 flex flex-col gap-4 border-t border-primary/10 pt-8 sm:flex-row sm:justify-between">
-          {prev ? (
-            <Link
-              href={`/devotionals/${prev.slug}`}
-              className="group flex flex-1 items-center gap-3 rounded-xl border border-primary/10 bg-primary/5 px-5 py-4 transition hover:border-accent/40 hover:shadow-sm"
-            >
-              <ArrowLeft className="h-5 w-5 shrink-0 text-primary/30 transition group-hover:-translate-x-0.5 group-hover:text-accent" />
-              <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-wider text-primary/40">Previous</p>
-                <p className="mt-0.5 truncate text-sm font-semibold text-primary group-hover:text-accent">
-                  {prev.title}
-                </p>
-              </div>
-            </Link>
-          ) : (
-            <div />
-          )}
-          {next ? (
-            <Link
-              href={`/devotionals/${next.slug}`}
-              className="group flex flex-1 items-center justify-end gap-3 rounded-xl border border-primary/10 bg-primary/5 px-5 py-4 text-right transition hover:border-accent/40 hover:shadow-sm"
-            >
-              <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-wider text-primary/40">Next</p>
-                <p className="mt-0.5 truncate text-sm font-semibold text-primary group-hover:text-accent">
-                  {next.title}
-                </p>
-              </div>
-              <ArrowRight className="h-5 w-5 shrink-0 text-primary/30 transition group-hover:translate-x-0.5 group-hover:text-accent" />
-            </Link>
-          ) : (
-            <div />
-          )}
-        </nav>
-
-        {/* Go to today's devotional */}
-        <div className="mt-10 rounded-2xl bg-accent/10 px-6 py-8 text-center sm:px-8">
-          <p className="text-lg font-bold text-primary">
-            Read today&apos;s devotional
-          </p>
-          <p className="mt-2 text-sm text-primary/60">
-            Start your day with the latest encouragement from God&apos;s Word.
-          </p>
-          <Link
-            href="/devotionals"
-            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:shadow-md"
-          >
-            Go to Today&apos;s Devotional
-          </Link>
-        </div>
+        <div className="mt-12 border-t border-primary/10 pt-8" />
       </div>
     </section>
   );
