@@ -107,7 +107,9 @@ export async function getDevotionalBySlug(slug: string): Promise<Devotional | nu
     [slug]
   );
   if (rows.length === 0) return null;
-  return rowToDevotional(rows[0]);
+  const d = rowToDevotional(rows[0]);
+  if (!isVisible(d.status, d.publicationDate)) return null;
+  return d;
 }
 
 // Get a single devotional by ID (for admin).
