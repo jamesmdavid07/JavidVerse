@@ -239,28 +239,6 @@ export async function updateDevotional(
   const existing = await getDevotionalById(id);
   if (!existing) return null;
 
-  // If title changed, regenerate slug.
-  let slug = existing.slug;
-  if (data.title && data.title !== existing.title) {
-    slug = data.title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
-    let counter = 2;
-    while (true) {
-      const [dup] = await pool.query<RowDataPacket[]>(
-        "SELECT id FROM devotionals WHERE slug = ? AND id != ?",
-        [slug, id]
-      );
-      if (dup.length === 0) break;
-      slug = `${data.title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "")}-${counter}`;
-      counter++;
-    }
-  }
-
   const fields: string[] = [];
   const values: (string | number)[] = [];
 
@@ -275,8 +253,6 @@ export async function updateDevotional(
   if (data.prayer !== undefined) { fields.push("prayer = ?"); values.push(data.prayer); }
   if (data.readMoreRefs !== undefined) { fields.push("read_more_refs = ?"); values.push(JSON.stringify(data.readMoreRefs)); }
   if (data.status !== undefined) { fields.push("status = ?"); values.push(data.status); }
-  if (slug !== existing.slug) { fields.push("slug = ?"); values.push(slug); }
-
   if (fields.length === 0) return existing;
 
   values.push(id);

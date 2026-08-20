@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, ChevronRight, CalendarDays } from "lucide-react";
+import { devotionalDateParts } from "@/lib/devotional-date";
 
 interface DevotionalIndexEntry {
   id: number;
@@ -39,10 +40,7 @@ function buildAvailableDates(
 ): Record<number, Record<number, Set<number>>> {
   const map: Record<number, Record<number, Set<number>>> = {};
   for (const e of entries) {
-    const d = new Date(e.publicationDate);
-    const year = d.getFullYear();
-    const month = d.getMonth() + 1;
-    const day = d.getDate();
+    const { year, month, day } = devotionalDateParts(e.publicationDate);
     if (!map[year]) map[year] = {};
     if (!map[year][month]) map[year][month] = new Set();
     map[year][month].add(day);

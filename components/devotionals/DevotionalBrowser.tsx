@@ -7,6 +7,7 @@ import DevotionalContent from "./DevotionalContent";
 import DevotionalShare from "./DevotionalShare";
 import DevotionalComments from "./DevotionalComments";
 import DevotionalArchive from "./DevotionalArchive";
+import { formatDevotionalDate } from "@/lib/devotional-date";
 
 interface DevotionalData {
   id: number;
@@ -59,12 +60,7 @@ export default function DevotionalBrowser({
   const unavailableDate = searchParams.get("unavailable");
 
   function formatUnavailableDate(dateStr: string) {
-    return new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      timeZone: "Asia/Manila",
-    });
+    return formatDevotionalDate(dateStr);
   }
 
   if (!latest) {
@@ -126,12 +122,7 @@ function DevotionalDisplay({
   devotional: DevotionalData;
   comments: CommentData[];
 }) {
-  const dateStr = new Date(devotional.publicationDate).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "Asia/Manila",
-  });
+  const dateStr = formatDevotionalDate(devotional.publicationDate);
 
   return (
     <section className="px-6 py-12 sm:px-8 sm:py-16 lg:px-12">
@@ -144,7 +135,7 @@ function DevotionalDisplay({
           </span>
           <span className="inline-flex items-center gap-1.5">
             <User className="h-4 w-4 text-accent" />
-            Written by James David
+            {devotional.author}
           </span>
         </div>
 

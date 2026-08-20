@@ -22,24 +22,24 @@ export default function DevotionalShare({
 
   const shareUrl = `https://javidverse.com/devotionals/${slug}`;
 
-  // Truncate verse for previews (max ~120 chars)
-  const versePreview =
-    fullVerse.length > 120 ? fullVerse.slice(0, 117) + "..." : fullVerse;
-
-  const shareTextWhatsApp = [
-    `\u{1F4D6} "${versePreview}" \u2014 ${mainBibleRef} (${bibleTranslation})`,
+  const shareMessage = [
+    `${title} - JavidVerse Daily Devotionals`,
     "",
-    `"${title}"`,
-    "JavidVerse Daily Devotionals",
+    `“${fullVerse}” — ${mainBibleRef} (${bibleTranslation})`,
+    "",
+    "Click the link to read the devotional",
+    "",
     shareUrl,
+    "",
+    "Don't forget to share and leave a comment",
+    "",
+    "Blessings!",
   ].join("\n");
-
-  const shareQuoteFacebook = `\u{1F4D6} "${versePreview}" \u2014 ${mainBibleRef} (${bibleTranslation}) \u2014 "${title}"`;
 
   const copyText = shareUrl;
 
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl + "?fb=1")}&quote=${encodeURIComponent(shareQuoteFacebook)}`;
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareTextWhatsApp)}`;
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareMessage)}`;
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
 
   async function copyLink() {
     try {

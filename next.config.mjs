@@ -1,4 +1,6 @@
 const redirects = [
+  // Preserve the link shared before the devotional title was clarified.
+  { source: "/devotionals/saul-s-first-battle-success", destination: "/devotionals/king-saul-s-first-battle-success", permanent: true },
   { source: "/about", destination: "/about-us", permanent: true },
   { source: "/book", destination: "/book-services", permanent: true },
   { source: "/books", destination: "/book-services", permanent: true },

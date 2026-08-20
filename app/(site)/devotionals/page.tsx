@@ -5,13 +5,22 @@ import DevotionalBanner from "@/components/devotionals/DevotionalBanner";
 import DevotionalBrowser from "@/components/devotionals/DevotionalBrowser";
 import CTASection from "@/components/sections/CTASection";
 import { BookOpen } from "lucide-react";
+import { devotionalDateKey } from "@/lib/devotional-date";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Daily Devotionals",
   description:
-    "Spend time each day in God's Word through simple, encouraging, Christ-centered devotionals that inspire faith, hope, and a deeper walk with God.",
+      "Spend time each day in God's Word through simple, encouraging, Christ-centered devotionals that inspire faith, hope, and a deeper walk with God.",
+  alternates: { canonical: "/devotionals" },
+  openGraph: {
+    title: "Daily Devotionals",
+    description:
+      "Spend time each day in God's Word through simple, encouraging, Christ-centered devotionals that inspire faith, hope, and a deeper walk with God.",
+    url: "/devotionals",
+    type: "website",
+  },
 };
 
 export default async function DevotionalsPage() {
@@ -28,9 +37,7 @@ export default async function DevotionalsPage() {
   // Build a date → slug map for the archive calendar links.
   const dateSlugMap: Record<string, string> = {};
   for (const entry of allPublished) {
-    const d = new Date(entry.publicationDate);
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    dateSlugMap[key] = entry.slug;
+    dateSlugMap[devotionalDateKey(entry.publicationDate)] = entry.slug;
   }
 
   // Fetch comments and adjacent devotionals for the latest devotional.

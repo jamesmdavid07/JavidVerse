@@ -10,6 +10,7 @@ import DevotionalComments from "@/components/devotionals/DevotionalComments";
 import DevotionalBanner from "@/components/devotionals/DevotionalBanner";
 import DevotionalArchive from "@/components/devotionals/DevotionalArchive";
 import CTASection from "@/components/sections/CTASection";
+import { devotionalDateKey, formatDevotionalDate } from "@/lib/devotional-date";
 
 export const dynamic = "force-dynamic";
 
@@ -78,9 +79,7 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
   const allPublished = await getPublishedDevotionals();
   const dateSlugMap: Record<string, string> = {};
   for (const entry of allPublished) {
-    const date = new Date(entry.publicationDate);
-    const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-    dateSlugMap[dateKey] = entry.slug;
+    dateSlugMap[devotionalDateKey(entry.publicationDate)] = entry.slug;
   }
 
   let comments: Awaited<ReturnType<typeof getCommentsByDevotionalId>> = [];
@@ -90,12 +89,7 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
     // Comments are non-critical — continue without them.
   }
 
-  const dateStr = new Date(devotional.publicationDate).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "Asia/Manila",
-  });
+  const dateStr = formatDevotionalDate(devotional.publicationDate);
 
   return (
     <>
@@ -119,7 +113,7 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
           </span>
           <span className="inline-flex items-center gap-1.5">
             <User className="h-4 w-4 text-accent" />
-            Written by James David
+            {devotional.author}
           </span>
         </div>
 
