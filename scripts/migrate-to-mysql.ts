@@ -62,7 +62,7 @@ async function migrate() {
       full_verse TEXT,
       content LONGTEXT NOT NULL,
       read_more_refs JSON,
-      status ENUM('draft', 'published', 'scheduled') DEFAULT 'draft',
+       status ENUM('scheduled', 'published') DEFAULT 'scheduled',
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

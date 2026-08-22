@@ -12,7 +12,7 @@ interface DevotionalIndexEntry {
   title: string;
   author: string;
   publicationDate: string;
-  status: "draft" | "published" | "scheduled";
+  status: "published" | "scheduled";
 }
 
 interface DevotionalArchiveProps {

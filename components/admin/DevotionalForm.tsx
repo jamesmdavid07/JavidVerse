@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import DevotionalEditor from "./DevotionalEditor";
+import type { DevotionalStatus } from "@/lib/devotionals";
 
 interface DevotionalFormData {
   title: string;
@@ -15,7 +16,7 @@ interface DevotionalFormData {
   content: string;
   reflection: string;
   prayer: string;
-  status: "draft" | "published" | "scheduled";
+  status: DevotionalStatus;
 }
 
 interface Props {
@@ -33,7 +34,7 @@ const EMPTY: DevotionalFormData = {
   content: "",
   reflection: "",
   prayer: "",
-  status: "draft",
+  status: "scheduled",
 };
 
 const inputClass =
@@ -207,14 +208,16 @@ export default function DevotionalForm({ initialData, mode }: Props) {
         <select
           value={form.status}
           onChange={(e) =>
-            updateField("status", e.target.value as "draft" | "published" | "scheduled")
+            updateField("status", e.target.value as DevotionalStatus)
           }
           className={inputClass}
         >
-          <option value="draft">Draft</option>
+          <option value="scheduled">Schedule</option>
           <option value="published">Published</option>
-          <option value="scheduled">Scheduled</option>
         </select>
+        <p className="mt-1 text-xs text-[#042D6D]/50">
+          Scheduled devotionals go live automatically on the publication date.
+        </p>
       </div>
 
       {/* Actions */}

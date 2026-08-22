@@ -1,5 +1,6 @@
 // Devotionals page — banner + full devotional (today's) + calendar archive.
 import { getLatestDevotional, getPublishedDevotionals } from "@/lib/devotionals";
+import type { DevotionalStatus } from "@/lib/devotionals";
 import { getCommentsByDevotionalId } from "@/lib/comments";
 import DevotionalBanner from "@/components/devotionals/DevotionalBanner";
 import DevotionalBrowser from "@/components/devotionals/DevotionalBrowser";
@@ -25,7 +26,7 @@ export const metadata = {
 
 export default async function DevotionalsPage() {
   let latest = null;
-  let allPublished: { id: number; slug: string; title: string; author: string; publicationDate: string; status: "draft" | "published" | "scheduled" }[] = [];
+  let allPublished: { id: number; slug: string; title: string; author: string; publicationDate: string; status: DevotionalStatus }[] = [];
 
   try {
     latest = await getLatestDevotional();

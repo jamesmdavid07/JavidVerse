@@ -7,13 +7,16 @@ import {
   createDevotional,
 } from "@/lib/devotionals";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const dateParam = searchParams.get("date");
-  const allParam = searchParams.get("all");
+const VALID_STATUSES = new Set(["scheduled", "published"]);
 
-  // Fetch devotional for a specific YYYY-MM-DD date.
-  if (dateParam) {
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const dateParam = searchParams.get("date");
+    const allParam = searchParams.get("all");
+
+    // Fetch devotional for a specific YYYY-MM-DD date.
+    if (dateParam) {
     const match = dateParam.match(/^(\d{4})-(\d{2})-(\d{2})$/);
     if (!match) {
       return NextResponse.json({ error: "Invalid date format. Use YYYY-MM-DD." }, { status: 400 });
@@ -29,17 +32,24 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(null);
     }
     return NextResponse.json(devotional);
-  }
+    }
 
-  // ?all=true returns every devotional (for admin dashboard).
-  if (allParam === "true") {
-    const all = await getAllDevotionals();
-    return NextResponse.json(all);
-  }
+    // ?all=true returns every devotional (for admin dashboard).
+    if (allParam === "true") {
+      const all = await getAllDevotionals();
+      return NextResponse.json(all);
+    }
 
-  // Default: list all published devotionals.
-  const devotionals = await getPublishedDevotionals();
-  return NextResponse.json(devotionals);
+    // Default: list all published devotionals.
+    const devotionals = await getPublishedDevotionals();
+    return NextResponse.json(devotionals);
+  } catch (error) {
+    console.error("Failed to load devotionals", error);
+    return NextResponse.json(
+      { error: process.env.NODE_ENV === "development" && error instanceof Error ? error.message : "Failed to load devotionals." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -49,6 +59,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
+  const status = VALID_STATUSES.has(body.status) ? body.status : "scheduled";
   const devotional = await createDevotional({
     title: body.title,
     author: body.author || "Written by James David",
@@ -60,7 +71,7 @@ export async function POST(request: NextRequest) {
     reflection: body.reflection || "",
     prayer: body.prayer || "",
     readMoreRefs: body.readMoreRefs || [],
-    status: body.status || "draft",
+    status,
   });
 
   return NextResponse.json(devotional, { status: 201 });

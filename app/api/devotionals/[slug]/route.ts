@@ -7,6 +7,8 @@ import {
   updateDevotional,
 } from "@/lib/devotionals";
 
+const VALID_STATUSES = new Set(["scheduled", "published"]);
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -42,7 +44,21 @@ export async function PUT(
     return NextResponse.json({ error: "Devotional not found" }, { status: 404 });
   }
 
-  const updated = await updateDevotional(existing.id, body);
+  const update = { ...body };
+  if (update.status !== undefined && !VALID_STATUSES.has(update.status)) {
+    return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+  }
+
+  // With only scheduled/published states, an unpublish needs a future date.
+  if (update.unpublish) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    update.status = "scheduled";
+    update.publicationDate = tomorrow.toLocaleDateString("en-CA", { timeZone: "Asia/Manila" });
+    delete update.unpublish;
+  }
+
+  const updated = await updateDevotional(existing.id, update);
   if (!updated) {
     return NextResponse.json({ error: "Update failed" }, { status: 500 });
   }

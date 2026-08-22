@@ -2,6 +2,8 @@
 import getPool from "./db";
 import type { RowDataPacket, ResultSetHeader } from "mysql2";
 
+export type DevotionalStatus = "scheduled" | "published";
+
 export interface Devotional {
   id: number;
   slug: string;
@@ -15,7 +17,7 @@ export interface Devotional {
   reflection: string;
   prayer: string;
   readMoreRefs: string[];
-  status: "draft" | "published" | "scheduled";
+  status: DevotionalStatus;
   createdAt: string;
   updatedAt: string;
 }
@@ -26,7 +28,7 @@ export interface DevotionalIndexEntry {
   title: string;
   author: string;
   publicationDate: string;
-  status: "draft" | "published" | "scheduled";
+  status: DevotionalStatus;
 }
 
 // Map a MySQL row to our Devotional interface.
@@ -47,7 +49,10 @@ function rowToDevotional(row: RowDataPacket): Devotional {
     reflection: row.reflection ?? "",
     prayer: row.prayer ?? "",
     readMoreRefs: Array.isArray(refs) ? refs : [],
-    status: row.status,
+    status: row.status === "published" ||
+      (row.status === "scheduled" && row.publication_date <= getPhilippineDate())
+      ? "published"
+      : "scheduled",
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -61,7 +66,10 @@ function rowToIndexEntry(row: RowDataPacket): DevotionalIndexEntry {
     title: row.title,
     author: row.author,
     publicationDate: row.publication_date,
-    status: row.status,
+    status: row.status === "published" ||
+      (row.status === "scheduled" && row.publication_date <= getPhilippineDate())
+      ? "published"
+      : "scheduled",
   };
 }
 
@@ -274,7 +282,7 @@ export async function deleteDevotional(id: number): Promise<boolean> {
 // Publish or unpublish a devotional.
 export async function setDevotionalStatus(
   id: number,
-  status: "draft" | "published" | "scheduled"
+  status: DevotionalStatus
 ): Promise<Devotional | null> {
   return updateDevotional(id, { status });
 }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import DevotionalForm from "@/components/admin/DevotionalForm";
+import type { DevotionalStatus } from "@/lib/devotionals";
 
 interface DevotionalData {
   id: number;
@@ -17,7 +18,7 @@ interface DevotionalData {
   reflection: string;
   prayer: string;
   readMoreRefs: string[];
-  status: "draft" | "published" | "scheduled";
+  status: DevotionalStatus;
 }
 
 export default function EditDevotionalPage() {
