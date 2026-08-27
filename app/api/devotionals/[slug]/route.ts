@@ -5,7 +5,7 @@ import {
   getDevotionalBySlugForAdmin,
   getDevotionalById,
   updateDevotional,
-} from "@/lib/devotionals";
+} from "@/lib/devotional-store";
 
 const VALID_STATUSES = new Set(["scheduled", "published"]);
 

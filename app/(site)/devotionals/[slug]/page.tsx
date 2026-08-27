@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Calendar, User, ArrowLeft, BookOpen } from "lucide-react";
-import { getDevotionalBySlug, getPublishedDevotionals } from "@/lib/devotionals";
+import { getDevotionalBySlug, getPublishedDevotionals } from "@/lib/devotional-store";
 import { getCommentsByDevotionalId } from "@/lib/comments";
 import { getSiteUrl } from "@/lib/site-url";
 import DevotionalContent from "@/components/devotionals/DevotionalContent";

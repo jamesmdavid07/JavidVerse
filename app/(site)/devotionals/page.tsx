@@ -1,5 +1,5 @@
 // Devotionals page — banner + full devotional (today's) + calendar archive.
-import { getLatestDevotional, getPublishedDevotionals } from "@/lib/devotionals";
+import { getLatestDevotional, getPublishedDevotionals } from "@/lib/devotional-store";
 import type { DevotionalStatus } from "@/lib/devotionals";
 import { getCommentsByDevotionalId } from "@/lib/comments";
 import DevotionalBanner from "@/components/devotionals/DevotionalBanner";

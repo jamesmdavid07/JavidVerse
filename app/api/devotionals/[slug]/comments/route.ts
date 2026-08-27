@@ -1,7 +1,7 @@
 // GET /api/devotionals/[slug]/comments — fetch comments for a devotional.
 // POST /api/devotionals/[slug]/comments — create a new comment.
 import { NextRequest, NextResponse } from "next/server";
-import { getDevotionalBySlug } from "@/lib/devotionals";
+import { getDevotionalBySlug } from "@/lib/devotional-store";
 import {
   getCommentsByDevotionalId,
   createComment,

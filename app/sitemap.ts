@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site-url";
-import { getPublishedDevotionals } from "@/lib/devotionals";
+import { getPublishedDevotionals } from "@/lib/devotional-store";
 
 const siteUrl = getSiteUrl();
 
