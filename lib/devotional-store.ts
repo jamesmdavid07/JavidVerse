@@ -170,13 +170,19 @@ async function deleteMySql(slug: string): Promise<void> {
 
 // Read all devotionals from MySQL (operational store) as full Devotional objects.
 // Returns null if the DB is unreachable, so callers can fall back to the JSON store.
+// Uses a short cooldown after a failure to avoid slow timeouts on every request.
+const DB_RETRY_MS = 30_000;
+let dbDownUntil = 0;
+
 async function readAllFromMySql(): Promise<Devotional[] | null> {
+  if (Date.now() < dbDownUntil) return null; // cooldown: skip DB, use JSON fallback
   try {
     const pool = getPool();
     const [rows] = await pool.query<any[]>(
       "SELECT * FROM devotionals ORDER BY publication_date ASC"
     );
     if (!Array.isArray(rows)) return null;
+    dbDownUntil = 0; // DB reachable again — clear cooldown
     return rows.map((row) =>
       normalize({
         id: Number(row.id),
@@ -203,6 +209,7 @@ async function readAllFromMySql(): Promise<Devotional[] | null> {
     );
   } catch (err) {
     console.error("MySQL read failed (falling back to JSON store)", err instanceof Error ? err.message : err);
+    dbDownUntil = Date.now() + DB_RETRY_MS; // enter cooldown
     return null;
   }
 }
