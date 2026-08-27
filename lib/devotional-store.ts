@@ -4,6 +4,7 @@
 
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 import getPool from "./db";
 import type { RowDataPacket, ResultSetHeader } from "mysql2";
 
@@ -54,6 +55,49 @@ function writeStore(items: Devotional[]): void {
   const dir = path.dirname(STORE_PATH);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(STORE_PATH, JSON.stringify(items, null, 2) + "\n", "utf8");
+  // Auto-save new content to git (sync, dev-only) so new devotionals are never
+  // lost even if the database/hosting is deleted.
+  autoCommit();
+}
+
+// Commit + push the content source-of-truth files to git after each write.
+// Runs synchronously so it always completes before the request is torn down.
+// Only enabled outside production (local dev, where the repo has push access);
+// on a host server the repo is read-only and this is skipped.
+let autoCommitRunning = false;
+function autoCommit(): void {
+  if (process.env.NODE_ENV === "production") return;
+  if (autoCommitRunning) return;
+  autoCommitRunning = true;
+  try {
+    const root = process.cwd();
+    execSync("git add data/devotionals/devotionals.json data/comments-backup.json", {
+      cwd: root,
+      timeout: 15_000,
+      stdio: "ignore",
+    });
+    // git diff --cached --quiet exits 0 when there is nothing to commit.
+    let hasChanges = false;
+    try {
+      execSync("git diff --cached --quiet", { cwd: root, stdio: "ignore" });
+    } catch {
+      hasChanges = true;
+    }
+    if (!hasChanges) return;
+    execSync(
+      'git commit -m "chore: auto-backup devotional content [skip ci]"',
+      { cwd: root, stdio: "ignore" }
+    );
+    execSync("git push origin HEAD", {
+      cwd: root,
+      timeout: 30_000,
+      stdio: "ignore",
+    });
+  } catch {
+    // best-effort only — never break the write
+  } finally {
+    autoCommitRunning = false;
+  }
 }
 
 function getPhilippineDate(): string {
@@ -178,7 +222,7 @@ async function readAllFromMySql(): Promise<Devotional[] | null> {
   if (Date.now() < dbDownUntil) return null; // cooldown: skip DB, use JSON fallback
   try {
     const pool = getPool();
-    const [rows] = await pool.query<any[]>(
+    const [rows] = await pool.query<RowDataPacket[]>(
       "SELECT * FROM devotionals ORDER BY publication_date ASC"
     );
     if (!Array.isArray(rows)) return null;

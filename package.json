@@ -8,7 +8,8 @@
     "build:hostinger": "rm -rf .next && next build --webpack",
     "start": "next start -H 0.0.0.0",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit --incremental false"
+    "typecheck": "tsc --noEmit --incremental false",
+    "backup": "git add data/devotionals/devotionals.json data/comments-backup.json scripts/seed.sql && (git diff --cached --quiet && echo 'No content changes to backup.' || git commit -m 'chore: backup devotional/comment content' && git push origin main)"
   },
   "dependencies": {
     "@tiptap/extension-link": "^3.30.1",

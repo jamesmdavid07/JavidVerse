@@ -1,0 +1,36 @@
+name: Auto-commit content backup
+
+on:
+  schedule:
+    # Run every 15 minutes so newly added devotionals are pushed to git automatically
+    - cron: "*/15 * * * *"
+  workflow_dispatch: # allow manual trigger from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  commit-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Auto-commit devotional & comment content changes
+        run: |
+          git config user.name "Auto Backup Bot"
+          git config user.email "auto-backup@javidverse.com"
+
+          # Add the content source-of-truth files (only the data, never secrets)
+          git add data/devotionals/devotionals.json data/comments-backup.json
+
+          # Commit if there are changes
+          if git diff --cached --quiet; then
+            echo "No content changes to commit."
+          else
+            git commit -m "chore: auto-backup devotional/comment content [skip ci]"
+            git push origin HEAD
+            echo "Content changes committed and pushed."
+          fi
