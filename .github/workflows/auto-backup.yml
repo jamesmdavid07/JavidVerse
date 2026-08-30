@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -31,6 +31,11 @@ jobs:
             echo "No content changes to commit."
           else
             git commit -m "chore: auto-backup devotional/comment content [skip ci]"
+
+            # Rebase on top of any commits that landed since checkout, then push.
+            # This avoids the exit code 128 "rejected (non-fast-forward)" failure
+            # caused by concurrent commits on the default branch.
+            git pull --rebase origin HEAD
             git push origin HEAD
             echo "Content changes committed and pushed."
           fi
