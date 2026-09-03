@@ -212,7 +212,7 @@ async function upsertMySql(d: Devotional): Promise<void> {
       );
     }
   } catch (err) {
-    console.error("MySQL sync skipped (DB unreachable?)", err instanceof Error ? err.message : err);
+    console.warn("MySQL sync skipped (DB unreachable?)", err instanceof Error ? err.message : err);
   }
 }
 
@@ -221,7 +221,7 @@ async function deleteMySql(slug: string): Promise<void> {
     const pool = getPool();
     await pool.execute("DELETE FROM devotionals WHERE slug = ?", [slug]);
   } catch (err) {
-    console.error("MySQL delete skipped (DB unreachable?)", err instanceof Error ? err.message : err);
+    console.warn("MySQL delete skipped (DB unreachable?)", err instanceof Error ? err.message : err);
   }
 }
 
@@ -265,7 +265,7 @@ async function readAllFromMySql(): Promise<Devotional[] | null> {
       })
     );
   } catch (err) {
-    console.error("MySQL read failed (falling back to JSON store)", err instanceof Error ? err.message : err);
+    console.warn("MySQL read failed (falling back to JSON store)", err instanceof Error ? err.message : err);
     dbDownUntil = Date.now() + DB_RETRY_MS; // enter cooldown
     return null;
   }

@@ -62,7 +62,7 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
   try {
     devotional = await getDevotionalBySlug(slug);
   } catch (err) {
-    console.error("Failed to load devotional:", err);
+    console.warn("Failed to load devotional:", err);
     return (
       <section className="px-6 py-16 text-center sm:px-8 sm:py-20 lg:px-12">
         <BookOpen className="mx-auto mb-4 h-10 w-10 text-accent" />

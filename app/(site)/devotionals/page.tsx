@@ -30,7 +30,7 @@ export default async function DevotionalsPage() {
     latest = await getLatestDevotional();
     allPublished = await getPublishedDevotionals();
   } catch (err) {
-    console.error("Failed to load devotionals from database:", err);
+    console.warn("Failed to load devotionals from database:", err);
   }
 
   // Build a date → slug map for the archive calendar links.
