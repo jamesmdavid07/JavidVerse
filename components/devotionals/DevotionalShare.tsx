@@ -23,7 +23,7 @@ export default function DevotionalShare({
   const shareUrl = `https://javidverse.com/devotionals/${slug}`;
 
   const shareMessage = [
-    `${title} - JavidVerse Daily Devotionals`,
+    `${title} - JavidVerse Devotionals`,
     "",
     `“${fullVerse}” — ${mainBibleRef} (${bibleTranslation})`,
     "",

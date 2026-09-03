@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Pencil, EyeOff } from "lucide-react";
 import type { DevotionalStatus } from "@/lib/devotionals";
+import { isMWFDate, getDevotionalDayShort, getMWFLabel } from "@/lib/devotional-date";
 
 interface DevotionalEntry {
   id: number;
@@ -86,6 +87,19 @@ export default function DevotionalTable() {
     );
   }
 
+  function dayBadge(dateStr: string) {
+    const isMWF = isMWFDate(dateStr);
+    const short = getDevotionalDayShort(dateStr);
+    return (
+      <span
+        title={getMWFLabel(dateStr)}
+        className={`inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-bold tracking-wide ${isMWF ? "bg-[#042D6D] text-white" : "bg-amber-100 text-amber-800 ring-1 ring-amber-200"}`}
+      >
+        {short}
+      </span>
+    );
+  }
+
   if (loading) {
     return (
       <div className="flex justify-center py-12">
@@ -102,7 +116,10 @@ export default function DevotionalTable() {
         </div>
       )}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-xl font-bold text-white">All Devotionals</h2>
+        <div>
+          <h2 className="text-xl font-bold text-white">All Devotionals</h2>
+          <p className="mt-1 text-xs font-medium text-white/60">Mon — Biblical Person · Wed — Midweek · Fri — Reflection</p>
+        </div>
         <button
           onClick={() => router.push("/admin/devotionals/new")}
           className="flex items-center justify-center gap-2 rounded-lg bg-[#FCB005] px-5 py-2.5 text-sm font-semibold text-[#042D6D] shadow-sm transition hover:bg-[#e5a804] hover:shadow-md"
@@ -130,6 +147,7 @@ export default function DevotionalTable() {
               <thead className="bg-[#031f4d]">
                 <tr>
                   <th className="px-4 py-3 font-semibold text-white/80">Date</th>
+                  <th className="px-4 py-3 font-semibold text-white/80">Day</th>
                   <th className="px-4 py-3 font-semibold text-white/80">Title</th>
                   <th className="px-4 py-3 font-semibold text-white/80">Status</th>
                   <th className="px-4 py-3 font-semibold text-white/80">Actions</th>
@@ -137,10 +155,11 @@ export default function DevotionalTable() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {devotionals.map((d) => (
-                  <tr key={d.id} className="transition hover:bg-gray-50">
+                  <tr key={d.id} className={`transition hover:bg-gray-50 ${!isMWFDate(d.publicationDate) ? "bg-amber-50/50" : ""}`}>
                     <td className="whitespace-nowrap px-4 py-3 text-gray-400">
                       {formatDate(d.publicationDate)}
                     </td>
+                    <td className="whitespace-nowrap px-4 py-3">{dayBadge(d.publicationDate)}</td>
                     <td className="px-4 py-3 font-medium text-[#042D6D]">
                       {d.title}
                     </td>
@@ -177,7 +196,7 @@ export default function DevotionalTable() {
             {devotionals.map((d) => (
               <div
                 key={d.id}
-                className="rounded-2xl border border-white/10 bg-white p-4 shadow-lg"
+                className={`rounded-2xl border bg-white p-4 shadow-lg ${!isMWFDate(d.publicationDate) ? "border-amber-200 bg-amber-50/30" : "border-white/10"}`}
               >
                 <div className="mb-2 flex items-start justify-between gap-2">
                   <h3 className="text-sm font-bold leading-snug text-[#042D6D]">
@@ -185,8 +204,9 @@ export default function DevotionalTable() {
                   </h3>
                   {statusBadge(d.status)}
                 </div>
-                <p className="mb-3 text-xs text-gray-400">
-                  {formatDate(d.publicationDate)}
+                <p className="mb-3 flex items-center gap-2 text-xs text-gray-400">
+                  {formatDate(d.publicationDate)} {dayBadge(d.publicationDate)}
+                  {!isMWFDate(d.publicationDate) && <span className="font-semibold text-amber-700">Off rhythm</span>}
                 </p>
                 <div className="flex items-center gap-2 border-t border-gray-100 pt-2">
                    <button

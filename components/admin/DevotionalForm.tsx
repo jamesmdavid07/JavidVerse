@@ -1,10 +1,11 @@
 // Devotional create/edit form with all fields.
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import DevotionalEditor from "./DevotionalEditor";
 import type { DevotionalStatus } from "@/lib/devotionals";
+import { isMWFDate, getDevotionalDayShort, getMWFLabel, getNextMWFOptions, getNextMWFDate } from "@/lib/devotional-date";
 
 interface DevotionalFormData {
   title: string;
@@ -45,6 +46,10 @@ export default function DevotionalForm({ initialData, mode }: Props) {
   const [form, setForm] = useState<DevotionalFormData>(initialData || EMPTY);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+
+  const nextOptions = useMemo(() => getNextMWFOptions(6), []);
+  const isSelectedMWF = useMemo(() => (form.publicationDate ? isMWFDate(form.publicationDate) : false), [form.publicationDate]);
+  const selectedDay = useMemo(() => (form.publicationDate ? getDevotionalDayShort(form.publicationDate) : ""), [form.publicationDate]);
 
   function updateField<K extends keyof DevotionalFormData>(
     key: K,
@@ -108,7 +113,7 @@ export default function DevotionalForm({ initialData, mode }: Props) {
         />
       </div>
 
-      {/* Publication Date */}
+      {/* Publication Date — M/W/F rhythm */}
       <div>
         <label className="block text-sm font-semibold text-[#042D6D]">Publication Date *</label>
         <input
@@ -118,6 +123,30 @@ export default function DevotionalForm({ initialData, mode }: Props) {
           className={inputClass}
           required
         />
+        {/* M/W/F hint + validation */}
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${isSelectedMWF ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-800"}`}>
+            {form.publicationDate ? `${selectedDay} — ${getMWFLabel(form.publicationDate)}` : "Pick a date"}
+          </span>
+          {!isSelectedMWF && form.publicationDate && (
+            <span className="text-xs text-amber-700">Not a Mon/Wed/Fri — publishing will be off rhythm. Next MWF: {getNextMWFDate(form.publicationDate)}</span>
+          )}
+        </div>
+        <p className="mt-2 text-xs leading-5 text-[#042D6D]/60">
+          Weekly rhythm: <span className="font-semibold">Mon</span> — Biblical Person · <span className="font-semibold">Wed</span> — Midweek · <span className="font-semibold">Fri</span> — Reflection. Choose only Mon/Wed/Fri to stay on schedule.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {nextOptions.map((opt) => (
+            <button
+              key={opt.date}
+              type="button"
+              onClick={() => updateField("publicationDate", opt.date)}
+              className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${form.publicationDate === opt.date ? "border-[#042D6D] bg-[#042D6D] text-white" : "border-[#042D6D]/15 bg-white text-[#042D6D] hover:bg-[#042D6D]/5"}`}
+            >
+              {opt.day} {opt.date.slice(5)}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Author */}

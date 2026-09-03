@@ -9,6 +9,7 @@ import DevotionalShare from "@/components/devotionals/DevotionalShare";
 import DevotionalComments from "@/components/devotionals/DevotionalComments";
 import DevotionalBanner from "@/components/devotionals/DevotionalBanner";
 import DevotionalArchive from "@/components/devotionals/DevotionalArchive";
+import DevotionalSchedule from "@/components/devotionals/DevotionalSchedule";
 import CTASection from "@/components/sections/CTASection";
 import { devotionalDateKey, formatDevotionalDate } from "@/lib/devotional-date";
 
@@ -29,10 +30,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description =
     devotional.fullVerse.length > 160
       ? devotional.fullVerse.slice(0, 157) + "..."
-      : devotional.fullVerse || `Read "${devotional.title}" on JavidVerse Daily Devotionals.`;
+      : devotional.fullVerse || `Read "${devotional.title}" on JavidVerse Devotionals.`;
 
   return {
-    title: `${devotional.title} | JavidVerse Daily Devotional`,
+    title: `${devotional.title} | JavidVerse Devotional`,
     description,
     alternates: { canonical: url },
     openGraph: {
@@ -94,7 +95,7 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
   return (
     <>
       <DevotionalBanner />
-      <section className="px-6 py-12 sm:px-8 sm:py-16 lg:px-12">
+      <section className="px-6 pb-8 pt-12 sm:px-8 sm:pb-10 sm:pt-16 lg:px-12">
         <div className="mx-auto max-w-4xl">
         {/* Back to hub */}
         <Link
@@ -168,33 +169,9 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
           initialComments={comments}
         />
 
-        {/* Submit your devotional CTA */}
-        <div className="mt-10 rounded-2xl bg-primary/5 px-6 py-8 text-center sm:px-8">
-          <p className="text-lg font-bold text-primary">
-            Would you like us to publish your devotional thoughts?
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-primary/70">
-            Please reach us through{" "}
-            <a
-              href="mailto:javidverse@gmail.com"
-              className="font-semibold text-accent underline transition hover:text-primary"
-            >
-              javidverse@gmail.com
-            </a>{" "}
-            or click the{" "}
-            <Link
-              href="/contact"
-              className="font-semibold text-accent underline transition hover:text-primary"
-            >
-              Contact Us
-            </Link>{" "}
-            button.
-          </p>
-        </div>
+        <div className="mt-6 border-t border-primary/10" />
 
-        <div className="mt-12 border-t border-primary/10 pt-8" />
-
-        <div className="mt-10 rounded-2xl bg-accent/10 px-6 py-8 text-center sm:px-8">
+        <div className="mt-8 rounded-2xl bg-accent/10 px-6 py-8 text-center sm:px-8">
           <p className="text-lg font-bold text-primary">Read today&apos;s devotional</p>
           <p className="mt-2 text-sm text-primary/60">
             Start your day with the latest encouragement from God&apos;s Word.
@@ -208,6 +185,7 @@ export default async function DevotionalSlugPage({ params }: { params: Promise<{
         </div>
         </div>
       </section>
+      <DevotionalSchedule />
       <DevotionalArchive allPublished={allPublished} dateSlugMap={dateSlugMap} />
       <CTASection
         title="Need a Creative Partner?"

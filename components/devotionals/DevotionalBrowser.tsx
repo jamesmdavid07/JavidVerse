@@ -7,6 +7,7 @@ import DevotionalContent from "./DevotionalContent";
 import DevotionalShare from "./DevotionalShare";
 import DevotionalComments from "./DevotionalComments";
 import DevotionalArchive from "./DevotionalArchive";
+import DevotionalSchedule from "./DevotionalSchedule";
 import { formatDevotionalDate } from "@/lib/devotional-date";
 
 interface DevotionalData {
@@ -68,7 +69,7 @@ export default function DevotionalBrowser({
       <section className="px-6 py-16 text-center sm:px-8 sm:py-20 lg:px-12">
         <BookOpen className="mx-auto mb-4 h-10 w-10 text-accent" />
         <p className="text-lg font-semibold text-primary">No devotionals published yet.</p>
-        <p className="mt-2 text-primary/60">Check back soon for daily encouragement from God&apos;s Word.</p>
+        <p className="mt-2 text-primary/60">Check back soon for encouragement from God&apos;s Word.</p>
       </section>
     );
   }
@@ -82,7 +83,7 @@ export default function DevotionalBrowser({
           <p className="mt-3 text-primary/60">
             The devotional for <strong>{formatUnavailableDate(unavailableDate)}</strong> has not been published yet.
           </p>
-          <p className="mt-2 text-primary/60">Check back soon for daily encouragement from God&apos;s Word.</p>
+          <p className="mt-2 text-primary/60">Check back soon for encouragement from God&apos;s Word.</p>
           <Link
             href="/devotionals"
             className="btn-primary mt-8 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:shadow-md"
@@ -105,6 +106,9 @@ export default function DevotionalBrowser({
         comments={initialComments}
       />
 
+      {/* Full-width weekly schedule — cards with zoom-out */}
+      <DevotionalSchedule />
+
       {/* Full-width archive */}
       <DevotionalArchive
         allPublished={allPublished}
@@ -125,7 +129,7 @@ function DevotionalDisplay({
   const dateStr = formatDevotionalDate(devotional.publicationDate);
 
   return (
-    <section className="px-6 py-12 sm:px-8 sm:py-16 lg:px-12">
+    <section className="px-6 pb-8 pt-12 sm:px-8 sm:pb-10 sm:pt-16 lg:px-12">
       <div className="mx-auto max-w-4xl">
         {/* Meta */}
         <div className="mb-6 flex flex-wrap items-center gap-4 text-sm text-primary/60">
@@ -190,31 +194,7 @@ function DevotionalDisplay({
           initialComments={comments}
         />
 
-        {/* Submit your devotional CTA */}
-        <div className="mt-10 rounded-2xl bg-primary/5 px-6 py-8 text-center sm:px-8">
-          <p className="text-lg font-bold text-primary">
-            Would you like us to publish your devotional thoughts?
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-primary/70">
-            Please reach us through{" "}
-            <a
-              href="mailto:javidverse@gmail.com"
-              className="font-semibold text-accent underline transition hover:text-primary"
-            >
-              javidverse@gmail.com
-            </a>{" "}
-            or click the{" "}
-            <Link
-              href="/contact"
-              className="font-semibold text-accent underline transition hover:text-primary"
-            >
-              Contact Us
-            </Link>{" "}
-            button.
-          </p>
-        </div>
-
-        <div className="mt-12 border-t border-primary/10 pt-8" />
+        <div className="mt-6 border-t border-primary/10" />
       </div>
     </section>
   );

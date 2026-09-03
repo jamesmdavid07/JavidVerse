@@ -11,14 +11,12 @@ import { devotionalDateKey } from "@/lib/devotional-date";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Daily Devotionals",
-  description:
-      "Spend time each day in God's Word through simple, encouraging, Christ-centered devotionals that inspire faith, hope, and a deeper walk with God.",
+  title: "Devotionals",
+  description: "Simple, Christ-centered devotionals to encourage your walk with God.",
   alternates: { canonical: "/devotionals" },
   openGraph: {
-    title: "Daily Devotionals",
-    description:
-      "Spend time each day in God's Word through simple, encouraging, Christ-centered devotionals that inspire faith, hope, and a deeper walk with God.",
+    title: "Devotionals",
+    description: "Simple, Christ-centered devotionals to encourage your walk with God.",
     url: "/devotionals",
     type: "website",
   },
