@@ -71,6 +71,19 @@ function autoCommit(): void {
   autoCommitRunning = true;
   try {
     const root = process.cwd();
+    // Ensure both backup files exist so git add never fails (fresh clones have no comments yet)
+    try {
+      const devPath = path.join(root, "data", "devotionals", "devotionals.json");
+      const cmtPath = path.join(root, "data", "comments-backup.json");
+      if (!fs.existsSync(devPath)) {
+        fs.mkdirSync(path.dirname(devPath), { recursive: true });
+        fs.writeFileSync(devPath, "[]\n", "utf8");
+      }
+      if (!fs.existsSync(cmtPath)) {
+        fs.mkdirSync(path.dirname(cmtPath), { recursive: true });
+        fs.writeFileSync(cmtPath, "[]\n", "utf8");
+      }
+    } catch {}
     execSync("git add data/devotionals/devotionals.json data/comments-backup.json", {
       cwd: root,
       timeout: 15_000,

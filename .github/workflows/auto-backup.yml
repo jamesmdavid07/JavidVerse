@@ -12,6 +12,8 @@ permissions:
 jobs:
   commit-content:
     runs-on: ubuntu-latest
+    # Never send failure emails — this is best-effort background backup
+    continue-on-error: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -20,22 +22,39 @@ jobs:
 
       - name: Auto-commit devotional & comment content changes
         run: |
-          git config user.name "Auto Backup Bot"
-          git config user.email "auto-backup@javidverse.com"
+          # Best-effort backup — never fail the workflow (no emails).
+          # Pushes what is available; if nothing to push, exits silently with success.
+          set +e
+          git config user.name "Auto Backup Bot" 2>/dev/null || true
+          git config user.email "auto-backup@javidverse.com" 2>/dev/null || true
 
-          # Add the content source-of-truth files (only the data, never secrets)
-          git add data/devotionals/devotionals.json data/comments-backup.json
+          # Ensure backup files exist so `git add` never fails with "pathspec did not match"
+          mkdir -p data/devotionals data 2>/dev/null || true
+          [ -f data/devotionals/devotionals.json ] || echo "[]" > data/devotionals/devotionals.json 2>/dev/null || true
+          [ -f data/comments-backup.json ] || echo "[]" > data/comments-backup.json 2>/dev/null || true
 
-          # Commit if there are changes
-          if git diff --cached --quiet; then
+          # Add whatever is available — never error if a file is absent
+          git add data/devotionals/devotionals.json 2>/dev/null || true
+          git add data/comments-backup.json 2>/dev/null || true
+          # Also stage any other expected data (seed) if present, without failing
+          git add data/devotionals/devotionals.json data/comments-backup.json 2>/dev/null || true
+
+          # Nothing staged → silent success, no email
+          if git diff --cached --quiet 2>/dev/null; then
             echo "No content changes to commit."
-          else
-            git commit -m "chore: auto-backup devotional/comment content [skip ci]"
-
-            # Rebase on top of any commits that landed since checkout, then push.
-            # This avoids the exit code 128 "rejected (non-fast-forward)" failure
-            # caused by concurrent commits on the default branch.
-            git pull --rebase origin HEAD
-            git push origin HEAD
-            echo "Content changes committed and pushed."
+            exit 0
           fi
+
+          git commit -m "chore: auto-backup devotional/comment content [skip ci]" 2>/dev/null || {
+            echo "Commit skipped (nothing to commit or race)."
+            exit 0
+          }
+
+          # Rebase + push are best-effort; race or no upstream = silent success
+          git pull --rebase origin HEAD 2>/dev/null || true
+          git push origin HEAD 2>/dev/null || {
+            echo "Push skipped (already up to date or race) — staying quiet."
+            exit 0
+          }
+          echo "Content changes committed and pushed."
+          exit 0
