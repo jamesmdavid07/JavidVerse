@@ -4,6 +4,8 @@ import { BriefcaseBusiness, CalendarDays, Palette, PanelsTopLeft } from "lucide-
 import CTASection from "@/components/sections/CTASection";
 import Hero from "@/components/sections/Hero";
 import SectionWrapper from "@/components/sections/SectionWrapper";
+import PhotoFrameClient from "@/components/onevoice27/PhotoFrameClient";
+import OneVoiceShare from "@/components/onevoice27/OneVoiceShare";
 
 export const metadata = {
   title: "Graphic Design — Javid Verse",
@@ -40,7 +42,11 @@ export default function GraphicPage() {
       <Hero eyebrow="Design With Purpose" title="Graphic Design" subtitle="We design visual identities for ministries, churches, organizations, and individuals, ranging from logos, flyers, social media posters, and event materials." />
 
       {/* Services Section */}
-      <SectionWrapper title="Visuals That Communicate With Purpose" subtitle="Thoughtful designs created around your message, audience, and mission, helping your brand or event look clear, professional, and memorable.">
+      <SectionWrapper
+        title="Visuals That Communicate"
+        subtitle="Thoughtful designs created around your message, audience, and mission, helping your brand or event look clear, professional, and memorable."
+        headerClassName="mb-8 max-w-2xl"
+      >
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service) => {
             const Icon = service.icon;
@@ -55,6 +61,57 @@ export default function GraphicPage() {
           })}
         </ul>
       </SectionWrapper>
+
+      {/* OneVoice27 Photo Frame Generator — left copy / right template */}
+      <section className="relative overflow-hidden px-6 py-12 sm:px-8 sm:py-14 lg:px-12 bg-gradient-to-br from-violet-50 via-indigo-50/60 to-blue-50">
+        {/* subtle OneVoice palette wash — does not affect template container */}
+        <div aria-hidden="true" className="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-violet-200/20 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-24 -bottom-24 h-[28rem] w-[28rem] rounded-full bg-blue-200/20 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-100/20 blur-3xl" />
+        <div className="relative mx-auto grid max-w-7xl gap-4 lg:grid-cols-[1.03fr_0.97fr] lg:items-start lg:gap-6">
+          {/* Left — desktop flex column (tight Share→card), mobile contents for correct order */}
+          <div className="contents lg:flex lg:flex-col lg:gap-4">
+            {/* Header + tip + share — order 1 mobile, top of left column desktop */}
+            <div className="order-1">
+              <h2 className="max-w-xl text-[1.9rem] font-bold leading-[1.05] tracking-tight text-primary sm:text-4xl lg:text-[2.5rem]">Create Your OneVoice27 Photo</h2>
+              <p className="mt-3 max-w-xl text-[1.02rem] leading-7 text-primary/70 sm:text-[1.06rem]">
+                Upload your photo and automatically place yourself inside the OneVoice27 frame.
+              </p>
+              <p className="mt-3 max-w-xl rounded-xl border border-primary/10 bg-white/70 px-3.5 py-2 text-[0.9rem] leading-6 text-primary/70 backdrop-blur">
+                <span className="font-bold text-primary">Tip:</span> Use a clear front-facing selfie. Drag and pinch to adjust, then download and share.
+              </p>
+              <OneVoiceShare />
+            </div>
+            {/* Movement card — order 3 mobile (below template), directly under Share on desktop */}
+            <div className="order-3">
+              <div className="max-w-xl rounded-2xl border border-primary/10 bg-white/80 p-4 shadow-sm backdrop-blur">
+                <p className="text-[0.7rem] font-bold uppercase tracking-[0.18em] text-primary/50">One global movement</p>
+                <h3 className="mt-1.5 text-lg font-bold tracking-tight text-primary sm:text-xl lg:text-[1.35rem]">Together, one voice</h3>
+                <p className="mt-2 text-[0.92rem] leading-6 text-primary/70">
+                  Across nations, cultures, and communities, people are uniting around one message—one person and one group at a time.
+                </p>
+                <a
+                  href="https://onevoice27.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-[0.85rem] font-semibold text-white shadow-sm transition hover:bg-primary/90"
+                >
+                  Visit onevoice27.org
+                  <span aria-hidden="true">→</span>
+                </a>
+                <p className="mt-3 border-t border-primary/10 pt-3 text-[0.75rem] leading-5 text-primary/55">
+                  <span className="font-bold text-primary/70">Disclaimer:</span> This is an independent personal project created to enhance the visibility and reach of OneVoice27. It is not funded,
+                  sponsored, or officially operated by the Mission.
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* Right — template — order 2 mobile (between header and card) */}
+          <div className="order-2 lg:order-none">
+            <PhotoFrameClient frameSrc="/graphic/frame-one(1).png" />
+          </div>
+        </div>
+      </section>
 
       {/* Portfolio Placeholder Section */}
       <SectionWrapper
