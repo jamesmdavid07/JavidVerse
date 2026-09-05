@@ -3,16 +3,19 @@
 import { useCallback, useState } from "react";
 import { Check, Copy, Share2, X } from "lucide-react";
 
-export default function OneVoiceShare() {
+export default function OneVoiceShare({ anchor }: { anchor?: string }) {
   const [showShare, setShowShare] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
 
   const getShareUrl = useCallback(() => {
     if (shareUrl) return shareUrl;
-    if (typeof window !== "undefined") return window.location.href;
+    if (typeof window !== "undefined") {
+      const base = `${window.location.origin}${window.location.pathname}`;
+      return anchor ? `${base}#${anchor}` : window.location.href;
+    }
     return "";
-  }, [shareUrl]);
+  }, [shareUrl, anchor]);
 
   const copyLink = useCallback(async () => {
     const url = getShareUrl();
